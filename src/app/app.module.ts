@@ -12,6 +12,10 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import {appRoutes} from './app.routes';
 import { WorkspaceComponent } from './workspace/workspace.component';
+import { LeftNavComponent } from './left-nav/left-nav.component';
+import { TopMenuComponent } from './top-menu/top-menu.component';
+import { FooterInfoComponent } from './footer-info/footer-info.component';
+import { UserTableComponent } from './user-table/user-table.component';
 
 export function createTranslateLoader(http: Http) {
     return new TranslateStaticLoader(http, './assets/i18n', '.json');
@@ -21,7 +25,11 @@ export function createTranslateLoader(http: Http) {
   declarations: [
     AppComponent,
     LoginComponent,
-    WorkspaceComponent
+    WorkspaceComponent,
+    LeftNavComponent,
+    TopMenuComponent,
+    FooterInfoComponent,
+    UserTableComponent
   ],
   imports: [
     SharedModule,

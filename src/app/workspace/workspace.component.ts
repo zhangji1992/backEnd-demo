@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { FooterInfoComponent } from '../footer-info/footer-info.component';
+import { LeftNavComponent } from '../left-nav/left-nav.component';
+import { TopMenuComponent } from '../top-menu/top-menu.component';
+import { UserTableComponent } from '../user-table/user-table.component';
 
 @Component({
   selector: 'workspace',
