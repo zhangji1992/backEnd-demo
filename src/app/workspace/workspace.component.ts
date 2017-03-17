@@ -11,9 +11,12 @@ import { UserTableComponent } from '../user-table/user-table.component';
 })
 export class WorkspaceComponent implements OnInit {
 
-  constructor() { }
+  	constructor() { 
 
-  ngOnInit() {
-  }
+  	}
 
+  	ngOnInit() {
+  		//用require动态加载的外部JS
+  		require("custom.js");
+  	}
 }
