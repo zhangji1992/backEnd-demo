@@ -1,0 +1,42 @@
+<div class="app">
+    <div class="banner">
+        <h1>{{title}}</h1>
+    </div>
+    <div class="aside" style="border: 1px solid #f0f0f0;">
+        <!--<p-accordion>-->
+        <!--<p-accordionTab header="{{menuGroup.name}}" [selected]="i == 0 && true"-->
+        <!--*ngFor="let menuGroup of menuList;let i = index">-->
+        <!--<a routerLink="{{menuItem.path}}" routerLinkActive="active" *ngFor="let menuItem of menuGroup.subMenu">{{menuItem.name}}</a>-->
+        <!--</p-accordionTab>-->
+        <!--</p-accordion>-->
+
+        <!--<p-tabView orientation="left">-->
+        <!--<p-tabPanel *ngFor="let menuItem of menuList;let i = index" header="{{menuItem.name}}"-->
+        <!--[selected]="i == 0 && true" leftIcon="fa-bell-o">-->
+        <!--{{menuItem.path}}-->
+        <!--<a routerLink="{{menuItem.path}}" routerLinkActive="active"></a>-->
+        <!--</p-tabPanel>-->
+        <!--</p-tabView>-->
+
+        <!--<p-menu [model]="menuList"></p-menu>-->
+
+        <ul style="padding-left: 0;">
+            <a *ngFor="let menuItem of menuList;let i = index;" routerLink="{{menuItem.path}}" routerLinkActive="active"
+               style="text-decoration:none;padding-left: 20px;"
+               [ngClass]="{selected: selectedItem == i + 1, notSelected: selectedItem != i + 1}"
+               (click)="select(i + 1);">
+                <li style="width: 100px;margin: auto;height: 60px;color: #666;text-align: left;line-height: 60px;list-style-type:none;cursor: pointer;">
+                    <span>{{menuItem.name}}</span>
+                </li>
+            </a>
+        </ul>
+    </div>
+
+    <div class="content">
+        <div class="content-container">
+            <div class="content-box">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+    </div>
+</div>

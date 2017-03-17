@@ -1,0 +1,39 @@
+.app .banner {
+    text-align: center;
+}
+
+.app .aside {
+    float: left;
+    width: 200px;
+    position: absolute;
+    height: 86.7%;
+}
+
+.app .aside a {
+    display: block;
+    padding-left: 30px;
+}
+
+.app .aside a:hover {
+    background-color: #eeeeee;
+}
+
+.app .aside .selected:hover {
+    background-color: #17A3D7;
+}
+
+.app .aside .selected {
+    background-color: #17A3D7;
+}
+
+.app .aside .notSelected {
+    background-color: #ffffff;
+}
+
+.app .content {
+    background-color: white;
+    overflow: hidden;
+    margin-left: 220px;
+    padding-bottom: 40px;
+    min-height: 600px;
+}
