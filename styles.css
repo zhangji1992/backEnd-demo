@@ -12,5 +12,6 @@ h2, h3 {
 }
 
 body {
-    margin: 2em;
+    /*margin: 2em;*/
+    margin: 0;
 }

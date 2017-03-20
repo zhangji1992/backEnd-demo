@@ -1,42 +1,113 @@
 <div class="app">
     <div class="banner">
-        <h1>{{title}}</h1>
-    </div>
-    <div class="aside" style="border: 1px solid #f0f0f0;">
-        <!--<p-accordion>-->
-        <!--<p-accordionTab header="{{menuGroup.name}}" [selected]="i == 0 && true"-->
-        <!--*ngFor="let menuGroup of menuList;let i = index">-->
-        <!--<a routerLink="{{menuItem.path}}" routerLinkActive="active" *ngFor="let menuItem of menuGroup.subMenu">{{menuItem.name}}</a>-->
-        <!--</p-accordionTab>-->
-        <!--</p-accordion>-->
-
-        <!--<p-tabView orientation="left">-->
-        <!--<p-tabPanel *ngFor="let menuItem of menuList;let i = index" header="{{menuItem.name}}"-->
-        <!--[selected]="i == 0 && true" leftIcon="fa-bell-o">-->
-        <!--{{menuItem.path}}-->
-        <!--<a routerLink="{{menuItem.path}}" routerLinkActive="active"></a>-->
-        <!--</p-tabPanel>-->
-        <!--</p-tabView>-->
-
-        <!--<p-menu [model]="menuList"></p-menu>-->
-
-        <ul style="padding-left: 0;">
-            <a *ngFor="let menuItem of menuList;let i = index;" routerLink="{{menuItem.path}}" routerLinkActive="active"
-               style="text-decoration:none;padding-left: 20px;"
-               [ngClass]="{selected: selectedItem == i + 1, notSelected: selectedItem != i + 1}"
-               (click)="select(i + 1);">
-                <li style="width: 100px;margin: auto;height: 60px;color: #666;text-align: left;line-height: 60px;list-style-type:none;cursor: pointer;">
-                    <span>{{menuItem.name}}</span>
-                </li>
-            </a>
-        </ul>
+            <div class="bannerLogo">
+                <div class="logoBG">
+                    <img src="app/resources/imgs/logo.png" alt="">
+                </div>
+            </div>
+            <nav style="height: 56px;min-height: 56px;padding: 0;margin-left: 260px;">
+                <ul style="list-style-type: none;margin: 0;padding: 0;">
+                    <li class="l-left">主页</li>
+                    <li class="l-left">二维码管理</li>
+                    <li class="l-left">营销助手</li>
+                    <li class="l-left">配置助手</li>
+                    <li class="l-right">退出</li>
+                    <li class="l-right">14</li>
+                    <li class="l-right">你好，川川</li>
+                </ul>
+            </nav>
     </div>
 
-    <div class="content">
-        <div class="content-container">
-            <div class="content-box">
-                <router-outlet></router-outlet>
+        <div class="aside" style="border: 1px solid #f0f0f0;">
+            <ul style="padding-left: 0;">
+                <a routerLink="main-frame"
+                   routerLinkActive="active"
+                   style="text-decoration:none;padding-left: 20px;"
+                   [ngClass]="{selected: selectedItem == 1, notSelected: selectedItem != 1}"
+                   (click)="select(1);">
+                    <li style="width: 100px;margin: auto;height: 60px;color: #666;text-align: left;line-height: 60px;list-style-type:none;cursor: pointer;">
+                        <i class="fa fa-home" aria-hidden="true"></i>
+                        <span>首页</span>
+                    </li>
+                </a>
+                <a routerLink="product"
+                   routerLinkActive="active"
+                   style="text-decoration:none;padding-left: 20px;"
+                   [ngClass]="{selected: selectedItem == 2, notSelected: selectedItem != 2}"
+                   (click)="select(2);">
+                    <li style="width: 100px;margin: auto;height: 60px;color: #666;text-align: left;line-height: 60px;list-style-type:none;cursor: pointer;">
+                        <i class="fa fa-home" aria-hidden="true"></i>
+                        <span>产品管理</span>
+                    </li>
+                </a>
+                <a routerLink="layout-model"
+                   routerLinkActive="active"
+                   style="text-decoration:none;padding-left: 20px;"
+                   [ngClass]="{selected: selectedItem == 3, notSelected: selectedItem != 3}"
+                   (click)="select(3);">
+                    <li style="width: 100px;margin: auto;height: 60px;color: #666;text-align: left;line-height: 60px;list-style-type:none;cursor: pointer;">
+                        <i class="fa fa-home" aria-hidden="true"></i>
+                        <span>计划单</span>
+                    </li>
+                </a>
+                <a routerLink="main-frame"
+                   routerLinkActive="active"
+                   style="text-decoration:none;padding-left: 20px;"
+                   [ngClass]="{selected: selectedItem == 4, notSelected: selectedItem != 4}"
+                   (click)="select(4);">
+                    <li style="width: 100px;margin: auto;height: 60px;color: #666;text-align: left;line-height: 60px;list-style-type:none;cursor: pointer;">
+                        <i class="fa fa-home" aria-hidden="true"></i>
+                        <span>铺货管理</span>
+                    </li>
+                </a>
+                <a routerLink="main-frame"
+                   routerLinkActive="active"
+                   style="text-decoration:none;padding-left: 20px;"
+                   [ngClass]="{selected: selectedItem == 5, notSelected: selectedItem != 5}"
+                   (click)="select(5);">
+                    <li style="width: 100px;margin: auto;height: 60px;color: #666;text-align: left;line-height: 60px;list-style-type:none;cursor: pointer;">
+                        <i class="fa fa-home" aria-hidden="true"></i>
+                        <span>运营中心</span>
+                    </li>
+                </a>
+                <a routerLink="main-frame"
+                   routerLinkActive="active"
+                   style="text-decoration:none;padding-left: 20px;"
+                   [ngClass]="{selected: selectedItem == 6, notSelected: selectedItem != 6}"
+                   (click)="select(6);">
+                    <li style="width: 100px;margin: auto;height: 60px;color: #666;text-align: left;line-height: 60px;list-style-type:none;cursor: pointer;">
+                        <i class="fa fa-home" aria-hidden="true"></i>
+                        <span>数据统计</span>
+                    </li>
+                </a>
+                <a routerLink="main-frame"
+                   routerLinkActive="active"
+                   style="text-decoration:none;padding-left: 20px;"
+                   [ngClass]="{selected: selectedItem == 7, notSelected: selectedItem != 7}"
+                   (click)="select(7);">
+                    <li style="width: 100px;margin: auto;height: 60px;color: #666;text-align: left;line-height: 60px;list-style-type:none;cursor: pointer;">
+                        <i class="fa fa-home" aria-hidden="true"></i>
+                        <span>溯源管理</span>
+                    </li>
+                </a>
+                <a routerLink="main-frame"
+                   routerLinkActive="active"
+                   style="text-decoration:none;padding-left: 20px;"
+                   [ngClass]="{selected: selectedItem == 8, notSelected: selectedItem != 8}"
+                   (click)="select(8);">
+                    <li style="width: 100px;margin: auto;height: 60px;color: #666;text-align: left;line-height: 60px;list-style-type:none;cursor: pointer;">
+                        <i class="fa fa-home" aria-hidden="true"></i>
+                        <span>异常查询</span>
+                    </li>
+                </a>
+            </ul>
+        </div>
+
+        <div class="content">
+            <div class="content-container">
+                <div class="content-box">
+                    <router-outlet></router-outlet>
+                </div>
             </div>
         </div>
-    </div>
 </div>
