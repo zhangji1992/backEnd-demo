@@ -41,6 +41,7 @@
     height: 54px;
     line-height: 54px;
     text-align: center;
+    color: white;
 }
 
 nav li:nth-child(5){
