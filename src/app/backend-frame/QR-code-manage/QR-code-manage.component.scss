@@ -1,0 +1,99 @@
+.app {
+    padding: 0;
+    margin: 0;
+}
+
+.aside {
+  float: left;
+  width: 200px;
+  position: absolute;
+  height: 100%;
+  //border-right: 1px solid #16A3D7;
+}
+
+.aside ul{
+  height: 600px;
+  background: #FFFFFF;
+  margin-bottom: 0;
+}
+
+.aside a {
+  display: block;
+  padding-left: 30px;
+}
+
+.aside a:hover {
+  background-color: #DCF4FF;
+}
+
+.aside .selected:hover {
+  background-color: #17A3D8;
+}
+
+.aside .selectedItem {
+  background-color: #17A3D8;
+}
+
+.aside .normalItem {
+  background-color: #ffffff;
+}
+
+.aside ul {
+  padding-left: 0;
+  margin-top: 0;
+}
+
+.aside ul a {
+  border-bottom: 1px solid #E5E5E5;
+  text-decoration:none;
+  padding-left: 20px;
+}
+
+.app .aside {
+    float: left;
+    width: 200px;
+    position: absolute;
+    height: 100%;
+    //border-right: 1px solid #16A3D7;
+}
+
+.app .aside a {
+    display: block;
+    padding-left: 30px;
+}
+
+.app .aside a:hover {
+    background-color: #DCF4FF;
+}
+
+.app .aside .selected:hover {
+    background-color: #17A3D8;
+}
+
+.app .aside .selectedItem {
+    background-color: #17A3D8;
+}
+
+.app .aside .normalItem {
+    background-color: #ffffff;
+}
+
+.app .aside ul {
+    padding-left: 0;
+    margin-top: 0;
+}
+
+.app .aside ul a {
+    border-bottom: 1px solid #E5E5E5;
+    text-decoration:none;
+    padding-left: 20px;
+}
+
+.app .content {
+    background-color: white;
+    overflow: hidden;
+    margin-left: 220px;
+    margin-right: 20px;
+    padding-bottom: 40px;
+    min-height: 600px;
+}

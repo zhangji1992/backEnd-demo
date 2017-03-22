@@ -1,44 +1,41 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { RouterModule } from '@angular/router';
-import { HttpModule,JsonpModule ,Http} from '@angular/http';
-import { ReactiveFormsModule } from '@angular/forms';
-import { TranslateModule, TranslateLoader, TranslateStaticLoader } from 'ng2-translate';
-import { ToastModule } from 'ng2-toastr/ng2-toastr';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {RouterModule} from '@angular/router';
+import {HttpModule, JsonpModule} from '@angular/http';
+import {ReactiveFormsModule} from '@angular/forms';
 
-import { SharedModule } from './shared/shared.module';
-import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
-import { appRoutes } from './app.routes';
+import {AppComponent} from './app.component';
+import {LoginComponent} from './login/login.component';
+import {PageNotFoundComponent} from "./backend-frame/my-common/page-not-found/page-not-found.component";
+import {ComponentsModule} from "./backend-frame/my-common/components/components.module";
+import {ProvidersModule} from "./backend-frame/my-common/providers/providers.module";
 
-export function createTranslateLoader(http: Http) {
-    return new TranslateStaticLoader(http, './assets/i18n', '.json');
-}
+const appRoutes = [
+  {path: '', redirectTo: 'login', pathMatch: 'full'},
+  {path: "login", component: LoginComponent},
+  {path: "backend-frame", loadChildren: './backend-frame/backend-frame.module#BackendFrameModule', data: { preload: true }},
+  {path: '**', component: PageNotFoundComponent }
+];
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    LoginComponent
-  ],
   imports: [
-    SharedModule,
     BrowserModule,
-    RouterModule,
-    ReactiveFormsModule,
     HttpModule,
     JsonpModule,
-    TranslateModule.forRoot({
-      provide: TranslateLoader,
-      useFactory: (createTranslateLoader),
-      deps: [Http]
-    }),
-    ToastModule.forRoot(),
-    RouterModule.forRoot(appRoutes)
+    RouterModule,
+    ReactiveFormsModule,
+    ComponentsModule,
+    ProvidersModule,
+    RouterModule.forRoot(appRoutes),
   ],
-  providers: [
+  declarations: [
+    AppComponent,
+    LoginComponent,
+    PageNotFoundComponent
   ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  
+
 }

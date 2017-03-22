@@ -1,0 +1,87 @@
+<div class="app">
+  <div class="aside">
+    <ul>
+      <a routerLink="overview"
+         routerLinkActive="active"
+         [ngClass]="{selected: selectedItem == 1, normalItem: selectedItem != 1}"
+         (click)="clickItem(1)">
+        <li style="width: 100px;margin: auto;height: 60px;color: #666;text-align: left;line-height: 60px;list-style-type:none;cursor: pointer;">
+          <i class="fa fa-home" aria-hidden="true"></i>
+          <span>首页</span>
+        </li>
+      </a>
+      <a routerLink="product-manage"
+         routerLinkActive="active"
+         [ngClass]="{selected: selectedItem == 2, normalItem: selectedItem != 2}"
+         (click)="clickItem(2)">
+        <li style="width: 100px;margin: auto;height: 60px;color: #666;text-align: left;line-height: 60px;list-style-type:none;cursor: pointer;">
+          <i class="fa fa-home" aria-hidden="true"></i>
+          <span>产品管理</span>
+        </li>
+      </a>
+      <a routerLink="plan-order"
+         routerLinkActive="active"
+         [ngClass]="{selected: selectedItem == 3, normalItem: selectedItem != 3}"
+         (click)="clickItem(3)">
+        <li style="width: 100px;margin: auto;height: 60px;color: #666;text-align: left;line-height: 60px;list-style-type:none;cursor: pointer;">
+          <i class="fa fa-home" aria-hidden="true"></i>
+          <span>计划单</span>
+        </li>
+      </a>
+      <a routerLink="distribution-manage"
+         routerLinkActive="active"
+         [ngClass]="{selected: selectedItem == 4, normalItem: selectedItem != 4}"
+         (click)="clickItem(4)">
+        <li style="width: 100px;margin: auto;height: 60px;color: #666;text-align: left;line-height: 60px;list-style-type:none;cursor: pointer;">
+          <i class="fa fa-home" aria-hidden="true"></i>
+          <span>铺货管理</span>
+        </li>
+      </a>
+      <a routerLink="operation-center"
+         routerLinkActive="active"
+         [ngClass]="{selected: selectedItem == 5, normalItem: selectedItem != 5}"
+         (click)="clickItem(5)">
+        <li style="width: 100px;margin: auto;height: 60px;color: #666;text-align: left;line-height: 60px;list-style-type:none;cursor: pointer;">
+          <i class="fa fa-home" aria-hidden="true"></i>
+          <span>运营中心</span>
+        </li>
+      </a>
+      <a routerLink="data-statistics"
+         routerLinkActive="active"
+         [ngClass]="{selected: selectedItem == 6, normalItem: selectedItem != 6}"
+         (click)="clickItem(6)">
+        <li style="width: 100px;margin: auto;height: 60px;color: #666;text-align: left;line-height: 60px;list-style-type:none;cursor: pointer;">
+          <i class="fa fa-home" aria-hidden="true"></i>
+          <span>数据统计</span>
+        </li>
+      </a>
+      <a routerLink="traceability-manage"
+         routerLinkActive="active"
+         [ngClass]="{selected: selectedItem == 7, normalItem: selectedItem != 7}"
+         (click)="clickItem(7)">
+        <li style="width: 100px;margin: auto;height: 60px;color: #666;text-align: left;line-height: 60px;list-style-type:none;cursor: pointer;">
+          <i class="fa fa-home" aria-hidden="true"></i>
+          <span>溯源管理</span>
+        </li>
+      </a>
+      <a routerLink="exception-query"
+         routerLinkActive="active"
+         [ngClass]="{selected: selectedItem == 8, normalItem: selectedItem != 8}"
+         (click)="clickItem(8)">
+        <li style="width: 100px;margin: auto;height: 60px;color: #666;text-align: left;line-height: 60px;list-style-type:none;cursor: pointer;">
+          <i class="fa fa-home" aria-hidden="true"></i>
+          <span>异常查询</span>
+        </li>
+      </a>
+    </ul>
+  </div>
+
+
+  <div class="content">
+        <div class="content-container">
+            <div class="content-box">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+    </div>
+</div>

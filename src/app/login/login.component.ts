@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { FormsModule ,ReactiveFormsModule} from '@angular/forms';
-import { ActivatedRoute, Router, ActivatedRouteSnapshot, RouterState, RouterStateSnapshot } from '@angular/router';
-import { User } from '../models/user-model';
+/**
+ * Created by zhangJi on 2017/3/14.
+ */
+import {Component, OnInit} from '@angular/core';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'login',
@@ -9,20 +10,15 @@ import { User } from '../models/user-model';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-	public user:User = new User();
+  constructor(private router: Router) {
+  }
 
-  	constructor(
-  		public router: Router,
-        public activatedRoute: ActivatedRoute
-  	) { 
+  ngOnInit() {
+  }
 
-  	}
+  public login(): void {
+    this.router.navigate(['backend-frame', 'QR-code-manage', 'overview']);
+    // this.router.navigateByUrl("/backend-frame/QR-code-manage/overview");
+  }
 
-  	ngOnInit() {
-
-  	}
-
-  	login(){
-  		this.router.navigateByUrl("workspace");
-  	}
 }

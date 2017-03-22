@@ -1,0 +1,27 @@
+.content form div {
+  display: inline-block;
+  margin-right: 18px;
+}
+
+.content form div:nth-child(n + 4) {
+  float: right;
+  margin-right: 30px;
+}
+
+.form {
+  margin-top: 8px;
+  margin-bottom: 20px;
+  background: #F0F1F4;
+  border: 1px solid #ddd;
+  padding: 20px;
+  color: #666;
+}
+
+.intervalLine {
+  margin-left: 33px;
+  margin-right: 0 !important;
+}
+
+table {
+  margin-top: 20px;
+}
