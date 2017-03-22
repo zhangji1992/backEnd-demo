@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from "@angular/common";
-import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {RouterModule} from '@angular/router';
 import {BackendFrameComponent} from './backend-frame.component';
 
@@ -22,6 +22,9 @@ import {
   TabViewModule,Message
 } from "primeng/primeng";
 import {ProductService} from "./QR-code-manage/product-manage/product-manage.service";
+import {HomeComponent} from "./home/home.component";
+import {ConfigurationHelperComponent} from "./configuration-helper/configuration-helper.component";
+import {SalesHelperComponent} from "./sales-helper/sales-helper.component";
 import {AddPlanComponent} from "./QR-code-manage/plan-order/add-plan.component";
 
 const backendFrameRoutes = [
@@ -30,9 +33,14 @@ const backendFrameRoutes = [
     component: BackendFrameComponent,     //框架页面
     children: [
       {
+        path: 'home', component: HomeComponent,
+        children: [
+        ]
+      },
+      {
         path: 'QR-code-manage', component: QRCodeManageComponent,
         children: [
-          {path: '', redirectTo: '/overview', pathMatch: 'full'},
+          {path: '', redirectTo: '/backend-frame/QR-code-manage/overview', pathMatch: 'full'},
           {path: 'overview', component: OverviewComponent},
           {path: 'product-manage', component: ProductManageComponent},
           {path: 'plan-order', component: PlanOrderComponent},
@@ -43,6 +51,16 @@ const backendFrameRoutes = [
           {path: 'exception-query', component: ExceptionQueryComponent},
           {path: '**', component: PageNotFound2Component}
         ]
+      },
+      {
+        path: 'configuration-helper', component: ConfigurationHelperComponent,
+        children: [
+
+        ]
+      },
+      {
+        path: 'sales-helper', component: SalesHelperComponent,
+        children: []
       },
       // {path: '**', component: PageNotFound2Component}   //带参数的路由也会匹配
     ]
@@ -64,6 +82,10 @@ const backendFrameRoutes = [
   ],
   exports: [],
   declarations: [
+    HomeComponent,
+    QRCodeManageComponent,
+    ConfigurationHelperComponent,
+    SalesHelperComponent,
     FooterInfoComponent,
     TopMenuComponent,
     BackendFrameComponent,
