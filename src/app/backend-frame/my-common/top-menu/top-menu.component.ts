@@ -14,5 +14,6 @@ export class TopMenuComponent implements OnInit {
 
   clickMenu(index: number){
     this.selectedMenu = index;
+    console.log('selectedMenu', this.selectedMenu);
   }
 }
