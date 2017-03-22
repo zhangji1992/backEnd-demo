@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from "@angular/common";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {RouterModule} from '@angular/router';
 import {BackendFrameComponent} from './backend-frame.component';
 
@@ -17,8 +17,12 @@ import {TopMenuComponent} from "./my-common/top-menu/top-menu.component";
 import {OverviewComponent} from "./QR-code-manage/overview/overview.component";
 import {QRCodeManageComponent} from "./QR-code-manage/QR-code-manage.component";
 import {ComponentsModule} from "./my-common/components/components.module";
-import {CalendarModule, DataTableModule, DialogModule, DropdownModule} from "primeng/primeng";
+import {
+  CalendarModule, CheckboxModule, DataTableModule, DialogModule, DropdownModule, PanelModule,
+  TabViewModule,Message
+} from "primeng/primeng";
 import {ProductService} from "./QR-code-manage/product-manage/product-manage.service";
+import {AddPlanComponent} from "./QR-code-manage/plan-order/add-plan.component";
 
 const backendFrameRoutes = [
   {
@@ -55,7 +59,8 @@ const backendFrameRoutes = [
     CalendarModule,
     DataTableModule,
     DialogModule,
-    RouterModule.forChild(backendFrameRoutes)
+    RouterModule.forChild(backendFrameRoutes),
+    TabViewModule,CheckboxModule,PanelModule
   ],
   exports: [],
   declarations: [
@@ -63,6 +68,7 @@ const backendFrameRoutes = [
     TopMenuComponent,
     BackendFrameComponent,
     QRCodeManageComponent,
+    AddPlanComponent,
     OverviewComponent,
     ProductManageComponent,
     PlanOrderComponent,
