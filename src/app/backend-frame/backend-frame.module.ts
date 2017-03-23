@@ -18,14 +18,13 @@ import {OverviewComponent} from "./QR-code-manage/overview/overview.component";
 import {QRCodeManageComponent} from "./QR-code-manage/QR-code-manage.component";
 import {ComponentsModule} from "./my-common/components/components.module";
 import {
+  TabViewModule,
   CalendarModule,
   CheckboxModule,
   DataTableModule,
   DialogModule,
   DropdownModule,
-  PanelModule,
-  TabViewModule,
-  Message
+  PanelModule
 } from "primeng/primeng";
 import {ProductService} from "./QR-code-manage/product-manage/product-manage.service";
 import {HomeComponent} from "./home/home.component";
@@ -80,10 +79,10 @@ const backendFrameRoutes = [
     CalendarModule,
     DataTableModule,
     DialogModule,
-    RouterModule.forChild(backendFrameRoutes),
     TabViewModule,
     CheckboxModule,
-    PanelModule
+    PanelModule,
+    RouterModule.forChild(backendFrameRoutes)
   ],
   exports: [],
   declarations: [
