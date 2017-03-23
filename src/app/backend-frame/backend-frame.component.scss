@@ -1,3 +1,14 @@
-.mainPart{
-  background-color: #EEEEEE;
+.main-frame {
+  height: 100%;
+
+  .main_container {
+    height: 100%;
+
+    .mainPart {
+      background-color: #EEEEEE;
+      height: calc(100% - 54px);
+    }
+  }
 }
+
+

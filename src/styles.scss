@@ -12,6 +12,16 @@ h2, h3 {
 }
 
 body {
-  /*margin: 2em;*/
   margin: 0;
+  height:100%;
 }
+
+
+.ui-tabview-panel{
+  background-color: white !important;
+}
+
+.ui-tabview .ui-tabview-top > .ui-tabview-nav{
+  padding: 0;
+}
+
