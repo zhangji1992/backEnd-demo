@@ -3,10 +3,10 @@
     <p-dataTable [value]="planData" [rows]="10" >
       <p-column field="selectAll" header="全选">
         <template pTemplate="header">
-          <p-checkbox name="groupname" value="" [(ngModel)]="checked" (onChange)="selectAllPlan(checked)"  binary="true"></p-checkbox>
+          <p-checkbox name="groupname" value="" [(ngModel)]="checked" (onChange)="selectAllPlan(checked)" binary="true"></p-checkbox>
         </template>
         <template let-col let-plan="rowData" pTemplate="body">
-          <p-checkbox name="groupname" [value]="plan.id"  [(ngModel)]="selectAll"  (onChange)="selectPlan(plan)"></p-checkbox>
+          <p-checkbox name="groupname" [value]="plan.id"  [(ngModel)]="selectAll" (onChange)="selectPlan(plan)"></p-checkbox>
         </template>
       </p-column>
 

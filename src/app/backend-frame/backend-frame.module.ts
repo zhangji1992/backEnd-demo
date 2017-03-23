@@ -18,8 +18,14 @@ import {OverviewComponent} from "./QR-code-manage/overview/overview.component";
 import {QRCodeManageComponent} from "./QR-code-manage/QR-code-manage.component";
 import {ComponentsModule} from "./my-common/components/components.module";
 import {
-  CalendarModule, CheckboxModule, DataTableModule, DialogModule, DropdownModule, PanelModule,
-  TabViewModule,Message
+  CalendarModule,
+  CheckboxModule,
+  DataTableModule,
+  DialogModule,
+  DropdownModule,
+  PanelModule,
+  TabViewModule,
+  Message
 } from "primeng/primeng";
 import {ProductService} from "./QR-code-manage/product-manage/product-manage.service";
 import {HomeComponent} from "./home/home.component";
@@ -34,8 +40,7 @@ const backendFrameRoutes = [
     children: [
       {
         path: 'home', component: HomeComponent,
-        children: [
-        ]
+        children: []
       },
       {
         path: 'QR-code-manage', component: QRCodeManageComponent,
@@ -54,9 +59,7 @@ const backendFrameRoutes = [
       },
       {
         path: 'configuration-helper', component: ConfigurationHelperComponent,
-        children: [
-
-        ]
+        children: []
       },
       {
         path: 'sales-helper', component: SalesHelperComponent,
@@ -78,7 +81,9 @@ const backendFrameRoutes = [
     DataTableModule,
     DialogModule,
     RouterModule.forChild(backendFrameRoutes),
-    TabViewModule,CheckboxModule,PanelModule
+    TabViewModule,
+    CheckboxModule,
+    PanelModule
   ],
   exports: [],
   declarations: [

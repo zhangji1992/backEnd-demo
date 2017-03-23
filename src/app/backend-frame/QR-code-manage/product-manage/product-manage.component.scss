@@ -17,6 +17,18 @@
   color: #666;
 }
 
+p-tabView ul {
+  padding: 0;
+}
+
+p-tabView ul + div {
+  background: white;
+}
+
+.content p-tabView{
+  background-color: green;
+}
+
 .intervalLine {
   margin-left: 33px;
   margin-right: 0 !important;

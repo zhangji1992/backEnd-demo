@@ -90,10 +90,14 @@
 }
 
 .app .content {
-    background-color: white;
+    background-color: #EEEEEE;
     overflow: hidden;
     margin-left: 220px;
     margin-right: 20px;
     padding-bottom: 40px;
     min-height: 600px;
+}
+
+.app .content .content-container{
+  margin-top: 20px;
 }

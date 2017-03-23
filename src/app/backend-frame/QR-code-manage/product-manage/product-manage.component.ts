@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ProductService} from "./product-manage.service";
-import {Product} from "./product";
+import {Product, PrimeProduct} from "./product";
 import {SelectItem} from "primeng/components/common/api";
 
 @Component({
@@ -15,12 +15,16 @@ export class ProductManageComponent implements OnInit {
   selectedProduct: Product;
   products: Product[];
   productsTypes: SelectItem[];
+  allChecked: boolean = false;
+  productsChecked: boolean[];
   searchName: string;
   searchType: string;
   searchBeginTime: string;
   searchEndTime: string;
   product: Product = new PrimeProduct();
-  cols: any[];
+  tabViewCss = {
+    'border': '1px solid red'
+  };
 
   constructor(public productService: ProductService) {
   }
@@ -40,13 +44,20 @@ export class ProductManageComponent implements OnInit {
         this.productsTypes = productsTypes;
       });
 
-    this.cols = [
-      {field: 'selectAll', header: '选择所有'},
-      {field: 'name', header: '产品名称'},
-      {field: 'type', header: '产品类型'},
-      {field: 'createTime', header: '创建时间'},
-      {field: 'operation', header: '操作'},
-    ];
+    // this.cols = [
+    //   {field: 'checked', header: '选择所有'},
+    //   {field: 'name', header: '产品名称'},
+    //   {field: 'type', header: '产品类型'},
+    //   {field: 'createTime', header: '创建时间'},
+    //   {field: 'operation', header: '操作'},
+    // ];
+
+    this.productService
+      .getProductsChecked()
+      .then(productsChecked =>{
+        console.log('productsChecked', productsChecked);
+        this.productsChecked = productsChecked;
+      });
   }
 
   add() {
@@ -112,15 +123,26 @@ export class ProductManageComponent implements OnInit {
   findSelectedProductIndex(): number {
     return this.products.indexOf(this.selectedProduct);
   }
-}
 
-
-class PrimeProduct implements Product {
-  constructor(public id?,
-              public selectAll?,
-              public name?,
-              public type?,
-              public createTime?,
-              public operation?) {
+  selectAll(){
+    if(this.allChecked == true){
+      for(let item of this.products){
+        for(let prop in item){
+          if(prop == 'checked'){
+            item[prop] = true;
+          }
+        }
+      }
+    }else {
+      for(let item of this.products){
+        for(let prop in item){
+          if(prop == 'checked'){
+            item[prop] = false;
+          }
+        }
+      }
+    }
   }
 }
+
+

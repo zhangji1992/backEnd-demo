@@ -1,53 +1,52 @@
 <form [formGroup]="userform" (ngSubmit)="onSubmit(userform.value)">
 
-    <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
-      <div class="ui-grid-row">
+  <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+    <div class="ui-grid-row">
 
-        <div class="ui-grid-col-2">
-          *计划单名称:
-        </div>
-        <div class="ui-grid-col-10">
-          <input pInputText type="text" formControlName="planName" required/>
-        </div>
-
-        <div *ngIf="formErrors.planName" class="alert alert-danger">
-          {{ formErrors.planName }}
-        </div>
+      <div class="ui-grid-col-2">
+        *计划单名称:
+      </div>
+      <div class="ui-grid-col-10">
+        <input pInputText type="text" formControlName="planName" required/>
       </div>
 
-      <div class="ui-grid-row">
-        <div class="ui-grid-col-2">
-          *计划单产品:
-        </div>
-        <div class="ui-grid-col-10">
-          <p-dropdown [options]="products" formControlName="selectedProduct"   [autoWidth]="false" ></p-dropdown>
-        </div>
-        <div *ngIf="formErrors.selectedProduct" class="alert alert-danger">
-          {{ formErrors.selectedProduct }}
-        </div>
-      </div>
-
-      <div class="ui-grid-row">
-        <div class="ui-grid-col-2">
-          *备注信息:
-        </div>
-        <div class="ui-grid-col-10">
-          <input pInputText type="text" formControlName="note" required/>
-        </div>
-        <div *ngIf="formErrors.note" class="alert alert-danger">
-          {{ formErrors.note }}
-        </div>
-      </div>
-
-
-
-      <div class="ui-grid-row">
-        <div class="ui-grid-col-2"></div>
-        <div class="ui-grid-col-6">
-          <button pButton type="submit" label="Submit" [disabled]="!userform.valid"></button>
-        </div>
-        <div class="ui-grid-col-4"></div>
+      <div *ngIf="formErrors.planName" class="alert alert-danger">
+        {{ formErrors.planName }}
       </div>
     </div>
+
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-2">
+        *计划单产品:
+      </div>
+      <div class="ui-grid-col-10">
+        <p-dropdown [options]="products" formControlName="selectedProduct" [autoWidth]="false"></p-dropdown>
+      </div>
+      <div *ngIf="formErrors.selectedProduct" class="alert alert-danger">
+        {{ formErrors.selectedProduct }}
+      </div>
+    </div>
+
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-2">
+        *备注信息:
+      </div>
+      <div class="ui-grid-col-10">
+        <input pInputText type="text" formControlName="note" required/>
+      </div>
+      <div *ngIf="formErrors.note" class="alert alert-danger">
+        {{ formErrors.note }}
+      </div>
+    </div>
+
+
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-2"></div>
+      <div class="ui-grid-col-6">
+        <button pButton type="submit" label="Submit" [disabled]="!userform.valid"></button>
+      </div>
+      <div class="ui-grid-col-4"></div>
+    </div>
+  </div>
 
 </form>
