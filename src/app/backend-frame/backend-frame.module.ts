@@ -26,7 +26,6 @@ import {HomeComponent} from "./home/home.component";
 import {ConfigurationHelperComponent} from "./configuration-helper/configuration-helper.component";
 import {SalesHelperComponent} from "./sales-helper/sales-helper.component";
 import {AddPlanComponent} from "./QR-code-manage/plan-order/add-plan.component";
-import {MyExpandoCmp} from "./my-common/components/soliderMenu.component";
 
 const backendFrameRoutes = [
   {
@@ -100,7 +99,7 @@ const backendFrameRoutes = [
     DataStatisticsComponent,
     TraceabilityManageComponent,
     ExceptionQueryComponent,
-    PageNotFound2Component,MyExpandoCmp
+    PageNotFound2Component
   ],
   providers: [ProductService]
 })
