@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
-import {planData} from "./planData";
+import {PlanData,AddPlanData} from "./planData";
 @Injectable()
 export class planService{
     planData=[];
     selectAllOrign=[];
-    getPlanData(): Promise < planData[] > {
+    getPlanData(): Promise < PlanData[] > {
         this.planData=[{
             id: 1,
             selected:false,
@@ -30,5 +30,14 @@ export class planService{
             this.selectAllOrign.push(plan.id);
         }
         return this.selectAllOrign;
-    }
+    };
+    setPlanData(){
+
+    };
+    addPlanData(planData:AddPlanData){
+
+    };
+    editPlanData(editData:AddPlanData){
+
+    };
 }

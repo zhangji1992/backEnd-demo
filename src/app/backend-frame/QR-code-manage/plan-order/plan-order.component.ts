@@ -1,5 +1,5 @@
 import {Component, OnInit} from "@angular/core";
-import {planData} from "./planData";
+import {PlanData} from "./planData";
 import {planService} from "./plan.service";
 
 @Component({
@@ -10,7 +10,7 @@ import {planService} from "./plan.service";
 })
 export class PlanOrderComponent implements OnInit {
   constructor(private planservice:planService) {}
-  planData:planData[]=[];
+  planData:PlanData[]=[];
   selectAllOrign:string[] = [];
   selectAll:string[] = [];
   checked: boolean = false;
