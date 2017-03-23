@@ -29,6 +29,57 @@
 
       <div class="ui-grid-row">
         <div class="ui-grid-col-2">
+          *印码类型:
+        </div>
+        <div class="ui-grid-col-10">
+          <p-dropdown [options]="products" formControlName="selectedProduct"   [autoWidth]="false" ></p-dropdown>
+        </div>
+        <div *ngIf="formErrors.selectedProduct" class="alert alert-danger">
+          {{ formErrors.selectedProduct }}
+        </div>
+      </div>
+
+
+      <div class="ui-grid-row">
+        <div class="ui-grid-col-2">
+          *包材供应商:
+        </div>
+        <div class="ui-grid-col-10">
+          <p-dropdown [options]="products" formControlName="selectedProduct"   [autoWidth]="false" ></p-dropdown>
+        </div>
+        <div *ngIf="formErrors.selectedProduct" class="alert alert-danger">
+          {{ formErrors.selectedProduct }}
+        </div>
+      </div>
+
+
+      <div class="ui-grid-row">
+        <div class="ui-grid-col-2">
+          *印码数量:
+        </div>
+        <div class="ui-grid-col-10">
+          <p-dropdown [options]="products" formControlName="selectedProduct"   [autoWidth]="false" ></p-dropdown>
+        </div>
+        <div *ngIf="formErrors.selectedProduct" class="alert alert-danger">
+          {{ formErrors.selectedProduct }}
+        </div>
+      </div>
+
+      <div class="ui-grid-row">
+        <div class="ui-grid-col-2">
+          *截止:
+        </div>
+        <div class="ui-grid-col-10">
+          <p-dropdown [options]="products" formControlName="selectedProduct"   [autoWidth]="false" ></p-dropdown>
+        </div>
+        <div *ngIf="formErrors.selectedProduct" class="alert alert-danger">
+          {{ formErrors.selectedProduct }}
+        </div>
+      </div>
+
+
+      <div class="ui-grid-row">
+        <div class="ui-grid-col-2">
           *备注信息:
         </div>
         <div class="ui-grid-col-10">

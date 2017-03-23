@@ -19,13 +19,14 @@ import {QRCodeManageComponent} from "./QR-code-manage/QR-code-manage.component";
 import {ComponentsModule} from "./my-common/components/components.module";
 import {
   CalendarModule, CheckboxModule, DataTableModule, DialogModule, DropdownModule, PanelModule,
-  TabViewModule,Message
+  TabViewModule,PanelMenuModule,MenuModule,MenuItem
 } from "primeng/primeng";
 import {ProductService} from "./QR-code-manage/product-manage/product-manage.service";
 import {HomeComponent} from "./home/home.component";
 import {ConfigurationHelperComponent} from "./configuration-helper/configuration-helper.component";
 import {SalesHelperComponent} from "./sales-helper/sales-helper.component";
 import {AddPlanComponent} from "./QR-code-manage/plan-order/add-plan.component";
+import {MyExpandoCmp} from "./my-common/components/soliderMenu.component";
 
 const backendFrameRoutes = [
   {
@@ -78,7 +79,7 @@ const backendFrameRoutes = [
     DataTableModule,
     DialogModule,
     RouterModule.forChild(backendFrameRoutes),
-    TabViewModule,CheckboxModule,PanelModule
+    TabViewModule,CheckboxModule,PanelModule,PanelMenuModule,MenuModule
   ],
   exports: [],
   declarations: [
@@ -99,7 +100,7 @@ const backendFrameRoutes = [
     DataStatisticsComponent,
     TraceabilityManageComponent,
     ExceptionQueryComponent,
-    PageNotFound2Component
+    PageNotFound2Component,MyExpandoCmp
   ],
   providers: [ProductService]
 })
