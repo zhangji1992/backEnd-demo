@@ -1,4 +1,40 @@
-<div class="login">
-    此页为登录页
-    <button (click)='login()'>登录</button>
+<div class="login ">
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)">
+    <div class="ui-grid">
+      <div class="ui-grid-col-12">
+          <h1 style="color:#666;">企业登录</h1>
+          <ul>
+            <li>
+              <div class="item">
+                <span class="fa fa-user"></span><input pInputText type="text" formControlName="userName" required placeholder="用户名"/>
+              </div>
+              <div *ngIf="formErrors.userName" class="alert alert-danger">
+                {{ formErrors.userName }}
+              </div>
+
+            </li>
+
+            <li>
+
+              <div class="item">
+                <span class="fa fa-lock"></span><input pInputText type="text" formControlName="password" required placeholder="密码"/>
+              </div>
+              <div *ngIf="formErrors.password" class="alert alert-danger">
+                {{ formErrors.password }}
+              </div>
+
+            </li>
+          </ul>
+      </div>
+    </div>
+    <div style="font-size:12px;">
+      <p-checkbox name="forgetPass" [value]="autoLogin" formControlName="forgetPass" binary="true"></p-checkbox>自动登录
+      <div class="fr"><a  routerLinkActive="active" routerLink="forgetPass" style="color:#666;text-decoration: none">无法登陆/忘记密码？</a> </div>
+    </div>
+    <div style="clear:both">
+      <button pButton type="submit" label="Submit" [ngClass]="{disabled:!loginForm.valid}" [disabled]="!loginForm.valid" >登录</button>
+    </div>
+
+  </form>
+    <!--<button >登录</button>-->
 </div>

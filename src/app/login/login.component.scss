@@ -1,3 +1,59 @@
+$loginBg:url("../../assets/imgs/login.jpg") no-repeat;
+$blue:#17a3d7;
 .login {
-    font-size: 28px;
+    background:$loginBg;color:#999;
+    background-size:cover; background-position: center;
+    position:absolute; top:0;left:0;width:100%;height:100vh;
+  font-size:14px;
+    form{
+      width:400px;height:400px;background:#fff;padding:58px;box-sizing: border-box;border-radius:5px;
+      position: absolute;
+      left: 60%;
+      top: 43%;
+      margin-top: -200px;
+      h1{
+        font-size:28px;text-align: center;
+      }
+    }
+    ul{
+      padding: 0px;
+      li{
+        list-style:none;
+        width:100%;
+        margin-bottom:23px;
+        .item{
+          border:{
+            bottom:1px solid #ddd;
+          }
+        }
+        .ui-inputtext{
+          width:257px;
+          height:25px;
+          border:none;
+          outline: none;
+          margin-left:5px;
+          border-radius:0;
+          &:focus{
+             border:none;box-shadow: none;
+          }
+        }
+        .ui-inputtext.ng-dirty.ng-invalid{
+          //border-bottom:2px solid red;
+        }
+      }
+    }
+
+    button{
+      width:280px;height:40px;
+      background-color:$blue;color:#fff;
+      border:none;margin-top:25px;border-radius:3px;
+    }
+  button.disabled{
+    background-color:#ddd;color:#666;
+  }
 }
+
+.fr{
+  float:right;
+}
+.alert{color:red;font-size:12px;padding-left:16px;margin-top:3px;}

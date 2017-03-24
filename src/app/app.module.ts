@@ -9,6 +9,7 @@ import {LoginComponent} from './login/login.component';
 import {PageNotFoundComponent} from "./backend-frame/my-common/page-not-found/page-not-found.component";
 import {ComponentsModule} from "./backend-frame/my-common/components/components.module";
 import {ProvidersModule} from "./backend-frame/my-common/providers/providers.module";
+import {InputTextModule,CheckboxModule} from "primeng/primeng";
 
 const appRoutes = [
   {path: '', redirectTo: 'login', pathMatch: 'full'},
@@ -25,7 +26,7 @@ const appRoutes = [
     RouterModule,
     ReactiveFormsModule,
     ComponentsModule,
-    ProvidersModule,
+    ProvidersModule,InputTextModule,CheckboxModule,
     RouterModule.forRoot(appRoutes),
   ],
   declarations: [
