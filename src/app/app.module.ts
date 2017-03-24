@@ -17,7 +17,7 @@ const appRoutes = [
   {path: '', redirectTo: 'login', pathMatch: 'full'},
   {path: "login", component: LoginComponent},
   {path: "backend-frame", loadChildren: './backend-frame/backend-frame.module#BackendFrameModule', data: { preload: true }},
-  {path: '**', component: PageNotFoundComponent }
+  // {path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({
