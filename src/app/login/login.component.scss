@@ -1,3 +1,16 @@
-.login {
-    font-size: 28px;
+.login-bg {
+  font-size: 28px;
+  height: 100%;
+  background: url("../../assets/imgs/login.jpg") no-repeat;
+
+  .login-input{
+    position: fixed;
+    right: 340px;
+    top: 240px;
+    height: 385px;
+    width: 385px;
+    background: white;
+    border-radius: 15px;
+    text-align: center;
+  }
 }

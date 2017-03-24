@@ -9,6 +9,9 @@ import {LoginComponent} from './login/login.component';
 import {PageNotFoundComponent} from "./backend-frame/my-common/page-not-found/page-not-found.component";
 import {ComponentsModule} from "./backend-frame/my-common/components/components.module";
 import {ProvidersModule} from "./backend-frame/my-common/providers/providers.module";
+import {InputTextModule, PasswordModule} from "primeng/primeng";
+import {CommonModule} from "@angular/common";
+import {LoginModule} from "./login/login.module";
 
 const appRoutes = [
   {path: '', redirectTo: 'login', pathMatch: 'full'},
@@ -23,14 +26,14 @@ const appRoutes = [
     HttpModule,
     JsonpModule,
     RouterModule,
-    ReactiveFormsModule,
     ComponentsModule,
+    ReactiveFormsModule,
     ProvidersModule,
+    LoginModule,
     RouterModule.forRoot(appRoutes),
   ],
   declarations: [
     AppComponent,
-    LoginComponent,
     PageNotFoundComponent
   ],
   providers: [],

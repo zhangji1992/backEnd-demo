@@ -10,6 +10,8 @@ import {Router} from "@angular/router";
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+  userName: string;
+  password: string;
   constructor(private router: Router) {
   }
 
@@ -17,8 +19,14 @@ export class LoginComponent implements OnInit {
   }
 
   public login(): void {
-    this.router.navigate(['backend-frame', 'QR-code-manage', 'overview']);
-    // this.router.navigateByUrl("/backend-frame/QR-code-manage/overview");
+    // if(this.userName == 'admin' && this.password == 'admin'){
+      // this.router.navigateByUrl("/backend-frame/QR-code-manage/overview");
+      this.router.navigate(['backend-frame', 'QR-code-manage', 'overview']);
+    // }else {
+
+    // }
+
+
   }
 
 }
