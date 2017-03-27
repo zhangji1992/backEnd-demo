@@ -6,7 +6,8 @@ import {NgModule} from '@angular/core';
 import {LoginComponent}   from './login.component';
 import {RouterModule} from "@angular/router";
 import {CommonModule} from "@angular/common";
-import {InputTextModule, PasswordModule} from "primeng/primeng";
+import {CheckboxModule, InputTextModule, PasswordModule} from "primeng/primeng";
+import {ReactiveFormsModule} from "@angular/forms";
 
 const loginRoutes = [
   {path: '', component: LoginComponent}
@@ -16,7 +17,7 @@ const loginRoutes = [
   imports: [
     CommonModule,
     InputTextModule,
-    PasswordModule,
+    PasswordModule,ReactiveFormsModule,CheckboxModule,
     RouterModule.forChild(loginRoutes)],
   exports: [],
   declarations: [LoginComponent],

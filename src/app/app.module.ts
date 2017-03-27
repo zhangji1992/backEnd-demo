@@ -9,7 +9,7 @@ import {LoginComponent} from './login/login.component';
 import {PageNotFoundComponent} from "./backend-frame/my-common/page-not-found/page-not-found.component";
 import {ComponentsModule} from "./backend-frame/my-common/components/components.module";
 import {ProvidersModule} from "./backend-frame/my-common/providers/providers.module";
-import {InputTextModule,CheckboxModule, PasswordModule} from "primeng/primeng";
+import {InputTextModule, PasswordModule} from "primeng/primeng";
 import {LoginModule} from "./login/login.module";
 
 const appRoutes = [
@@ -25,7 +25,7 @@ const appRoutes = [
     HttpModule,
     JsonpModule,
     RouterModule,
-    ComponentsModule,InputTextModule,CheckboxModule,
+    ComponentsModule,InputTextModule,
     ReactiveFormsModule,
     ProvidersModule,
     LoginModule,
@@ -33,7 +33,6 @@ const appRoutes = [
   ],
   declarations: [
     AppComponent,
-    LoginComponent,
     PageNotFoundComponent
   ],
   providers: [],
