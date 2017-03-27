@@ -12,6 +12,7 @@ import {DataStatisticsComponent} from './QR-code-manage/data-statistics/data-sta
 import {TraceabilityManageComponent} from './QR-code-manage/traceability-manage/traceability-manage.component';
 import {ExceptionQueryComponent} from './QR-code-manage/exception-query/exception-query.component';
 import {PageNotFound2Component} from './my-common/page-not-found2/page-not-found2.component';
+import {PageNotFound3Component} from './my-common/page-not-found3/page-not-found3.component';
 import {FooterInfoComponent} from "./my-common/footer-info/footer-info.component";
 import {TopMenuComponent} from "./my-common/top-menu/top-menu.component";
 import {OverviewComponent} from "./QR-code-manage/overview/overview.component";
@@ -53,7 +54,7 @@ const backendFrameRoutes = [
           {path: 'data-statistics', component: DataStatisticsComponent},
           {path: 'traceability-manage', component: TraceabilityManageComponent},
           {path: 'exception-query', component: ExceptionQueryComponent},
-          {path: '**', component: PageNotFound2Component}
+          {path: '**', component: PageNotFound3Component}
         ]
       },
       {
@@ -64,7 +65,7 @@ const backendFrameRoutes = [
         path: 'sales-helper', component: SalesHelperComponent,
         children: []
       },
-      // {path: '**', component: PageNotFound2Component}   //带参数的路由也会匹配
+      {path: '**', component: PageNotFound2Component}   //带参数的路由也会匹配
     ]
   }
 ];
@@ -103,7 +104,8 @@ const backendFrameRoutes = [
     DataStatisticsComponent,
     TraceabilityManageComponent,
     ExceptionQueryComponent,
-    PageNotFound2Component
+    PageNotFound2Component,
+    PageNotFound3Component
   ],
   providers: [ProductService]
 })
