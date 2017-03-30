@@ -19,6 +19,6 @@ export class AuthoritySystemComponent implements OnInit {
 
   test(){
     let url = 'http://mam.mindmedia.cn:8181/a/topMenu.do';
-    this.service.getMenu(url);
+    this.service.getTopMenu(url);
   }
 }
