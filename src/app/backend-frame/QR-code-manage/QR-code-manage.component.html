@@ -11,7 +11,7 @@
     <ul>
       <a *ngFor="let menu of menuData;let i = index" [ngClass]="{menuActive: selectedItem == menu.id}" >
         <div *ngIf="menu.children.length == 0">
-          <li  (click)="clickItem(menu)" [routerLink]="menu.path" routerLinkActive="active">
+          <li (click)="clickItem(menu)" [routerLink]="menu.path" routerLinkActive="active">
             <i [class]="menu.icon" aria-hidden="true"></i>
             <span>{{menu.label}}</span>
             <!--<span *ngIf="menu.children"><span class="caret"></span></span>-->

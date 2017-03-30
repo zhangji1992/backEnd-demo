@@ -8,15 +8,16 @@ import {AppComponent} from './app.component';
 import {LoginComponent} from './login/login.component';
 import {PageNotFoundComponent} from "./backend-frame/my-common/page-not-found/page-not-found.component";
 import {ComponentsModule} from "./backend-frame/my-common/components/components.module";
-import {ProvidersModule} from "./backend-frame/my-common/providers/providers.module";
+import {ProvidersModule} from "./providers/providers.module";
 import {InputTextModule, PasswordModule} from "primeng/primeng";
 import {LoginModule} from "./login/login.module";
+import {requestOptionsProvider} from "./default-request-options.service";
 
 const appRoutes = [
   {path: '', redirectTo: 'login', pathMatch: 'full'},
-  {path: "login", component: LoginComponent},
-  {path: "backend-frame", loadChildren: './backend-frame/backend-frame.module#BackendFrameModule', data: { preload: true }},
-  {path: '**', component: PageNotFoundComponent }
+  {path: "login", loadChildren: './login/login.module#LoginModule', data: {preload: true}},   //允许预加载
+  {path: "backend-frame", loadChildren: './backend-frame/backend-frame.module#BackendFrameModule'},
+  {path: '**', component: PageNotFoundComponent}
 ];
 
 @NgModule({
@@ -25,7 +26,8 @@ const appRoutes = [
     HttpModule,
     JsonpModule,
     RouterModule,
-    ComponentsModule,InputTextModule,
+    ComponentsModule,
+    InputTextModule,
     ReactiveFormsModule,
     ProvidersModule,
     LoginModule,
@@ -35,7 +37,7 @@ const appRoutes = [
     AppComponent,
     PageNotFoundComponent
   ],
-  providers: [],
+  providers: [requestOptionsProvider],    //http请求头的统一预设值
   bootstrap: [AppComponent]
 })
 export class AppModule {

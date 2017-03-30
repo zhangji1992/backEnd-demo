@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {RequestService} from "../../../providers/request.service";
 
 @Component({
   selector: 'top-menu',
@@ -7,13 +8,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TopMenuComponent implements OnInit {
   selectedMenu: number = null;
-  constructor() { }
+  topMenu: any[];
+
+  constructor(private service: RequestService) { }
 
   ngOnInit() {
+    let url = 'http://mam.mindmedia.cn:8181/a/topMenu.do';
+    this.service.getTopMenu(url)
+      .then(topMenu => {
+        console.log('ngOnInit getTopMenu', topMenu);
+        this.topMenu = topMenu;
+      });
   }
 
   clickMenu(index: number){
     this.selectedMenu = index;
-    console.log('selectedMenu', this.selectedMenu);
+    console.log('select TopMenu', this.selectedMenu);
   }
 }

@@ -6,7 +6,8 @@ import {SelectItem} from "primeng/components/common/api";
 @Component({
   selector: 'product-manage',
   templateUrl: './product-manage.component.html',
-  styleUrls: ['./product-manage.component.scss']
+  styleUrls: ['./product-manage.component.scss'],
+  providers: [ProductService]
 })
 export class ProductManageComponent implements OnInit {
   position = ['产品管理', '产品'];

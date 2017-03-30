@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'backend-frame',
@@ -6,9 +6,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./backend-frame.component.scss']
 })
 export class BackendFrameComponent implements OnInit {
-  	constructor() {
-  	}
+  constructor() {
+  }
 
-  	ngOnInit() {
-  	}
+  ngOnInit() {
+
+  }
 }
