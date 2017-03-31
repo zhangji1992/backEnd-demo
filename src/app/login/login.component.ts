@@ -16,6 +16,7 @@ export class LoginComponent implements OnInit {
   submitted: boolean;
   autoLogin: false;
   autoLoginChecked: boolean = false;
+  errorMsg:string='';
 
   constructor(private fb: FormBuilder,
               public router: Router,
@@ -73,12 +74,15 @@ export class LoginComponent implements OnInit {
   };
 
   onSubmit(value: string): void {
+
     let param = {
       username: this.loginForm.value.username,
       password: this.loginForm.value.password
     };
     console.log('param', param);
-    this.service.login('http://mam.mindmedia.cn:8181/loginForm2.do', param);
+    this.service.login('http://mam.mindmedia.cn:8181/loginForm2.do', param).then(
+      error =>  this.errorMsg = <string>error
+    );
 
     // this.service.login('http://mam.mindmedia.cn:8181/loginForm.do', param)
     //   .subscribe(

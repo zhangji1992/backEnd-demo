@@ -14,13 +14,13 @@ h2, h3 {
 body {
   margin: 0;
   height: 100%;
+  background-color: #eee;
 }
 
 .ui-tabview-panel {
   background-color: white !important;
 }
 
-.ui-tabview .ui-tabview-top > .ui-tabview-nav {
+.ui-tabview.ui-tabview-top > .ui-tabview-nav {
   padding: 0;
 }
-
