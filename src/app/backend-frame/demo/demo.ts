@@ -11,8 +11,7 @@ import {RequestService} from "../../providers/request.service";
   animations: [trigger('toggle', [
     state('closed, void', style({height: '0px', color: 'maroon', borderColor: 'maroon', overflow: 'hidden'})),
     state('open', style({height: '*', borderColor: 'green', color: 'green'})),
-    transition(
-      'open <=> closed', [animate("150ms ease-in", style({height: '*'})), animate(150)])
+    transition('open <=> closed', [animate("150ms ease-in", style({height: '*'})), animate(150)])
   ])]
 })
 export class DemoComponent implements OnInit {
@@ -92,6 +91,7 @@ export class DemoComponent implements OnInit {
   }
 
   clickItem(menu: any) {
+    console.log('click in');
     this.selectedItem = menu.id;
 
     for (let m of this.leftMenu) {

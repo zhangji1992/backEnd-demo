@@ -4,9 +4,11 @@
 import {Injectable} from '@angular/core';
 import {Http, Headers, RequestOptions, Response, Request, RequestMethod} from '@angular/http';
 import 'rxjs/add/operator/toPromise';
+import 'rxjs/add/operator/timeout';
 import {Router} from "@angular/router";
 import {Observable} from "rxjs";
 import {requestOptionsProvider} from "../default-request-options.service";
+import {Error} from "tslint/lib/error";
 
 
 @Injectable()
@@ -58,19 +60,26 @@ export class RequestService {
     return Promise.reject(error.message || error);
   }
 
+  /**
+   * 登录
+   * @param url
+   * @param param
+   * @returns {Promise<any>}
+   */
   login(url, param): Promise<any> {
     // let headers = new Headers({'Content-Type': 'application/json'});
     // let options = new RequestOptions({headers: headers});
     // return this.http.post(url, JSON.stringify(param), options)       //新建请求头
 
     return this.http.post(url, JSON.stringify(param))       //请求头已在app.module.ts中预设并注入
+      .timeout(2000)
       .toPromise()
       .then(res => {
-        console.log('res', res.json());
+        // console.log('res', res.json());
         let data = res.json();
         if (data.resultStatus == 'success') {
-          console.log('ok');
-          this.router.navigateByUrl("/backend-frame/demo/product-manage");
+          // console.log('ok');
+          this.router.navigateByUrl("/backend-frame/demo/demo-page");
         } else {
           console.log('fail:', data.errorMassage || data.errorStackTrace || data.exception);
         }
@@ -90,7 +99,7 @@ export class RequestService {
       .then(res => {
         let data = res.json();
         if (data.resultStatus = 'success') {
-          console.log('ok');
+          // console.log('ok');
         } else {
           console.log('fail:', data.errorMassage || data.errorStackTrace || data.exception);
         }
@@ -111,11 +120,32 @@ export class RequestService {
       .then(res => {
         let data = res.json();
         if (data.resultStatus = 'success') {
-          console.log('ok');
+          // console.log('ok');
         } else {
           console.log('fail:', data.errorMassage || data.errorStackTrace || data.exception);
         }
         return data.infoData;
+      })
+      .catch(this.handleError);
+  }
+
+  /**
+   * 搜索数据（合并获取列表）
+   * @param url
+   * @param param
+   * @returns {Promise<any>}
+   */
+  search(url, param): Promise<any> {
+    return this.http.post(url, JSON.stringify(param))
+      .toPromise()
+      .then(res => {
+        let data = res.json();
+        if (data.resultStatus = 'success'){
+          console.log('ok');
+        } else {
+          console.log('fail:', data.errorMassage || data.errorStackTrace || data.exception);
+        }
+        return data.infoData.items;
       })
       .catch(this.handleError);
   }

@@ -7,10 +7,10 @@
   <nav style="height: 56px;min-height: 56px;padding: 0;margin-left: 260px;">
     <ul style="list-style-type: none;margin: 0;padding: 0;">
 
-      <li class="l-left" *ngFor="let item of topMenu" routerLink="item.path"
+      <li class="l-left" *ngFor="let item of topMenu" [routerLink]="item.path"
           routerLinkActive="active"
-          [ngClass]="{selectedMenu: selectedMenu == 1, normalMenu: selectedMenu != 1}"
-          (click)="clickMenu(Number(item.id))">{{item.label}}
+          [ngClass]="{select: selectedMenu == item.id, normal: selectedMenu != item.id}"
+          (click)="clickMenu(item.id)">{{item.label}}
       </li>
 
       <!--<li class="l-left" routerLink="home"-->

@@ -7,7 +7,7 @@ import {RequestService} from "../../../providers/request.service";
   styleUrls: ['./top-menu.component.scss']
 })
 export class TopMenuComponent implements OnInit {
-  selectedMenu: number = null;
+  selectedMenu: string;
   topMenu: any[];
 
   constructor(private service: RequestService) { }
@@ -16,12 +16,12 @@ export class TopMenuComponent implements OnInit {
     let url = 'http://mam.mindmedia.cn:8181/a/topMenu.do';
     this.service.getTopMenu(url)
       .then(topMenu => {
-        console.log('ngOnInit getTopMenu', topMenu);
+        // console.log('ngOnInit getTopMenu', topMenu);
         this.topMenu = topMenu;
       });
   }
 
-  clickMenu(index: number){
+  clickMenu(index: string){
     this.selectedMenu = index;
     console.log('select TopMenu', this.selectedMenu);
   }

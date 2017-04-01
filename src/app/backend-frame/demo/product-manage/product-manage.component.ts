@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ProductService} from "./product-manage.service";
 import {Product, PrimeProduct} from "./product";
 import {SelectItem} from "primeng/components/common/api";
+import {RequestService} from "../../../providers/request.service";
 
 @Component({
   selector: 'product-manage',
@@ -12,14 +13,17 @@ import {SelectItem} from "primeng/components/common/api";
 export class ProductManageComponent implements OnInit {
   position = ['产品管理', '产品'];
   displayDialog: boolean;
+  pageNo: number = 1;
+  pageSize: number = 10;
   newProduct: boolean;
   selectedProduct: Product;
   products: Product[];
-  productsTypes: SelectItem[];
-  allChecked: boolean = false;
-  productsChecked: boolean[];
-  searchName: string;
+  // productsTypes: SelectItem[];
+  ifAllSelected: boolean = false;
+  selectedProducts: string[];
+  searchName: string = '';
   searchType: string;
+  searchRemarks: string = '';
   searchBeginTime: string;
   searchEndTime: string;
   product: Product = new PrimeProduct();
@@ -27,23 +31,23 @@ export class ProductManageComponent implements OnInit {
     'border': '1px solid red'
   };
 
-  constructor(public productService: ProductService) {
+  constructor(public productService: ProductService,
+              private service: RequestService) {
   }
 
   ngOnInit() {
-    this.productService
-      .getProducts()
-      .then(products => {
-        console.log('products', products);
-        this.products = products;
-      });
+    // this.productService
+    //   .getProducts()
+    //   .then(products => {
+    //     this.products = products;
+    //   });
 
-    this.productService
-      .getProductsTypes()
-      .then(productsTypes => {
-        console.log('productsTypes', productsTypes);
-        this.productsTypes = productsTypes;
-      });
+    // this.productService
+    //   .getProductsTypes()
+    //   .then(productsTypes => {
+    //     // console.log('productsTypes', productsTypes);
+    //     this.productsTypes = productsTypes;
+    //   });
 
     // this.cols = [
     //   {field: 'checked', header: '选择所有'},
@@ -53,12 +57,27 @@ export class ProductManageComponent implements OnInit {
     //   {field: 'operation', header: '操作'},
     // ];
 
-    this.productService
-      .getProductsChecked()
-      .then(productsChecked =>{
-        console.log('productsChecked', productsChecked);
-        this.productsChecked = productsChecked;
-      });
+    // this.productService
+    //   .getProductsChecked()
+    //   .then(selectedProducts => {
+    //     // console.log('productsChecked', productsChecked);
+    //     this.selectedProducts = selectedProducts;
+    //   });
+
+    this.search();
+  }
+
+  search() {
+    let url = `http://mam.mindmedia.cn:8181/a/demo/testPage/list.do?pageNo=${this.pageNo}`;
+    let param = {
+      "name": this.searchName,
+      "remarks": this.searchRemarks
+    };
+    this.service.search(url, param)
+      .then(products => {
+        console.log('search get', products);
+        this.products = products;
+      })
   }
 
   add() {
@@ -125,23 +144,27 @@ export class ProductManageComponent implements OnInit {
     return this.products.indexOf(this.selectedProduct);
   }
 
-  selectAll(){
-    if(this.allChecked == true){
-      for(let item of this.products){
-        for(let prop in item){
-          if(prop == 'checked'){
-            item[prop] = true;
+  selectAll() {
+    let temp = [];
+    if (this.ifAllSelected == true) {
+      for (let item of this.products) {
+        for (let prop in item) {
+          if (prop == 'id') {
+            temp.push(item[prop]);
           }
         }
       }
-    }else {
-      for(let item of this.products){
-        for(let prop in item){
-          if(prop == 'checked'){
-            item[prop] = false;
-          }
-        }
-      }
+      this.selectedProducts = temp;
+    } else {
+      // for (let item of this.products) {
+      //   for (let prop in item) {
+      //     if (prop == 'checked') {
+      //       item[prop] = false;
+      //     }
+      //   }
+      // }
+
+      this.selectedProducts = [];
     }
   }
 }

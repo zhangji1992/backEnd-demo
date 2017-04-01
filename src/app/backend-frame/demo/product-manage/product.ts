@@ -11,6 +11,8 @@ export interface Product {
   'status'?,
   'createTime'?;
   'operation'?;
+  'email'?;
+  'remarks'?;
 }
 
 export class PrimeProduct implements Product {
@@ -22,6 +24,9 @@ export class PrimeProduct implements Product {
               public codesAmount?,
               public status?,
               public createTime?,
-              public operation?) {
+              public operation?,
+              public email?,
+              public remarks?
+  ) {
   }
 }
