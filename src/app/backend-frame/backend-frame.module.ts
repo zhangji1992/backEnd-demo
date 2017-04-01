@@ -25,7 +25,7 @@ import {
   DataTableModule,
   DialogModule,
   DropdownModule,
-  PanelModule
+  PanelModule, ConfirmDialogModule, ConfirmationService, GrowlModule
 } from "primeng/primeng";
 import {ProductService} from "./QR-code-manage/product-manage/product-manage.service";
 import {HomeComponent} from "./home/home.component";
@@ -97,6 +97,8 @@ const backendFrameRoutes = [
 @NgModule({
   imports: [
     CommonModule,
+    ConfirmDialogModule,
+    GrowlModule,
     FormsModule,
     ReactiveFormsModule,
     ComponentsModule,
@@ -132,7 +134,7 @@ const backendFrameRoutes = [
     PageNotFound2Component,
     PageNotFound3Component
   ],
-  providers: [requestOptionsProvider]
+  providers: [requestOptionsProvider, ConfirmationService]
 })
 export class BackendFrameModule {
 }

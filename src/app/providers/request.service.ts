@@ -57,6 +57,23 @@ export class RequestService {
   }
 
   /**
+   * 退出登录
+   * @param url
+   * @param param
+   * @returns {Promise<any>}
+   */
+  logout(url, param?): Promise<any> {
+    // let headers = new Headers({'Content-Type': 'application/json'});
+    // let options = new RequestOptions({headers: headers});
+    // return this.http.post(url, JSON.stringify(param), options)       //新建请求头
+    return this.httpPost(url, param)
+      .then(() => {
+        this.router.navigateByUrl("/login");
+      })
+      .catch(this.handleError);
+  }
+
+  /**
    * 获取顶级菜单
    * @param url
    * @param param
