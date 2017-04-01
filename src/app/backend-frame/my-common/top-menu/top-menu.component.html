@@ -7,8 +7,6 @@
 
   <nav>
     <ul>
-      <li >
-
       <li class="l-left" *ngFor="let item of topMenu"  (click)="clickMenu(item.id)"
           [routerLink]="item.path"
           [ngClass]="{selectedMenu: selectedMenu == item.id, normalMenu: selectedMenu != item.id}" >{{item.label}}
