@@ -37,26 +37,3 @@ p-tabView ul + div {
 table {
   margin-top: 20px;
 }
-
-.newTabPanel{
-  background: #F0F1F4;
-  border: 1px solid #ddd;
-
-  .product-details{
-    //width: 100%;
-    padding: 10px 0 10px 15px;
-  }
-}
-
-.product_btn{
-  padding: 10px 0 10px 15px;
-  button:nth-child(1){
-    margin-left: 10px;
-  }
-
-  button:nth-child(2){
-    margin-left: 30px;
-  }
-}
-
-

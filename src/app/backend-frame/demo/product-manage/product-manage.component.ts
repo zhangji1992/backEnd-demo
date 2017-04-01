@@ -20,13 +20,32 @@ export class ProductManageComponent implements OnInit {
   products: Product[];
   // productsTypes: SelectItem[];
   ifAllSelected: boolean = false;
-  selectedProducts: string[];
+  selectedProducts: string[] = [];
   searchName: string = '';
   searchType: string;
   searchRemarks: string = '';
   searchBeginTime: string;
   searchEndTime: string;
   product: Product = new PrimeProduct();
+
+  newTabPanel: string = '添加产品';                 //新标签页名称
+  ifTab1Active: boolean = true;
+  ifTab2Active: boolean = false;
+
+  //产品详情
+  product_id: string;
+  product_name: string;
+  product_age: number;
+  product_email: string;
+  product_password: string;
+  product_ifEnable: boolean;
+  product_score: string;
+  product_hits: number;
+
+  product_remarks: string;
+  product_price: number;
+  product_birthday: string;
+
   tabViewCss = {
     'border': '1px solid red'
   };
@@ -68,7 +87,7 @@ export class ProductManageComponent implements OnInit {
   }
 
   search() {
-    let url = `http://mam.mindmedia.cn:8181/a/demo/testPage/list.do?pageNo=${this.pageNo}`;
+    let url = `http://mam.mindmedia.cn:8181/a/demo/testPage/list.do?pageNo=${this.pageNo}&pageSize=${this.pageSize}`;
     let param = {
       "name": this.searchName,
       "remarks": this.searchRemarks
@@ -99,11 +118,98 @@ export class ProductManageComponent implements OnInit {
 
   edit(product) {
     console.log('eidt', product);
-    this.newProduct = false;
-    this.product = this.cloneProduct(product);
-    console.log('111', this.product);
-    this.displayDialog = true;
+
+    this.newTabPanel = '编辑产品';
+    this.ifTab1Active = false;
+    this.ifTab2Active = true;
+
+    // this.newProduct = false;
+    // this.product = this.cloneProduct(product);
+    // this.displayDialog = true;
+
+    let url = 'http://mam.mindmedia.cn:8181/a/demo/testPage/form.do';
+    let param = {
+      id: product.id
+    };
+    this.service.addOrEdit(url, param)
+      .then(item => {
+        this.product_id = item.id;
+        this.product_name = item.name;
+        this.product_age = item.age;
+        this.product_birthday = item.birthday;
+        this.product_email = item.loginEmail;
+        this.product_password = item.password;
+        this.product_ifEnable = item.isEnable;
+        this.product_score = item.isScore;
+        this.product_hits = item.hits;
+        this.product_remarks = item.remarks;
+        this.product_price = item.price;
+      });
   }
+
+  changeTab(event) {
+    console.log('ininin', event.index);
+    if (event.index == 0) {
+      this.newTabPanel = '添加产品';
+      this.ifTab1Active = true;
+      this.ifTab2Active = false;
+    } else if (event.index == 1) {
+      this.ifTab1Active = false;
+      this.ifTab2Active = true;
+
+      this.product_id = '';
+      this.product_name = '';
+      this.product_age = null;
+      this.product_email = '';
+      this.product_password = '';
+      this.product_ifEnable = false;
+      this.product_score = '';
+      this.product_hits = null;
+    }
+
+
+    // this.newTabPanel = '添加产品';
+    //
+    // this.ifTab1Active = true;
+    // this.ifTab2Active = false;
+  }
+
+  product_cancel() {
+    this.newTabPanel = '添加产品';
+
+    this.ifTab1Active = true;
+    this.ifTab2Active = false;
+  }
+
+  product_save() {
+    let url = 'http://mam.mindmedia.cn:8181/a/demo/testPage/save.do'
+    let param = {
+      "id": this.product_id,
+      "remarks": '',
+      "name": this.product_name,
+      "age": null,
+      "birthday": null,
+      "loginEmail": this.product_email,
+      "password": this.product_password,
+      "price": null,
+      "isEnable": this.product_ifEnable,
+      "isScore": this.product_score,
+      "score": null,
+      "hits": this.product_hits,
+      "type": null,
+      "info": null
+    };
+    this.service.save(url, param)
+      .then(res => {
+        this.newTabPanel = '添加产品';
+
+        this.ifTab1Active = true;
+        this.ifTab2Active = false;
+
+        this.search();
+      });
+  }
+
 
   cloneProduct(p: Product): Product {
     let product = new PrimeProduct();
@@ -137,7 +243,29 @@ export class ProductManageComponent implements OnInit {
   }
 
   delete(product) {
-    this.products.splice(product.id - 1, 1);
+    // this.products.splice(product.id - 1, 1);
+    let url = 'http://mam.mindmedia.cn:8181/a/demo/testPage/deletes.do';
+    let param = [
+      {
+        id: product.id
+      }
+    ];
+    this.service.del(url, param)
+      .then(res => {
+        this.search();
+      });
+  }
+
+  batchDel() {
+    let url = 'http://mam.mindmedia.cn:8181/a/demo/testPage/deletes.do';
+    let param = [];
+    for (let id of this.selectedProducts) {
+      param.push({id: id});
+    }
+    this.service.del(url, param)
+      .then(res => {
+        this.search();
+      })
   }
 
   findSelectedProductIndex(): number {
