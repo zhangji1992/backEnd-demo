@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ProductService} from "./product-manage.service";
 import {Product, PrimeProduct} from "./product";
 import {SelectItem} from "primeng/components/common/api";
+import {RequestService} from "../../../providers/request.service";
 
 @Component({
   selector: 'product-manage',
@@ -12,38 +13,60 @@ import {SelectItem} from "primeng/components/common/api";
 export class ProductManageComponent implements OnInit {
   position = ['产品管理', '产品'];
   displayDialog: boolean;
+  pageNo: number = 1;
+  pageSize: number = 10;
   newProduct: boolean;
   selectedProduct: Product;
   products: Product[];
-  productsTypes: SelectItem[];
-  allChecked: boolean = false;
-  productsChecked: boolean[];
-  searchName: string;
+  // productsTypes: SelectItem[];
+  ifAllSelected: boolean = false;
+  selectedProducts: string[] = [];
+  searchName: string = '';
   searchType: string;
+  searchRemarks: string = '';
   searchBeginTime: string;
   searchEndTime: string;
   product: Product = new PrimeProduct();
+
+  newTabPanel: string = '添加产品';                 //新标签页名称
+  ifTab1Active: boolean = true;
+  ifTab2Active: boolean = false;
+
+  //产品详情
+  product_id: string;
+  product_name: string;
+  product_age: number;
+  product_email: string;
+  product_password: string;
+  product_ifEnable: boolean;
+  product_score: string;
+  product_hits: number;
+
+  product_remarks: string;
+  product_price: number;
+  product_birthday: string;
+
   tabViewCss = {
     'border': '1px solid red'
   };
 
-  constructor(public productService: ProductService) {
+  constructor(public productService: ProductService,
+              private service: RequestService) {
   }
 
   ngOnInit() {
-    this.productService
-      .getProducts()
-      .then(products => {
-        console.log('products', products);
-        this.products = products;
-      });
+    // this.productService
+    //   .getProducts()
+    //   .then(products => {
+    //     this.products = products;
+    //   });
 
-    this.productService
-      .getProductsTypes()
-      .then(productsTypes => {
-        console.log('productsTypes', productsTypes);
-        this.productsTypes = productsTypes;
-      });
+    // this.productService
+    //   .getProductsTypes()
+    //   .then(productsTypes => {
+    //     // console.log('productsTypes', productsTypes);
+    //     this.productsTypes = productsTypes;
+    //   });
 
     // this.cols = [
     //   {field: 'checked', header: '选择所有'},
@@ -53,12 +76,27 @@ export class ProductManageComponent implements OnInit {
     //   {field: 'operation', header: '操作'},
     // ];
 
-    this.productService
-      .getProductsChecked()
-      .then(productsChecked =>{
-        console.log('productsChecked', productsChecked);
-        this.productsChecked = productsChecked;
-      });
+    // this.productService
+    //   .getProductsChecked()
+    //   .then(selectedProducts => {
+    //     // console.log('productsChecked', productsChecked);
+    //     this.selectedProducts = selectedProducts;
+    //   });
+
+    this.search();
+  }
+
+  search() {
+    let url = `http://mam.mindmedia.cn:8181/a/demo/testPage/list.do?pageNo=${this.pageNo}&pageSize=${this.pageSize}`;
+    let param = {
+      "name": this.searchName,
+      "remarks": this.searchRemarks
+    };
+    this.service.search(url, param)
+      .then(products => {
+        console.log('search get', products);
+        this.products = products;
+      })
   }
 
   add() {
@@ -80,11 +118,98 @@ export class ProductManageComponent implements OnInit {
 
   edit(product) {
     console.log('eidt', product);
-    this.newProduct = false;
-    this.product = this.cloneProduct(product);
-    console.log('111', this.product);
-    this.displayDialog = true;
+
+    this.newTabPanel = '编辑产品';
+    this.ifTab1Active = false;
+    this.ifTab2Active = true;
+
+    // this.newProduct = false;
+    // this.product = this.cloneProduct(product);
+    // this.displayDialog = true;
+
+    let url = 'http://mam.mindmedia.cn:8181/a/demo/testPage/form.do';
+    let param = {
+      id: product.id
+    };
+    this.service.addOrEdit(url, param)
+      .then(item => {
+        this.product_id = item.id;
+        this.product_name = item.name;
+        this.product_age = item.age;
+        this.product_birthday = item.birthday;
+        this.product_email = item.loginEmail;
+        this.product_password = item.password;
+        this.product_ifEnable = item.isEnable;
+        this.product_score = item.isScore;
+        this.product_hits = item.hits;
+        this.product_remarks = item.remarks;
+        this.product_price = item.price;
+      });
   }
+
+  changeTab(event) {
+    console.log('ininin', event.index);
+    if (event.index == 0) {
+      this.newTabPanel = '添加产品';
+      this.ifTab1Active = true;
+      this.ifTab2Active = false;
+    } else if (event.index == 1) {
+      this.ifTab1Active = false;
+      this.ifTab2Active = true;
+
+      this.product_id = '';
+      this.product_name = '';
+      this.product_age = null;
+      this.product_email = '';
+      this.product_password = '';
+      this.product_ifEnable = false;
+      this.product_score = '';
+      this.product_hits = null;
+    }
+
+
+    // this.newTabPanel = '添加产品';
+    //
+    // this.ifTab1Active = true;
+    // this.ifTab2Active = false;
+  }
+
+  product_cancel() {
+    this.newTabPanel = '添加产品';
+
+    this.ifTab1Active = true;
+    this.ifTab2Active = false;
+  }
+
+  product_save() {
+    let url = 'http://mam.mindmedia.cn:8181/a/demo/testPage/save.do'
+    let param = {
+      "id": this.product_id,
+      "remarks": '',
+      "name": this.product_name,
+      "age": null,
+      "birthday": null,
+      "loginEmail": this.product_email,
+      "password": this.product_password,
+      "price": null,
+      "isEnable": this.product_ifEnable,
+      "isScore": this.product_score,
+      "score": null,
+      "hits": this.product_hits,
+      "type": null,
+      "info": null
+    };
+    this.service.save(url, param)
+      .then(res => {
+        this.newTabPanel = '添加产品';
+
+        this.ifTab1Active = true;
+        this.ifTab2Active = false;
+
+        this.search();
+      });
+  }
+
 
   cloneProduct(p: Product): Product {
     let product = new PrimeProduct();
@@ -118,30 +243,56 @@ export class ProductManageComponent implements OnInit {
   }
 
   delete(product) {
-    this.products.splice(product.id - 1, 1);
+    // this.products.splice(product.id - 1, 1);
+    let url = 'http://mam.mindmedia.cn:8181/a/demo/testPage/deletes.do';
+    let param = [
+      {
+        id: product.id
+      }
+    ];
+    this.service.del(url, param)
+      .then(res => {
+        this.search();
+      });
+  }
+
+  batchDel() {
+    let url = 'http://mam.mindmedia.cn:8181/a/demo/testPage/deletes.do';
+    let param = [];
+    for (let id of this.selectedProducts) {
+      param.push({id: id});
+    }
+    this.service.del(url, param)
+      .then(res => {
+        this.search();
+      })
   }
 
   findSelectedProductIndex(): number {
     return this.products.indexOf(this.selectedProduct);
   }
 
-  selectAll(){
-    if(this.allChecked == true){
-      for(let item of this.products){
-        for(let prop in item){
-          if(prop == 'checked'){
-            item[prop] = true;
+  selectAll() {
+    let temp = [];
+    if (this.ifAllSelected == true) {
+      for (let item of this.products) {
+        for (let prop in item) {
+          if (prop == 'id') {
+            temp.push(item[prop]);
           }
         }
       }
-    }else {
-      for(let item of this.products){
-        for(let prop in item){
-          if(prop == 'checked'){
-            item[prop] = false;
-          }
-        }
-      }
+      this.selectedProducts = temp;
+    } else {
+      // for (let item of this.products) {
+      //   for (let prop in item) {
+      //     if (prop == 'checked') {
+      //       item[prop] = false;
+      //     }
+      //   }
+      // }
+
+      this.selectedProducts = [];
     }
   }
 }

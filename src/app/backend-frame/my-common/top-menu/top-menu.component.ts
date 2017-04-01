@@ -7,7 +7,7 @@ import {RequestService} from "../../../providers/request.service";
   styleUrls: ['./top-menu.component.scss']
 })
 export class TopMenuComponent implements OnInit {
-  selectedMenu: number = null;
+  selectedMenu: string;
   topMenu: any[];
 
   constructor(private service: RequestService) { }
@@ -21,7 +21,7 @@ export class TopMenuComponent implements OnInit {
       });
   }
 
-  clickMenu(index: any){
+  clickMenu(index: string){
     this.selectedMenu = index;
     console.log('select TopMenu', this.selectedMenu);
   }
