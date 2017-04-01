@@ -3,12 +3,12 @@ import {ProductService} from "./product-manage.service";
 import {Product, PrimeProduct} from "./product";
 import {SelectItem} from "primeng/components/common/api";
 import {RequestService} from "../../../providers/request.service";
-
+import {ConfirmDialogModule,ConfirmationService} from 'primeng/primeng';
 @Component({
   selector: 'product-manage',
   templateUrl: './product-manage.component.html',
   styleUrls: ['./product-manage.component.scss'],
-  providers: [ProductService]
+  providers: [ProductService,ConfirmationService]
 })
 export class ProductManageComponent implements OnInit {
   position = ['产品管理', '产品'];
@@ -50,8 +50,10 @@ export class ProductManageComponent implements OnInit {
     'border': '1px solid red'
   };
 
+  dialogHeader:string;
+
   constructor(public productService: ProductService,
-              private service: RequestService) {
+              private service: RequestService,private confirmationService:ConfirmationService) {
   }
 
   ngOnInit() {
@@ -182,6 +184,7 @@ export class ProductManageComponent implements OnInit {
   }
 
   product_save() {
+    this.dialogHeader='保存产品';
     let url = 'http://mam.mindmedia.cn:8181/a/demo/testPage/save.do'
     let param = {
       "id": this.product_id,
@@ -199,15 +202,29 @@ export class ProductManageComponent implements OnInit {
       "type": null,
       "info": null
     };
-    this.service.save(url, param)
-      .then(res => {
-        this.newTabPanel = '添加产品';
 
-        this.ifTab1Active = true;
-        this.ifTab2Active = false;
-
-        this.search();
+    if(!param.id){
+      this.service.save(url, param)
+        .then(res => {
+          this.newTabPanel = '添加产品';
+          this.ifTab1Active = true;
+          this.ifTab2Active = false;
+          this.search();
+        });
+    }else{
+      this.confirmationService.confirm({
+        message: '确定保存此次修改吗？',
+        accept: () => {
+          this.service.save(url, param)
+            .then(res => {
+              this.newTabPanel = '添加产品';
+              this.ifTab1Active = true;
+              this.ifTab2Active = false;
+              this.search();
+            });
+        },
       });
+    }
   }
 
 
@@ -243,29 +260,50 @@ export class ProductManageComponent implements OnInit {
   }
 
   delete(product) {
+    this.dialogHeader='删除产品';
+    this.confirmationService.confirm({
+      message: '确定要删除该产品么',
+      accept: () => {
+        let url = 'http://mam.mindmedia.cn:8181/a/demo/testPage/deletes.do';
+        let param = [
+          {
+            id: product.id
+          }
+        ];
+        this.service.del(url, param)
+          .then(res => {
+            this.search();
+          });
+      },
+    });
     // this.products.splice(product.id - 1, 1);
-    let url = 'http://mam.mindmedia.cn:8181/a/demo/testPage/deletes.do';
-    let param = [
-      {
-        id: product.id
-      }
-    ];
-    this.service.del(url, param)
-      .then(res => {
-        this.search();
-      });
+
   }
 
   batchDel() {
-    let url = 'http://mam.mindmedia.cn:8181/a/demo/testPage/deletes.do';
-    let param = [];
-    for (let id of this.selectedProducts) {
-      param.push({id: id});
+    this.dialogHeader='批量删除';
+    if(this.selectedProducts.length>0){
+      this.confirmationService.confirm({
+        message: '确定批量删除这些产品吗？',
+        accept: () => {
+          let url = 'http://mam.mindmedia.cn:8181/a/demo/testPage/deletes.do';
+          let param = [];
+          for (let id of this.selectedProducts) {
+            param.push({id: id});
+          }
+          this.service.del(url, param)
+            .then(res => {
+              this.search();
+            })
+        },
+      });
+    }else{
+      this.confirmationService.confirm({
+        message: '请选择要删除的产品',
+      });
     }
-    this.service.del(url, param)
-      .then(res => {
-        this.search();
-      })
+
+
   }
 
   findSelectedProductIndex(): number {

@@ -78,11 +78,17 @@
   background-color: #DCF4FF;
   color: #65bee3;
 }
+.aside ul a.menuActive li:hover {
+  background: #17a3d7;
+  color: #fff;
+}
 
 .aside ul a li:hover .caret {
   border-top-color: #65bee3;
 }
-
+.aside ul a.menuActive li:hover .caret{
+  border-top-color: #fff;
+}
 .aside a .childMenu a li {
   background: #eee;
   color: #666;
@@ -98,7 +104,7 @@
 }
 
 .aside a .childMenu a.menuActive li:hover {
-  background: #eee;
+  color: #666;
 }
 
 /*

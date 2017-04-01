@@ -24,3 +24,12 @@ body {
 .ui-tabview.ui-tabview-top > .ui-tabview-nav {
   padding: 0;
 }
+
+/*修改ui-button-secondary鼠标悬停的时候的默认的按钮样式*/
+.ui-button.ui-button-secondary:enabled:hover, .ui-button.ui-button-secondary:focus{
+  color: #373a3c;border: 1px solid #ccc;
+}
+/*修改表格没有数据时，提示的文字居中*/
+.ui-datatable .ui-datatable-data>tr>td{
+  text-align: center;
+}

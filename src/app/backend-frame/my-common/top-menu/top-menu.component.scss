@@ -55,33 +55,17 @@
   color: white;
 }
 
-nav li:nth-child(5) {
-  width: 55px;
-}
 
-nav li:nth-child(6) {
-  width: 45px;
+.banner nav li{
+  background-color: #24B7ED;
 }
-
-nav li:nth-child(7) {
-  width: 115px;
-}
-
-.banner nav li.selected:hover {
+.banner nav li:hover {
   background-color: #20B1E8;
 }
 
-.banner nav li:hover {
-  background-color: #1FB1E7;
-}
-
-.banner .selectedMenu{
+.banner nav li.selectedMenu,.banner nav li.selectedMenu:hover{
   background-color: #0E96C8;
 }
-
-.banner .normalMenu {
-  background-color: #24B7ED;
-}
-.banner .active-link {
+.banner nav li.active-link {
   background-color: #0E96C8 !important;
 }

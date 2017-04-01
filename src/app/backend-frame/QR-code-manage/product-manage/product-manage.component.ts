@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {ProductService} from "./product-manage.service";
 import {Product, PrimeProduct} from "./product";
 import {SelectItem} from "primeng/components/common/api";
+import {ConfirmDialogModule,ConfirmationService} from 'primeng/primeng';
+
 
 @Component({
   selector: 'product-manage',
@@ -27,7 +29,7 @@ export class ProductManageComponent implements OnInit {
     'border': '1px solid red'
   };
 
-  constructor(public productService: ProductService) {
+  constructor(public productService: ProductService,private confirmationService:ConfirmationService) {
   }
 
   ngOnInit() {
@@ -118,7 +120,16 @@ export class ProductManageComponent implements OnInit {
   }
 
   delete(product) {
-    this.products.splice(product.id - 1, 1);
+
+    this.confirmationService.confirm({
+      message: 'Are you sure that you want to perform this action?',
+      accept: () => {
+        //Actual logic to perform a confirmation
+      }
+    });
+
+
+    // this.products.splice(product.id - 1, 1);
   }
 
   findSelectedProductIndex(): number {
