@@ -3,7 +3,9 @@
   height: 54px;
   min-width: 1080px;
   z-index: 3;
-  position: relative;
+  position: fixed;
+  top: 0;width:100%;
+  z-index: 5;
 }
 
 .bannerLogo {
@@ -12,7 +14,19 @@
   float: left;
   line-height: 54px;
 }
-
+.banner nav{
+  height: 54px;min-height: 54px;padding: 0;margin-left: 260px;
+}
+.banner ul{margin: 0;padding: 0;}
+.banner li{
+  outline:none;
+  list-style-type: none;
+  font-family: "Microsoft YaHei";font-size:16px;font-weight: normal;cursor: pointer;
+}
+.banner ul.l-right{margin-right:40px;}
+.banner ul.l-right li{
+  font-size:12px;padding:0 8px;
+}
 .logoBG {
   position: relative;
 }
@@ -61,10 +75,13 @@ nav li:nth-child(7) {
   background-color: #1FB1E7;
 }
 
-.banner .selectedMenu {
+.banner .selectedMenu{
   background-color: #0E96C8;
 }
 
 .banner .normalMenu {
   background-color: #24B7ED;
+}
+.banner .active-link {
+  background-color: #0E96C8 !important;
 }

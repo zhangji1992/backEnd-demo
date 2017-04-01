@@ -4,34 +4,36 @@
       <img src="../../../../assets/imgs/logo.png" alt="">
     </div>
   </div>
-  <nav style="height: 56px;min-height: 56px;padding: 0;margin-left: 260px;">
-    <ul style="list-style-type: none;margin: 0;padding: 0;">
 
+  <nav>
+    <ul>
+      <li >
+
+      <li class="l-left" *ngFor="let item of topMenu"  (click)="clickMenu(item.id)"
+          [routerLink]="item.path"
+          [ngClass]="{selectedMenu: selectedMenu == item.id, normalMenu: selectedMenu != item.id}" >{{item.label}}
+      </li>
+    </ul>
+    <ul class="l-right">
+      <li class="l-right ">退出</li>
+      <li class="l-right" style="margin:0 20px;"><span style="background:#fff;color:#1aa8dd;border-radius:5px;padding: 0px 5px;">14</span></li>
+      <li class="l-right">你好，Guzilong</li>
+    </ul>
+  </nav>
+
+
+  <nav>
+    <ul>
       <li class="l-left" *ngFor="let item of topMenu" routerLink="item.path"
           routerLinkActive="active"
           [ngClass]="{selectedMenu: selectedMenu == 1, normalMenu: selectedMenu != 1}"
           (click)="clickMenu(Number(item.id))">{{item.label}}
       </li>
-
-      <!--<li class="l-left" routerLink="home"-->
-          <!--routerLinkActive="active" [ngClass]="{selectedMenu: selectedMenu == 1, normalMenu: selectedMenu != 1}"-->
-          <!--(click)="clickMenu(1)">主页-->
-      <!--</li>-->
-      <!--<li class="l-left" routerLink="QR-code-manage"-->
-          <!--routerLinkActive="active" [ngClass]="{selectedMenu: selectedMenu == 2, normalMenu: selectedMenu != 2}"-->
-          <!--(click)="clickMenu(2)">二维码管理-->
-      <!--</li>-->
-      <!--<li class="l-left" routerLink="sales-helper"-->
-          <!--routerLinkActive="active" [ngClass]="{selectedMenu: selectedMenu == 3, normalMenu: selectedMenu != 3}"-->
-          <!--(click)="clickMenu(3)">营销助手-->
-      <!--</li>-->
-      <!--<li class="l-left" routerLink="configuration-helper"-->
-          <!--routerLinkActive="active" [ngClass]="{selectedMenu: selectedMenu == 4, normalMenu: selectedMenu != 4}"-->
-          <!--(click)="clickMenu(4)">配置助手-->
-      <!--</li>-->
-      <li class="l-right">退出</li>
-      <li class="l-right">14</li>
-      <li class="l-right">你好，川川</li>
+    </ul>
+    <ul class="l-right">
+      <li class="l-right ">退出</li>
+      <li class="l-right" style="margin:0 20px;"><span style="background:#fff;color:#1aa8dd;border-radius:5px;padding: 0px 5px;">14</span></li>
+      <li class="l-right">你好，Guzilong</li>
     </ul>
   </nav>
 </div>
