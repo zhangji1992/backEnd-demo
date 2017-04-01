@@ -16,14 +16,14 @@
 .app .aside {
   float: left;
   width: 200px;
-  position: absolute;
+  position: fixed;
   height: 100%;
   top: 0;
   z-index: 2;
   padding-top: 54px;
   box-sizing: border-box;
   border-right: 1px solid #65bee3;
-  color: #65bee3;
+  color: #65bee3;background: #fff;
   font-family: "Microsoft YaHei";
 }
 
