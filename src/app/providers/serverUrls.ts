@@ -1,8 +1,11 @@
-const server = "http://mam.mindmedia.cn:8181";
+/**
+ * Created by zhangJi on 2017/4/1.
+ */
+const server = "http://mam.mindmedia.cn:8181";      //演示环境
 
 export const interfaceUrl = {
   //登录接口
-  login: `${server}/loginForm2.do`,
+  login: `${server}/loginForm.do`,
 
   //获取顶级菜单
   getTopMenu: `${server}/a/topMenu.do`,

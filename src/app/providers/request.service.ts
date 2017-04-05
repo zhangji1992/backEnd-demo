@@ -14,6 +14,7 @@ import {Error} from "tslint/lib/error";
 
 @Injectable()
 export class RequestService {
+  userName: string;
 
   constructor(private http: Http,
               public router: Router) {
@@ -30,8 +31,7 @@ export class RequestService {
       .then(res => {
         let data = res.json();
         if (data.resultStatus == 'success') {
-          // console.log('ok');
-          return Promise.resolve(data.infoData);
+          return data.infoData;
         } else {
           console.log('fail:', data.errorMassage || data.errorStackTrace || data.exception);
         }
@@ -45,12 +45,14 @@ export class RequestService {
    * @param param
    * @returns {Promise<any>}
    */
-  login(url, param): Promise<any> {
+  login(param): Promise<any> {
     // let headers = new Headers({'Content-Type': 'application/json'});
     // let options = new RequestOptions({headers: headers});
     // return this.http.post(url, JSON.stringify(param), options)       //新建请求头
-    return this.httpPost(url, param)
-      .then(() => {
+    return this.httpPost(interfaceUrl.login, param)
+      .then(res => {
+        console.log('userName', res);
+        this.userName = res.name;
         this.router.navigateByUrl("/backend-frame/demo/demo-page");
       })
       .catch(this.handleError);
@@ -79,8 +81,8 @@ export class RequestService {
    * @param param
    * @returns {Promise<any>}
    */
-  getTopMenu(url, param?): Promise<any> {
-    return this.httpPost(url, param)
+  getTopMenu(param?): Promise<any> {
+    return this.httpPost(interfaceUrl.getTopMenu, param)
       .then(res => res)
       .catch(this.handleError);
   }
@@ -99,48 +101,46 @@ export class RequestService {
 
   /**
    * 搜索数据（合并获取列表）
-   * @param url
+   * @param pageNo 当前页码
+   * @param pageSize 每页个数
    * @param param
    * @returns {Promise<any>}
    */
-  search(url, param): Promise<any> {
-    return this.httpPost(url, param)
+  search(pageNo, pageSize, param): Promise<any> {
+    return this.httpPost(`${interfaceUrl.search}?pageNo=${pageNo}&pageSize=${pageSize}`, param)
       .then(res => res.items)
       .catch(this.handleError);
   }
 
   /**
    * 添加或编辑
-   * @param url
    * @param param
    * @returns {Promise<any>}
    */
-  addOrEdit(url, param) {
-    return this.httpPost(url, param)
+  addOrEdit(param) {
+    return this.httpPost(interfaceUrl.addOrEdit, param)
       .then(res => res)
       .catch(this.handleError);
   }
 
   /**
    * 保存
-   * @param url
    * @param param
    * @returns {Promise<any>}
    */
-  save(url, param){
-    return this.httpPost(url, param)
+  save(param) {
+    return this.httpPost(interfaceUrl.save, param)
       .then(res => res)
       .catch(this.handleError);
   }
 
   /**
    * 删除
-   * @param url
    * @param param
    * @returns {Promise<any>}
    */
-  del(url, param) {
-    return this.httpPost(url, param)
+  del(param) {
+    return this.httpPost(interfaceUrl.del, param)
       .then(res => res)
       .catch(this.handleError);
   }

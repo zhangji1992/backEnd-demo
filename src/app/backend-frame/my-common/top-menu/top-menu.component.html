@@ -15,10 +15,10 @@
     <ul class="l-right">
       <li class="l-right" (click)="logout()">退出</li>
       <li class="l-right" style="margin:0 20px;"><span style="background:#fff;color:#1aa8dd;border-radius:5px;padding: 0px 5px;">14</span></li>
-      <li class="l-right">你好，Guzilong</li>
+      <li class="l-right">你好，{{service.userName}}</li>
     </ul>
   </nav>
 </div>
 
-<p-growl [value]="msgs"></p-growl>
-<p-confirmDialog width="500"></p-confirmDialog>
+<p-confirmDialog width="500" acceptLabel="确定" rejectLabel="取消"></p-confirmDialog>
+

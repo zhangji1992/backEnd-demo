@@ -55,44 +55,15 @@ export class ProductManageComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.productService
-    //   .getProducts()
-    //   .then(products => {
-    //     this.products = products;
-    //   });
-
-    // this.productService
-    //   .getProductsTypes()
-    //   .then(productsTypes => {
-    //     // console.log('productsTypes', productsTypes);
-    //     this.productsTypes = productsTypes;
-    //   });
-
-    // this.cols = [
-    //   {field: 'checked', header: '选择所有'},
-    //   {field: 'name', header: '产品名称'},
-    //   {field: 'type', header: '产品类型'},
-    //   {field: 'createTime', header: '创建时间'},
-    //   {field: 'operation', header: '操作'},
-    // ];
-
-    // this.productService
-    //   .getProductsChecked()
-    //   .then(selectedProducts => {
-    //     // console.log('productsChecked', productsChecked);
-    //     this.selectedProducts = selectedProducts;
-    //   });
-
     this.search();
   }
 
   search() {
-    let url = `http://mam.mindmedia.cn:8181/a/demo/testPage/list.do?pageNo=${this.pageNo}&pageSize=${this.pageSize}`;
     let param = {
       "name": this.searchName,
       "remarks": this.searchRemarks
     };
-    this.service.search(url, param)
+    this.service.search(this.pageNo, this.pageSize, param)
       .then(products => {
         console.log('search get', products);
         this.products = products;
@@ -127,11 +98,10 @@ export class ProductManageComponent implements OnInit {
     // this.product = this.cloneProduct(product);
     // this.displayDialog = true;
 
-    let url = 'http://mam.mindmedia.cn:8181/a/demo/testPage/form.do';
     let param = {
       id: product.id
     };
-    this.service.addOrEdit(url, param)
+    this.service.addOrEdit(param)
       .then(item => {
         this.product_id = item.id;
         this.product_name = item.name;
@@ -182,7 +152,6 @@ export class ProductManageComponent implements OnInit {
   }
 
   product_save() {
-    let url = 'http://mam.mindmedia.cn:8181/a/demo/testPage/save.do'
     let param = {
       "id": this.product_id,
       "remarks": '',
@@ -199,7 +168,7 @@ export class ProductManageComponent implements OnInit {
       "type": null,
       "info": null
     };
-    this.service.save(url, param)
+    this.service.save(param)
       .then(res => {
         this.newTabPanel = '添加产品';
 
@@ -243,26 +212,21 @@ export class ProductManageComponent implements OnInit {
   }
 
   delete(product) {
-    // this.products.splice(product.id - 1, 1);
-    let url = 'http://mam.mindmedia.cn:8181/a/demo/testPage/deletes.do';
-    let param = [
-      {
+    let param = [{
         id: product.id
-      }
-    ];
-    this.service.del(url, param)
+      }];
+    this.service.del(param)
       .then(res => {
         this.search();
       });
   }
 
   batchDel() {
-    let url = 'http://mam.mindmedia.cn:8181/a/demo/testPage/deletes.do';
     let param = [];
     for (let id of this.selectedProducts) {
       param.push({id: id});
     }
-    this.service.del(url, param)
+    this.service.del(param)
       .then(res => {
         this.search();
       })

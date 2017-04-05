@@ -1,7 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {RequestService} from "../../../providers/request.service";
-import {Router} from "@angular/router";
-import {ConfirmationService, Message} from "primeng/primeng";
+import {ConfirmationService} from "primeng/primeng";
 
 @Component({
   selector: 'top-menu',
@@ -10,17 +9,14 @@ import {ConfirmationService, Message} from "primeng/primeng";
 })
 export class TopMenuComponent implements OnInit {
   selectedMenu: string;
-  msgs: Message[] = [];
   topMenu: any[];
 
-  constructor(private service: RequestService,
-              private confirmationService: ConfirmationService,
-              private router: Router,) {
+  constructor(public service: RequestService,
+              private confirmationService: ConfirmationService) {
   }
 
   ngOnInit() {
-    let url = 'http://mam.mindmedia.cn:8181/a/topMenu.do';
-    this.service.getTopMenu(url)
+    this.service.getTopMenu()
       .then(topMenu => {
         console.log('ngOnInit getTopMenu', topMenu);
         this.topMenu = topMenu;
@@ -39,10 +35,7 @@ export class TopMenuComponent implements OnInit {
       accept: () => {
         let url = "http://mam.mindmedia.cn:8181/a/logout.do";
         this.service.logout(url)
-          .then(() => {
-            this.msgs = [];
-            this.msgs.push({severity: 'info', summary: '退出登录', detail: '退出登录成功'});
-          });
+          .then(() => {});
       }
     });
 

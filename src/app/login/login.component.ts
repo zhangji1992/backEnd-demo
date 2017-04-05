@@ -80,7 +80,7 @@ export class LoginComponent implements OnInit {
       password: this.loginForm.value.password
     };
     console.log('param', param);
-    this.service.login('http://mam.mindmedia.cn:8181/loginForm2.do', param).then(
+    this.service.login(param).then(
       error =>  this.errorMsg = <string>error
     );
 
