@@ -3,12 +3,12 @@ import {ProductService} from "./product-manage.service";
 import {Product, PrimeProduct} from "./product";
 import {SelectItem} from "primeng/components/common/api";
 import {RequestService} from "../../../providers/request.service";
-
+import {ConfirmDialogModule,ConfirmationService} from 'primeng/primeng';
 @Component({
   selector: 'product-manage',
   templateUrl: './product-manage.component.html',
   styleUrls: ['./product-manage.component.scss'],
-  providers: [ProductService]
+  providers: [ProductService,ConfirmationService]
 })
 export class ProductManageComponent implements OnInit {
   position = ['产品管理', '产品'];
@@ -50,8 +50,10 @@ export class ProductManageComponent implements OnInit {
     'border': '1px solid red'
   };
 
+  dialogHeader:string;
+
   constructor(public productService: ProductService,
-              private service: RequestService) {
+              private service: RequestService,private confirmationService:ConfirmationService) {
   }
 
   ngOnInit() {
@@ -179,7 +181,6 @@ export class ProductManageComponent implements OnInit {
       });
   }
 
-
   cloneProduct(p: Product): Product {
     let product = new PrimeProduct();
     for (let prop in p) {
@@ -212,24 +213,38 @@ export class ProductManageComponent implements OnInit {
   }
 
   delete(product) {
-    let param = [{
-        id: product.id
-      }];
-    this.service.del(param)
-      .then(res => {
-        this.search();
-      });
+    this.dialogHeader='删除产品';
+    this.confirmationService.confirm({
+      message: '确定要删除该产品么',
+      accept: () => {
+        let param = [{
+            id: product.id
+        }];
+        this.service.del(param)
+          .then(res => {
+            this.search();
+          });
+      },
+    });
+    // this.products.splice(product.id - 1, 1);
+
   }
 
   batchDel() {
-    let param = [];
-    for (let id of this.selectedProducts) {
-      param.push({id: id});
-    }
-    this.service.del(param)
-      .then(res => {
-        this.search();
-      })
+    this.dialogHeader='批量删除';
+      this.confirmationService.confirm({
+        message: '确定批量删除这些产品吗？',
+        accept: () => {
+          let param = [];
+          for (let id of this.selectedProducts) {
+            param.push({id: id});
+          }
+          this.service.del(param)
+            .then(res => {
+              this.search();
+            })
+        },
+      });
   }
 
   findSelectedProductIndex(): number {

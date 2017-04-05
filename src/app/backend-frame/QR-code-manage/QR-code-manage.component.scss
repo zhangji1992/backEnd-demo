@@ -51,32 +51,28 @@
   text-decoration: none;
   cursor: pointer;
 }
-
-.aside a.menuActive {
-  background: #17a3d7;
-  color: #fff;
-}
-
 .aside a li {
   padding-left: 50px;
   border-bottom: 1px solid #E5E5E5;
-}
-
-.aside ul a.menuActive li {
-  color: #fff;
-}
-
-.app .aside a.menuActive .caret {
-  border-top-color: #fff
 }
 
 .aside ul a li:hover {
   background-color: #DCF4FF;
   color: #65bee3;
 }
-
 .aside ul a li:hover .caret {
   border-top-color: #65bee3;
+}
+
+.aside a.menuActive,.aside ul a.menuActive li:hover {
+  background: #17a3d7;
+  color: #fff;
+}
+.aside ul a.menuActive li {
+  color: #fff;
+}
+.app .aside a.menuActive .caret {
+  border-top-color: #fff
 }
 
 .aside a .childMenu a li {

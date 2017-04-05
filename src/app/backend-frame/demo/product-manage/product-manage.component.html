@@ -52,7 +52,7 @@
                 label="批量删除"></button>
       </div>
 
-      <p-dataTable [value]="products" [rows]="10" [paginator]="true" [pageLinks]="3"
+      <p-dataTable [value]="products" [rows]="10" [paginator]="true" [pageLinks]="3" emptyMessage="未查询到相关记录"
                    [rowsPerPageOptions]="[5,10,20]">
         <p-column [style]="{'width':'10%;', 'margin-top': '20px', 'text-align': 'center'}" field="id">
           <template pTemplate="header">
@@ -71,14 +71,6 @@
                   header="类别"></p-column>
         <p-column [style]="{'width':'10%', 'margin-top': '20px', 'text-align': 'center'}" field="remarks"
                   header="备注"></p-column>
-
-        <!--<p-column [style]="{'width': '7%', 'margin-top': '20px', 'text-align': 'center'}" field="name" header="产品名称"></p-column>-->
-        <!--<p-column [style]="{'width':'7%', 'margin-top': '20px', 'text-align': 'center'}" field="type" header="产品类型"></p-column>-->
-        <!--<p-column [style]="{'width':'15%', 'margin-top': '20px', 'text-align': 'center'}" field="area" header="产地"></p-column>-->
-        <!--<p-column [style]="{'width':'5%', 'margin-top': '20px', 'text-align': 'center'}" field="codesAmount" header="生码数量"></p-column>-->
-        <!--<p-column [style]="{'width':'6%', 'margin-top': '20px', 'text-align': 'center'}" field="status" header="状态"></p-column>-->
-        <!--<p-column [style]="{'width':'15%', 'margin-top': '20px', 'text-align': 'center'}" field="createTime" header="创建时间"></p-column>-->
-
         <p-column [style]="{'width':'50%', 'margin-top': '20px', 'text-align': 'center'}" field="operation" header="操作">
           <template let-col let-product="rowData" pTemplate="body">
             <button type="button" pButton class="ui-button-secondary" icon="fa-pencil" (click)="edit(product)"
@@ -167,5 +159,8 @@
       </div>
     </p-footer>
   </p-dialog>
+
+
+  <p-confirmDialog [header]="dialogHeader" acceptLabel="确定"  rejectLabel="取消" icon="fa fa-question-circle" width="425"></p-confirmDialog>
 
 </div>
