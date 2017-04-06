@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {RequestService} from "../providers/request.service";
 
 @Component({
   selector: 'backend-frame',
@@ -6,10 +7,10 @@ import {Component, OnInit} from '@angular/core';
   styleUrls: ['./backend-frame.component.scss']
 })
 export class BackendFrameComponent implements OnInit {
-  constructor() {
+  constructor(public service: RequestService) {
   }
 
   ngOnInit() {
-
+      console.log('333', this.service, this.service.userName);
   }
 }

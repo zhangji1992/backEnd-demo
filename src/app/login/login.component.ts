@@ -4,7 +4,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {RequestService} from "../providers/request.service";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'login',
@@ -20,6 +20,7 @@ export class LoginComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
               public router: Router,
+              public route: ActivatedRoute,
               public service: RequestService) {
   }
 
@@ -80,9 +81,13 @@ export class LoginComponent implements OnInit {
       password: this.loginForm.value.password
     };
     console.log('param', param);
-    this.service.login(param).then(
-      error =>  this.errorMsg = <string>error
-    );
+    this.service.login(param).then(res => {
+      console.log('登录成功', res);
+      console.log('vvv', this.service, this.service.userName);
+      this.service.userName = res.name;
+      console.log('vvv2', this.service.userName);
+      this.router.navigate(['../backend-frame', 'demo', 'demo-page'], { relativeTo: this.route });
+    });
 
     // this.service.login('http://mam.mindmedia.cn:8181/loginForm.do', param)
     //   .subscribe(

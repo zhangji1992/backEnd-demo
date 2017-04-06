@@ -5,7 +5,6 @@ import {HttpModule, JsonpModule} from '@angular/http';
 import {ReactiveFormsModule} from '@angular/forms';
 
 import {AppComponent} from './app.component';
-import {LoginComponent} from './login/login.component';
 import {PageNotFoundComponent} from "./backend-frame/my-common/page-not-found/page-not-found.component";
 import {ComponentsModule} from "./backend-frame/my-common/components/components.module";
 import {ProvidersModule} from "./providers/providers.module";
@@ -15,7 +14,7 @@ import {requestOptionsProvider} from "./default-request-options.service";
 
 const appRoutes = [
   {path: '', redirectTo: 'login', pathMatch: 'full'},
-  {path: "login", loadChildren: './login/login.module#LoginModule', data: {preload: true}},   //允许预加载
+  {path: "login", loadChildren: './login/login.module#LoginModule'},   //允许预加载
   {path: "backend-frame", loadChildren: './backend-frame/backend-frame.module#BackendFrameModule'},
   {path: '**', component: PageNotFoundComponent}
 ];
@@ -30,6 +29,7 @@ const appRoutes = [
     InputTextModule,
     ReactiveFormsModule,
     ProvidersModule,
+    // RequestService,
     LoginModule,
     RouterModule.forRoot(appRoutes),
   ],

@@ -20,8 +20,9 @@ const loginRoutes = [
   imports: [
     CommonModule,
     InputTextModule,
-    ProvidersModule,
-    PasswordModule,ReactiveFormsModule,CheckboxModule,
+    PasswordModule,
+    ReactiveFormsModule,
+    CheckboxModule,
     RouterModule.forChild(loginRoutes)],
   exports: [],
   declarations: [LoginComponent],

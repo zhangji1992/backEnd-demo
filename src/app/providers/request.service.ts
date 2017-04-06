@@ -5,11 +5,12 @@ import {Injectable} from '@angular/core';
 import {Http, Headers, RequestOptions, Response, Request, RequestMethod} from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/timeout';
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {interfaceUrl} from "./serverUrls";
 import {Observable} from "rxjs";
 import {requestOptionsProvider} from "../default-request-options.service";
 import {Error} from "tslint/lib/error";
+import {DialogModule} from "primeng/primeng";
 
 
 @Injectable()
@@ -17,7 +18,8 @@ export class RequestService {
   userName: string;
 
   constructor(private http: Http,
-              public router: Router) {
+              private route: ActivatedRoute,
+              private router: Router) {
   }
 
   private handleError(error: any): Promise<any> {
@@ -34,6 +36,7 @@ export class RequestService {
           return data.infoData;
         } else {
           console.log('fail:', data.errorMassage || data.errorStackTrace || data.exception);
+          return Promise.reject(data);
         }
       })
       .catch(this.handleError);
@@ -48,31 +51,36 @@ export class RequestService {
   login(param): Promise<any> {
     // let headers = new Headers({'Content-Type': 'application/json'});
     // let options = new RequestOptions({headers: headers});
-    // return this.http.post(url, JSON.stringify(param), options)       //新建请求头
+    // return this.http.post(url, JSON.stringify(param), options)       //新建请求
     return this.httpPost(interfaceUrl.login, param)
       .then(res => {
-        console.log('userName', res);
         this.userName = res.name;
-        this.router.navigateByUrl("/backend-frame/demo/demo-page");
+        console.log('登录成功', res, this.userName);
+        // this.router.navigateByUrl("/backend-frame/demo/demo-page");
+        this.router.navigate(['../backend-frame', 'demo', 'demo-page'], { relativeTo: this.route });
+        return res;
       })
       .catch(this.handleError);
   }
 
   /**
    * 退出登录
-   * @param url
    * @param param
    * @returns {Promise<any>}
    */
-  logout(url, param?): Promise<any> {
+  logout(param?): Promise<any> {
     // let headers = new Headers({'Content-Type': 'application/json'});
     // let options = new RequestOptions({headers: headers});
     // return this.http.post(url, JSON.stringify(param), options)       //新建请求头
-    return this.httpPost(url, param)
+    return this.httpPost(interfaceUrl.logout, param)
       .then(() => {
         this.router.navigateByUrl("/login");
       })
       .catch(this.handleError);
+  }
+
+  getUserName(){
+    return this.userName;
   }
 
   /**
@@ -83,18 +91,20 @@ export class RequestService {
    */
   getTopMenu(param?): Promise<any> {
     return this.httpPost(interfaceUrl.getTopMenu, param)
-      .then(res => res)
+      .then(res => {
+        console.log('111', this.userName);
+        return res;
+      })
       .catch(this.handleError);
   }
 
   /**
    * 获取二级菜单
-   * @param url
    * @param param
    * @returns {Promise<any>}
    */
-  getLeftMenu(url, param): Promise<any> {
-    return this.httpPost(url, param)
+  getLeftMenu(param): Promise<any> {
+    return this.httpPost(interfaceUrl.getLeftMenu, param)
       .then(res => res)
       .catch(this.handleError);
   }

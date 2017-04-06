@@ -27,14 +27,11 @@ import {
   DropdownModule,
   PanelModule, ConfirmDialogModule, ConfirmationService, GrowlModule
 } from "primeng/primeng";
-import {ProductService} from "./QR-code-manage/product-manage/product-manage.service";
 import {HomeComponent} from "./home/home.component";
 import {ConfigurationHelperComponent} from "./configuration-helper/configuration-helper.component";
 import {SalesHelperComponent} from "./sales-helper/sales-helper.component";
 import {AddPlanComponent} from "./QR-code-manage/plan-order/add-plan.component";
-import {RequestService} from "../providers/request.service";
 import {requestOptionsProvider} from "../default-request-options.service";
-import {ProvidersModule} from "../providers/providers.module";
 import {AuthoritySystemComponent} from "./authority-system/authority-system";
 
 const backendFrameRoutes = [
@@ -102,6 +99,7 @@ const backendFrameRoutes = [
     FormsModule,
     ReactiveFormsModule,
     ComponentsModule,
+    DialogModule,
     DropdownModule,
     CalendarModule,
     DataTableModule,
@@ -109,7 +107,6 @@ const backendFrameRoutes = [
     TabViewModule,
     CheckboxModule,
     PanelModule,
-    ProvidersModule,
     RouterModule.forChild(backendFrameRoutes)
   ],
   exports: [],

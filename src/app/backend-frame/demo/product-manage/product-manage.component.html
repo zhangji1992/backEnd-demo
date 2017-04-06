@@ -49,7 +49,7 @@
         <button type="button" class="ui-button-secondary" pButton label="批量停用"></button>
         <button type="button" class="ui-button-secondary" pButton label="批量合并"></button>
         <button type="button" class="ui-button-secondary" pButton icon="fa-trash" style="float:right" (click)="batchDel()"
-                label="批量删除"></button>
+                label="批量删除" [disabled]="selectedProducts.length == 0"></button>
       </div>
 
       <p-dataTable [value]="products" [rows]="10" [paginator]="true" [pageLinks]="3" emptyMessage="未查询到相关记录"
@@ -78,7 +78,7 @@
             <button type="button" pButton class="ui-button-secondary" icon="fa-trash" (click)="delete(product)"
                     label="删除"></button>
             <button type="button" pButton class="ui-button-secondary" icon="fa-plus-circle" (click)="addPlan()"
-                    label="添加计划单"></button>
+                    label="添加计划单" disabled></button>
           </template>
         </p-column>
       </p-dataTable>
@@ -162,5 +162,15 @@
 
 
   <p-confirmDialog [header]="dialogHeader" acceptLabel="确定"  rejectLabel="取消" icon="fa fa-question-circle" width="425"></p-confirmDialog>
+
+  <p-dialog header="异常提示" showHeader="false" closeOnEscape="false" [(visible)]="ifException" modal="true" width="500" responsive="true" closable="false">
+    <p>{{myException}}</p>
+    <p-footer>
+      <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+        <button type="button" pButton (click)="goLogin()" label="确定"></button>
+      </div>
+    </p-footer>
+  </p-dialog>
+
 
 </div>

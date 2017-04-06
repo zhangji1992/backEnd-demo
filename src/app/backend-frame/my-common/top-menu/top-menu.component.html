@@ -15,10 +15,19 @@
     <ul class="l-right">
       <li class="l-right" (click)="logout()">退出</li>
       <li class="l-right" style="margin:0 20px;"><span style="background:#fff;color:#1aa8dd;border-radius:5px;padding: 0px 5px;">14</span></li>
-      <li class="l-right">你好，{{service.userName}}</li>
+      <li class="l-right">你好，{{userName}}</li>
     </ul>
   </nav>
 </div>
 
 <p-confirmDialog width="500" acceptLabel="确定" rejectLabel="取消"></p-confirmDialog>
+
+<p-dialog header="异常提示" [(visible)]="ifException" modal="true" dismissableMask="true" width="300" responsive="true" >
+  <p>{{myException}}</p>
+  <p-footer>
+    <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+      <button type="button" pButton (click)="ifException = false" label="确定"></button>
+    </div>
+  </p-footer>
+</p-dialog>
 

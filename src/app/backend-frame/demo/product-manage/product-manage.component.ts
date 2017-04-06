@@ -4,6 +4,7 @@ import {Product, PrimeProduct} from "./product";
 import {SelectItem} from "primeng/components/common/api";
 import {RequestService} from "../../../providers/request.service";
 import {ConfirmDialogModule,ConfirmationService} from 'primeng/primeng';
+import {Router} from "@angular/router";
 @Component({
   selector: 'product-manage',
   templateUrl: './product-manage.component.html',
@@ -12,6 +13,8 @@ import {ConfirmDialogModule,ConfirmationService} from 'primeng/primeng';
 })
 export class ProductManageComponent implements OnInit {
   position = ['产品管理', '产品'];
+  ifException: boolean = false;
+  myException: string;
   displayDialog: boolean;
   pageNo: number = 1;
   pageSize: number = 10;
@@ -53,7 +56,9 @@ export class ProductManageComponent implements OnInit {
   dialogHeader:string;
 
   constructor(public productService: ProductService,
-              private service: RequestService,private confirmationService:ConfirmationService) {
+              private router: Router,
+              private service: RequestService,
+              private confirmationService:ConfirmationService) {
   }
 
   ngOnInit() {
@@ -70,6 +75,16 @@ export class ProductManageComponent implements OnInit {
         console.log('search get', products);
         this.products = products;
       })
+      .catch(err => {
+        this.ifException = true;
+        console.log('err', err, err.json());
+        this.myException = err;
+      })
+  }
+
+  goLogin(){
+    this.ifException = false;
+    this.router.navigate(['login']);
   }
 
   add() {

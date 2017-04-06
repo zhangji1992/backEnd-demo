@@ -82,11 +82,10 @@ export class DemoComponent implements OnInit {
   }
 
   ngOnInit() {
-    let url = 'http://mam.mindmedia.cn:8181/a/menuTree.do';
     let param = {         //请求topMenu第二项对应的leftMenu
       id: 2
     };
-    this.service.getLeftMenu(url, param)
+    this.service.getLeftMenu(param)
       .then(leftMenu => this.leftMenu = leftMenu);
   }
 

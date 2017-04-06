@@ -1,11 +1,15 @@
 /**
  * Created by zhangJi on 2017/4/1.
  */
-const server = "http://mam.mindmedia.cn:8181";      //演示环境
+// const server = "http://mam.mindmedia.cn:8181";      //演示环境
+const server = "http://bsm.mindmedia.cn:8181/bsm";      //演示环境
 
 export const interfaceUrl = {
   //登录接口
   login: `${server}/loginForm.do`,
+
+  //退出登录
+  logout: `${server}/a/logout.do`,
 
   //获取顶级菜单
   getTopMenu: `${server}/a/topMenu.do`,

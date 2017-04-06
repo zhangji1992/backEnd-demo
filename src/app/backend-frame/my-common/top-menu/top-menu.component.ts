@@ -5,11 +5,15 @@ import {ConfirmationService} from "primeng/primeng";
 @Component({
   selector: 'top-menu',
   templateUrl: './top-menu.component.html',
-  styleUrls: ['./top-menu.component.scss']
+  styleUrls: ['./top-menu.component.scss'],
+  providers: [RequestService],
 })
 export class TopMenuComponent implements OnInit {
   selectedMenu: string;
   topMenu: any[];
+  ifException: boolean = false;
+  myException: string;
+  @Input() userName: string;
 
   constructor(public service: RequestService,
               private confirmationService: ConfirmationService) {
@@ -18,8 +22,12 @@ export class TopMenuComponent implements OnInit {
   ngOnInit() {
     this.service.getTopMenu()
       .then(topMenu => {
-        console.log('ngOnInit getTopMenu', topMenu);
+        console.log('ngOnInit getTopMenu', topMenu, this.service.userName);
         this.topMenu = topMenu;
+      })
+      .catch(err => {
+        this.ifException = true;
+        this.myException = err;
       });
   }
 
@@ -33,12 +41,9 @@ export class TopMenuComponent implements OnInit {
       header: '退出登录',
       message: '确定要退出登录吗？',
       accept: () => {
-        let url = "http://mam.mindmedia.cn:8181/a/logout.do";
-        this.service.logout(url)
+        this.service.logout()
           .then(() => {});
       }
     });
-
-
   }
 }
