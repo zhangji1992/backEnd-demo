@@ -49,6 +49,9 @@ export class ProductManageComponent implements OnInit {
   product_price: number;
   product_birthday: string;
 
+  gotoLog:boolean=false;
+
+  confrim:any;
   tabViewCss = {
     'border': '1px solid red'
   };
@@ -63,6 +66,21 @@ export class ProductManageComponent implements OnInit {
 
   ngOnInit() {
     this.search();
+
+  }
+
+  alertDialog(errorMsg){
+    this.ifException=true;
+    this.myException=errorMsg;
+    /*this.dialogHeader='提示';
+    this.confirmationService.confirm({
+      message: error.errorMassage,
+      accept: ()=>{
+
+    },
+    reject: ()=>{
+
+    );*/
   }
 
   search() {
@@ -74,6 +92,9 @@ export class ProductManageComponent implements OnInit {
       .then(products => {
         console.log('search get', products);
         this.products = products;
+      },error=>{
+        this.gotoLog=true;
+        this.alertDialog(error);
       })
       .catch(err => {
         this.ifException = true;
@@ -82,9 +103,13 @@ export class ProductManageComponent implements OnInit {
       })
   }
 
+
   goLogin(){
     this.ifException = false;
     this.router.navigate(['login']);
+  }
+  confirmDialog(){
+    this.ifException = false;
   }
 
   add() {
@@ -120,18 +145,26 @@ export class ProductManageComponent implements OnInit {
     };
     this.service.addOrEdit(param)
       .then(item => {
-        this.product_id = item.id;
-        this.product_name = item.name;
-        this.product_age = item.age;
-        this.product_birthday = item.birthday;
-        this.product_email = item.loginEmail;
-        this.product_password = item.password;
-        this.product_ifEnable = item.isEnable;
-        this.product_score = item.isScore;
-        this.product_hits = item.hits;
-        this.product_remarks = item.remarks;
-        this.product_price = item.price;
+       this.initProduct(item);
+      },error=>{
+        this.gotoLog=false;
+        this.alertDialog(error)
       });
+  }
+
+  //初始化表单数据
+  initProduct(item){
+    this.product_id = item.id;
+    this.product_name = item.name;
+    this.product_age = item.age;
+    this.product_birthday = item.birthday;
+    this.product_email = item.loginEmail;
+    this.product_password = item.password;
+    this.product_ifEnable = item.isEnable;
+    this.product_score = item.isScore;
+    this.product_hits = item.hits;
+    this.product_remarks = item.remarks;
+    this.product_price = item.price;
   }
 
   changeTab(event) {
@@ -152,13 +185,28 @@ export class ProductManageComponent implements OnInit {
       this.product_ifEnable = false;
       this.product_score = '';
       this.product_hits = null;
+
+      let param={
+        id:''
+      }
+      this.service.addOrEdit(param)
+        .then(item => {
+          this.initProduct(item);
+       },error=>{
+          this.dialogHeader='提示';
+          this.confirmationService.confirm({
+            message: error.errorMassage,
+            accept: () => {
+              this.ifTab1Active = true;
+              this.ifTab2Active = false;
+            },
+            reject:() =>{
+              this.ifTab1Active = true;
+              this.ifTab2Active = false;
+            }
+          });
+        });
     }
-
-
-    // this.newTabPanel = '添加产品';
-    //
-    // this.ifTab1Active = true;
-    // this.ifTab2Active = false;
   }
 
   product_cancel() {
@@ -193,6 +241,9 @@ export class ProductManageComponent implements OnInit {
         this.ifTab2Active = false;
 
         this.search();
+      },error=>{
+        this.gotoLog=false;
+        this.alertDialog(error)
       });
   }
 
@@ -238,6 +289,9 @@ export class ProductManageComponent implements OnInit {
         this.service.del(param)
           .then(res => {
             this.search();
+          },error=>{
+            this.gotoLog=false;
+            this.alertDialog(error)
           });
       },
     });
@@ -257,6 +311,9 @@ export class ProductManageComponent implements OnInit {
           this.service.del(param)
             .then(res => {
               this.search();
+            },error=>{
+              this.gotoLog=false;
+              this.alertDialog(error)
             })
         },
       });

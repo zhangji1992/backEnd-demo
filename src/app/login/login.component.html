@@ -16,7 +16,6 @@
           </li>
 
           <li>
-
             <div class="item">
               <span class="fa fa-lock"></span>
               <input pInputText type="text" formControlName="password" required
@@ -25,9 +24,14 @@
             <div *ngIf="formErrors.password" class="alert alert-danger">
               {{ formErrors.password }}
             </div>
-
           </li>
         </ul>
+        <div>
+          <input pInputText type="hidden" formControlName="result" />
+          <div *ngIf="formErrors.result" class="alert alert-danger">
+            {{ formErrors.result }}
+          </div>
+        </div>
       </div>
     </div>
     <!--<div style="font-size:12px;">-->
@@ -37,8 +41,8 @@
       <!--</div>-->
     <!--</div>-->
     <div style="clear:both">
-      <button pButton type="submit" label="Submit" [ngClass]="{disabled:!loginForm.valid}"
-              [disabled]="!loginForm.valid">登录
+      <button pButton type="submit" label="登录" [ngClass]="{disabled:!loginForm.valid}"
+              [disabled]="!loginForm.valid">
       </button>
     </div>
   </form>
@@ -47,5 +51,7 @@
        <p>关于我们 服务与支持  常见问题  人才招聘 加盟合作</p>
        <p>版权所有@ 2015 - 2016 深圳在乎传媒科技有限公司 粤ICP备15107022-1号</p>
    </footer>
+
+
 
 </div>

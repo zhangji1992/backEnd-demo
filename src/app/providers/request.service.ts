@@ -12,7 +12,6 @@ import {requestOptionsProvider} from "../default-request-options.service";
 import {Error} from "tslint/lib/error";
 import {DialogModule} from "primeng/primeng";
 
-
 @Injectable()
 export class RequestService {
   userName: string;
@@ -23,8 +22,7 @@ export class RequestService {
   }
 
   private handleError(error: any): Promise<any> {
-    // console.error('An error occurred', error); // for demo purposes only
-    return Promise.reject(error.message || error);
+     return Promise.reject(error);
   }
 
   private httpPost(url, param?): Promise<any> {
@@ -32,11 +30,20 @@ export class RequestService {
       .toPromise()
       .then(res => {
         let data = res.json();
-        if (data.resultStatus == 'success') {
+        console.log('data', data);
+        let resultStatus = data.resultStatus;
+
+        if (resultStatus == 'success') {
           return data.infoData;
-        } else {
+        } else if (resultStatus == 'error'){
           console.log('fail:', data.errorMassage || data.errorStackTrace || data.exception);
-          return Promise.reject(data);
+          return Promise.reject(data.infoData || data.errorMassage);
+        }else if (resultStatus == 'exception'){
+          return Promise.reject(data.errorMassage);
+        }else if(resultStatus == 'validate'){
+          return Promise.reject(data.infoData);
+        }else if(resultStatus == 'validates'){
+          return Promise.reject(data.infoData);
         }
       })
       .catch(this.handleError);

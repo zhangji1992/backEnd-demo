@@ -33,6 +33,7 @@ import {SalesHelperComponent} from "./sales-helper/sales-helper.component";
 import {AddPlanComponent} from "./QR-code-manage/plan-order/add-plan.component";
 import {requestOptionsProvider} from "../default-request-options.service";
 import {AuthoritySystemComponent} from "./authority-system/authority-system";
+import {CookieService} from "angular2-cookie/core";
 
 const backendFrameRoutes = [
   {
@@ -131,7 +132,7 @@ const backendFrameRoutes = [
     PageNotFound2Component,
     PageNotFound3Component
   ],
-  providers: [requestOptionsProvider, ConfirmationService]
+  providers: [requestOptionsProvider, ConfirmationService,CookieService]
 })
 export class BackendFrameModule {
 }

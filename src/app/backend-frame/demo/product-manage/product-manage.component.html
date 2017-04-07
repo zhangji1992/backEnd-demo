@@ -167,7 +167,8 @@
     <p>{{myException}}</p>
     <p-footer>
       <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-        <button type="button" pButton (click)="goLogin()" label="确定"></button>
+        <button type="button" *ngIf="gotoLog" pButton (click)="goLogin()" label="确定"></button>
+        <button type="button" *ngIf="!gotoLog" pButton (click)="confirmDialog()" label="确定"></button>
       </div>
     </p-footer>
   </p-dialog>

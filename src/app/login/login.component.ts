@@ -5,11 +5,14 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {RequestService} from "../providers/request.service";
 import {ActivatedRoute, Router} from "@angular/router";
+import {ConfirmDialogModule,ConfirmationService} from 'primeng/primeng';
+import {CookieService} from 'angular2-cookie/core';
 
 @Component({
   selector: 'login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
+  providers:[ConfirmationService,CookieService]
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
@@ -21,7 +24,9 @@ export class LoginComponent implements OnInit {
   constructor(private fb: FormBuilder,
               public router: Router,
               public route: ActivatedRoute,
-              public service: RequestService) {
+              public service: RequestService,
+              private confirmationService:ConfirmationService,
+              private _cookieService:CookieService) {
   }
 
   ngOnInit() {
@@ -33,6 +38,7 @@ export class LoginComponent implements OnInit {
     this.loginForm = this.fb.group({
       'username': ['', [Validators.required]],
       'password': ['', Validators.required],
+      'result':[]
       // 'forgetPass': [this.autoLoginChecked]
     });
     this.loginForm.valueChanges
@@ -62,7 +68,8 @@ export class LoginComponent implements OnInit {
 
   formErrors = {
     'username': '',
-    'password': ''
+    'password': '',
+    'result':'',
   };
 
   validationMessages = {
@@ -71,6 +78,9 @@ export class LoginComponent implements OnInit {
     },
     'password': {
       'required': '请填写用户密码',
+    },
+    'result':{
+
     }
   };
 
@@ -82,13 +92,10 @@ export class LoginComponent implements OnInit {
     };
     console.log('param', param);
     this.service.login(param).then(res => {
-      console.log('登录成功', res);
-      console.log('vvv', this.service, this.service.userName);
-      this.service.userName = res.name;
+      this._cookieService.put('userName', res.name);
       console.log('vvv2', this.service.userName);
       this.router.navigate(['../backend-frame', 'demo', 'demo-page'], { relativeTo: this.route });
-    });
-
+    },error=>this.alertDialog(error)).catch(error=>this.alertDialog(error));
     // this.service.login('http://mam.mindmedia.cn:8181/loginForm.do', param)
     //   .subscribe(
     //     data => console.log('loginCtrl'),
@@ -107,6 +114,13 @@ export class LoginComponent implements OnInit {
     // this.loginService.login('http://mam.mindmedia.cn:8181/loginForm.do', {username: this.loginForm.value.userName, password: this.loginForm.value.password});
     // this.router.navigate(['backend-frame', 'QR-code-manage', 'overview']);
     // this.router.navigateByUrl("/backend-frame/QR-code-manage/overview");
+  }
+
+  alertDialog(error:any){
+    this.formErrors.result='登录错误：'+error;
+   /* this.confirmationService.confirm({
+      message: error.errorMassage,
+    });*/
   }
 
 }
