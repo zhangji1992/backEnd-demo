@@ -188,14 +188,15 @@ export class ProductManageComponent implements OnInit {
 
       let param={
         id:''
-      }
+      };
       this.service.addOrEdit(param)
         .then(item => {
           this.initProduct(item);
        },error=>{
+          console.log('111', error);
           this.dialogHeader='提示';
           this.confirmationService.confirm({
-            message: error.errorMassage,
+            message: error,
             accept: () => {
               this.ifTab1Active = true;
               this.ifTab2Active = false;
