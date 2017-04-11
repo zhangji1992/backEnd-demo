@@ -34,7 +34,7 @@ const appRoutes = [
   ],
   declarations: [
     AppComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
   ],
   providers: [requestOptionsProvider],    //http请求头的统一预设值
   bootstrap: [AppComponent]

@@ -94,7 +94,8 @@ export class LoginComponent implements OnInit {
     this.service.login(param).then(res => {
       this._cookieService.put('userName', res.name);
       console.log('vvv2', this.service.userName);
-      this.router.navigate(['../backend-frame', 'demo', 'demo-page'], { relativeTo: this.route });
+      // this.router.navigate(['../backend-frame', 'demo', 'demo-page'], { relativeTo: this.route });
+      this.router.navigateByUrl('/backend-frame/authority-system/user-manage');
     },error=>this.alertDialog(error)).catch(error=>this.alertDialog(error));
     // this.service.login('http://mam.mindmedia.cn:8181/loginForm.do', param)
     //   .subscribe(

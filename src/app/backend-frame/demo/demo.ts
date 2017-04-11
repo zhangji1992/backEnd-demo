@@ -9,7 +9,6 @@ import {ConfirmationService} from "primeng/primeng";
   selector: 'demo',
   templateUrl: './demo.html',
   styleUrls: ['./demo.scss'],
-  providers:[ConfirmationService],
   animations: [trigger('toggle', [
     state('closed, void', style({height: '0px', color: 'maroon', borderColor: 'maroon', overflow: 'hidden'})),
     state('open', style({height: '*', borderColor: 'green', color: 'green'})),
@@ -22,7 +21,7 @@ export class DemoComponent implements OnInit {
   stateExpression: string;
   leftMenu: any[];
 
-  constructor(private service: RequestService,private confirmationService:ConfirmationService) {
+  constructor(private service: RequestService) {
   }
 
   ngOnInit() {

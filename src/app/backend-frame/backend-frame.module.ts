@@ -27,6 +27,9 @@ import {AuthoritySystemComponent} from "./authority-system/authority-system";
 import {CookieService} from "angular2-cookie/core";
 import {DemoPageComponent} from "./demo/demo-page/demo-page";
 import {DemoAffairsComponent} from "./demo/demo-affairs/demo-affairs";
+import {UserManageComponent} from "./authority-system/user-manage/user-manage.component";
+import {RoleManageComponent} from "./authority-system/role-manage/role-manage.component";
+import {MenuManageComponent} from "./authority-system/menu-manage/menu-manage.component";
 
 const backendFrameRoutes = [
   {
@@ -35,7 +38,13 @@ const backendFrameRoutes = [
     children: [
       {
         path: 'authority-system', component: AuthoritySystemComponent,
-        children: []
+        children: [
+          {path: '', redirectTo: '/backend-frame/authority-system/user-manage', pathMatch: 'full'},
+          {path: 'user-manage', component: UserManageComponent},
+          {path: 'role-manage', component: RoleManageComponent},
+          {path: 'menu-manage', component: MenuManageComponent},
+          {path: '**', component: PageNotFound3Component}
+        ]
       },
       {
         path: 'demo', component: DemoComponent,
@@ -72,12 +81,17 @@ const backendFrameRoutes = [
   exports: [],
   declarations: [
     AuthoritySystemComponent,
+    UserManageComponent,
+    RoleManageComponent,
+    MenuManageComponent,
+
     DemoComponent,
+    DemoAffairsComponent,
+    DemoPageComponent,
+
     FooterInfoComponent,
     TopMenuComponent,
     BackendFrameComponent,
-    DemoAffairsComponent,
-    DemoPageComponent,
     PageNotFound2Component,
     PageNotFound3Component
   ],

@@ -1,3 +1,41 @@
-<p>
-  这是权限系统页面
-</p>
+<div class="app">
+
+  <div class="aside">
+    <ul>
+      <a *ngFor="let menu of leftMenu;let i = index" [ngClass]="{menuActive: selectedItem == menu.id}">
+        <div *ngIf="menu.children.length == 0">
+          <li (click)="clickItem(menu)" [routerLink]="menu.path" routerLinkActive="active">
+            <i [class]="menu.icon" aria-hidden="true"></i>
+            <span>{{menu.label}}</span>
+          </li>
+        </div>
+
+        <div *ngIf="menu.children.length != 0">
+          <li (click)="clickItem(menu)">
+            <i [class]="menu.icon" aria-hidden="true"></i>
+            <span>{{menu.label}}</span>
+            <span><span class="caret"></span></span>
+          </li>
+          <div class="childMenu" [@toggle]="menu.expression">
+            <a *ngFor="let childMenu of menu.children" [routerLink]="childMenu.path" routerLinkActive="active"
+               [ngClass]="{menuActive: selectedChildItem == childMenu.id}" (click)="clickChildItem(childMenu.id)">
+              <li>
+                <i class="{{childMenu.icon}}" aria-hidden="true"></i>
+                <span>{{childMenu.label}}</span>
+              </li>
+            </a>
+          </div>
+        </div>
+      </a>
+    </ul>
+  </div>
+
+  <div class="content">
+    <div class="content-container">
+      <div class="content-box">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+
+</div>
