@@ -23,13 +23,13 @@ import {
   GrowlModule
 } from "primeng/primeng";
 import {requestOptionsProvider} from "../default-request-options.service";
-import {AuthoritySystemComponent} from "./authority-system/authority-system";
+import {PermissionComponent} from "./permission/permission";
 import {CookieService} from "angular2-cookie/core";
 import {DemoPageComponent} from "./demo/demo-page/demo-page";
 import {DemoAffairsComponent} from "./demo/demo-affairs/demo-affairs";
-import {UserManageComponent} from "./authority-system/user-manage/user-manage.component";
-import {RoleManageComponent} from "./authority-system/role-manage/role-manage.component";
-import {MenuManageComponent} from "./authority-system/menu-manage/menu-manage.component";
+import {UserManageComponent} from "./permission/user-manage/user-manage.component";
+import {RoleManageComponent} from "./permission/role-manage/role-manage.component";
+import {MenuManageComponent} from "./permission/menu-manage/menu-manage.component";
 
 const backendFrameRoutes = [
   {
@@ -37,9 +37,9 @@ const backendFrameRoutes = [
     component: BackendFrameComponent,     //框架页面
     children: [
       {
-        path: 'authority-system', component: AuthoritySystemComponent,
+        path: 'permission', component: PermissionComponent,
         children: [
-          {path: '', redirectTo: '/backend-frame/authority-system/user-manage', pathMatch: 'full'},
+          {path: '', redirectTo: '/backend-frame/permission/user-manage', pathMatch: 'full'},
           {path: 'user-manage', component: UserManageComponent},
           {path: 'role-manage', component: RoleManageComponent},
           {path: 'menu-manage', component: MenuManageComponent},
@@ -80,7 +80,7 @@ const backendFrameRoutes = [
   ],
   exports: [],
   declarations: [
-    AuthoritySystemComponent,
+    PermissionComponent,
     UserManageComponent,
     RoleManageComponent,
     MenuManageComponent,
