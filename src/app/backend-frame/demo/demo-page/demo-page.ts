@@ -1,17 +1,15 @@
 import {Component, OnInit} from '@angular/core';
-import {ProductService} from "./product-manage.service";
 import {Product, PrimeProduct} from "./product";
-import {SelectItem} from "primeng/components/common/api";
 import {RequestService} from "../../../providers/request.service";
-import {ConfirmDialogModule,ConfirmationService} from 'primeng/primeng';
+import {ConfirmationService} from 'primeng/primeng';
 import {Router} from "@angular/router";
+
 @Component({
-  selector: 'product-manage',
-  templateUrl: './product-manage.component.html',
-  styleUrls: ['./product-manage.component.scss'],
-  providers: [ProductService,ConfirmationService]
+  selector: 'demo-page',
+  templateUrl: './demo-page.html',
+  styleUrls: ['./demo-page.scss']
 })
-export class ProductManageComponent implements OnInit {
+export class DemoPageComponent implements OnInit {
   position = ['产品管理', '产品'];
   ifException: boolean = false;
   myException: string;
@@ -21,7 +19,6 @@ export class ProductManageComponent implements OnInit {
   newProduct: boolean;
   selectedProduct: Product;
   products: Product[];
-  // productsTypes: SelectItem[];
   ifAllSelected: boolean = false;
   selectedProducts: string[] = [];
   searchName: string = '';
@@ -49,38 +46,36 @@ export class ProductManageComponent implements OnInit {
   product_price: number;
   product_birthday: string;
 
-  gotoLog:boolean=false;
+  gotoLog: boolean = false;
 
-  confrim:any;
+  confrim: any;
   tabViewCss = {
     'border': '1px solid red'
   };
 
-  dialogHeader:string;
+  dialogHeader: string;
 
-  constructor(public productService: ProductService,
-              private router: Router,
+  constructor(private router: Router,
               private service: RequestService,
-              private confirmationService:ConfirmationService) {
+              private confirmationService: ConfirmationService) {
   }
 
   ngOnInit() {
     this.search();
-
   }
 
-  alertDialog(errorMsg){
-    this.ifException=true;
-    this.myException=errorMsg;
+  alertDialog(errorMsg) {
+    this.ifException = true;
+    this.myException = errorMsg;
     /*this.dialogHeader='提示';
-    this.confirmationService.confirm({
-      message: error.errorMassage,
-      accept: ()=>{
+     this.confirmationService.confirm({
+     message: error.errorMassage,
+     accept: ()=>{
 
-    },
-    reject: ()=>{
+     },
+     reject: ()=>{
 
-    );*/
+     );*/
   }
 
   search() {
@@ -92,8 +87,8 @@ export class ProductManageComponent implements OnInit {
       .then(products => {
         console.log('search get', products);
         this.products = products;
-      },error=>{
-        this.gotoLog=true;
+      }, error => {
+        this.gotoLog = true;
         this.alertDialog(error);
       })
       .catch(err => {
@@ -104,11 +99,12 @@ export class ProductManageComponent implements OnInit {
   }
 
 
-  goLogin(){
+  goLogin() {
     this.ifException = false;
     this.router.navigate(['login']);
   }
-  confirmDialog(){
+
+  confirmDialog() {
     this.ifException = false;
   }
 
@@ -145,15 +141,15 @@ export class ProductManageComponent implements OnInit {
     };
     this.service.addOrEdit(param)
       .then(item => {
-       this.initProduct(item);
-      },error=>{
-        this.gotoLog=false;
+        this.initProduct(item);
+      }, error => {
+        this.gotoLog = false;
         this.alertDialog(error)
       });
   }
 
   //初始化表单数据
-  initProduct(item){
+  initProduct(item) {
     this.product_id = item.id;
     this.product_name = item.name;
     this.product_age = item.age;
@@ -186,22 +182,22 @@ export class ProductManageComponent implements OnInit {
       this.product_score = '';
       this.product_hits = null;
 
-      let param={
-        id:''
+      let param = {
+        id: ''
       };
       this.service.addOrEdit(param)
         .then(item => {
           this.initProduct(item);
-       },error=>{
+        }, error => {
           console.log('111', error);
-          this.dialogHeader='提示';
+          this.dialogHeader = '提示';
           this.confirmationService.confirm({
             message: error,
             accept: () => {
               this.ifTab1Active = true;
               this.ifTab2Active = false;
             },
-            reject:() =>{
+            reject: () => {
               this.ifTab1Active = true;
               this.ifTab2Active = false;
             }
@@ -242,8 +238,8 @@ export class ProductManageComponent implements OnInit {
         this.ifTab2Active = false;
 
         this.search();
-      },error=>{
-        this.gotoLog=false;
+      }, error => {
+        this.gotoLog = false;
         this.alertDialog(error)
       });
   }
@@ -280,18 +276,18 @@ export class ProductManageComponent implements OnInit {
   }
 
   delete(product) {
-    this.dialogHeader='删除产品';
+    this.dialogHeader = '删除产品';
     this.confirmationService.confirm({
       message: '确定要删除该产品么',
       accept: () => {
         let param = [{
-            id: product.id
+          id: product.id
         }];
         this.service.del(param)
           .then(res => {
             this.search();
-          },error=>{
-            this.gotoLog=false;
+          }, error => {
+            this.gotoLog = false;
             this.alertDialog(error)
           });
       },
@@ -301,23 +297,23 @@ export class ProductManageComponent implements OnInit {
   }
 
   batchDel() {
-    this.dialogHeader='批量删除';
-      this.confirmationService.confirm({
-        message: '确定批量删除这些产品吗？',
-        accept: () => {
-          let param = [];
-          for (let id of this.selectedProducts) {
-            param.push({id: id});
-          }
-          this.service.del(param)
-            .then(res => {
-              this.search();
-            },error=>{
-              this.gotoLog=false;
-              this.alertDialog(error)
-            })
-        },
-      });
+    this.dialogHeader = '批量删除';
+    this.confirmationService.confirm({
+      message: '确定批量删除这些产品吗？',
+      accept: () => {
+        let param = [];
+        for (let id of this.selectedProducts) {
+          param.push({id: id});
+        }
+        this.service.del(param)
+          .then(res => {
+            this.search();
+          }, error => {
+            this.gotoLog = false;
+            this.alertDialog(error)
+          })
+      },
+    });
   }
 
   findSelectedProductIndex(): number {

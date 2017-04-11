@@ -18,8 +18,8 @@
           <li>
             <div class="item">
               <span class="fa fa-lock"></span>
-              <input pInputText type="text" formControlName="password" required
-                                                     placeholder="密码"/>
+              <input type="text" pInputText formControlName="password" required
+                     placeholder="密码"/>
             </div>
             <div *ngIf="formErrors.password" class="alert alert-danger">
               {{ formErrors.password }}
@@ -27,7 +27,7 @@
           </li>
         </ul>
         <div>
-          <input pInputText type="hidden" formControlName="result" />
+          <input pInputText type="hidden" formControlName="result"/>
           <div *ngIf="formErrors.result" class="alert alert-danger">
             {{ formErrors.result }}
           </div>
@@ -35,10 +35,10 @@
       </div>
     </div>
     <!--<div style="font-size:12px;">-->
-      <!--<p-checkbox name="forgetPass" [value]="autoLogin" formControlName="forgetPass" binary="true"></p-checkbox>-->
-      <!--自动登录-->
-      <!--<div class="fr"><a routerLinkActive="active" routerLink="forgetPass" style="color:#666;text-decoration: none">无法登陆/忘记密码？</a>-->
-      <!--</div>-->
+    <!--<p-checkbox name="forgetPass" [value]="autoLogin" formControlName="forgetPass" binary="true"></p-checkbox>-->
+    <!--自动登录-->
+    <!--<div class="fr"><a routerLinkActive="active" routerLink="forgetPass" style="color:#666;text-decoration: none">无法登陆/忘记密码？</a>-->
+    <!--</div>-->
     <!--</div>-->
     <div style="clear:both">
       <button pButton type="submit" label="登录" [ngClass]="{disabled:!loginForm.valid}"
@@ -47,11 +47,10 @@
     </div>
   </form>
 
-   <footer>
-       <p>关于我们 服务与支持  常见问题  人才招聘 加盟合作</p>
-       <p>版权所有@ 2015 - 2016 深圳在乎传媒科技有限公司 粤ICP备15107022-1号</p>
-   </footer>
-
+  <footer>
+    <p>关于我们 服务与支持 常见问题 人才招聘 加盟合作</p>
+    <p>版权所有@ 2015 - 2016 深圳在乎传媒科技有限公司 粤ICP备15107022-1号</p>
+  </footer>
 
 
 </div>

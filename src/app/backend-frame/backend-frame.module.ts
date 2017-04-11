@@ -5,14 +5,6 @@ import {RouterModule} from '@angular/router';
 import {BackendFrameComponent} from './backend-frame.component';
 
 import {DemoComponent} from "./demo/demo";
-import {OverviewComponent} from "./demo/overview/overview.component";
-import {ProductManageComponent} from './demo/product-manage/product-manage.component';
-import {PlanOrderComponent} from './demo/plan-order/plan-order.component';
-import {DistributionManageComponent} from './demo/distribution-manage/distribution-manage.component';
-import {OperationCenterComponent} from './demo/operation-center/operation-center.component';
-import {DataStatisticsComponent} from './demo/data-statistics/data-statistics.component';
-import {TraceabilityManageComponent} from './demo/traceability-manage/traceability-manage.component';
-import {ExceptionQueryComponent} from './demo/exception-query/exception-query.component';
 import {PageNotFound2Component} from './my-common/page-not-found2/page-not-found2.component';
 import {PageNotFound3Component} from './my-common/page-not-found3/page-not-found3.component';
 import {FooterInfoComponent} from "./my-common/footer-info/footer-info.component";
@@ -25,48 +17,22 @@ import {
   DataTableModule,
   DialogModule,
   DropdownModule,
-  PanelModule, ConfirmDialogModule, ConfirmationService, GrowlModule
+  PanelModule,
+  ConfirmDialogModule,
+  ConfirmationService,
+  GrowlModule
 } from "primeng/primeng";
-import {HomeComponent} from "./home/home.component";
-import {ConfigurationHelperComponent} from "./configuration-helper/configuration-helper.component";
-import {SalesHelperComponent} from "./sales-helper/sales-helper.component";
-import {AddPlanComponent} from "./QR-code-manage/plan-order/add-plan.component";
 import {requestOptionsProvider} from "../default-request-options.service";
 import {AuthoritySystemComponent} from "./authority-system/authority-system";
 import {CookieService} from "angular2-cookie/core";
+import {DemoPageComponent} from "./demo/demo-page/demo-page";
+import {DemoAffairsComponent} from "./demo/demo-affairs/demo-affairs";
 
 const backendFrameRoutes = [
   {
     path: '',
     component: BackendFrameComponent,     //框架页面
     children: [
-      // {
-      //   path: 'home', component: HomeComponent,
-      //   children: []
-      // },
-      // {
-      //   path: 'QR-code-manage', component: QRCodeManageComponent,
-      //   children: [
-      //     {path: '', redirectTo: '/backend-frame/QR-code-manage/overview', pathMatch: 'full'},
-      //     {path: 'overview', component: OverviewComponent},
-      //     {path: 'product-manage', component: ProductManageComponent},
-      //     {path: 'plan-order', component: PlanOrderComponent},
-      //     {path: 'distribution-manage', component: DistributionManageComponent},
-      //     {path: 'operation-center', component: OperationCenterComponent},
-      //     {path: 'data-statistics', component: DataStatisticsComponent},
-      //     {path: 'traceability-manage', component: TraceabilityManageComponent},
-      //     {path: 'exception-query', component: ExceptionQueryComponent},
-      //     {path: '**', component: PageNotFound3Component}
-      //   ]
-      // },
-      // {
-      //   path: 'configuration-helper', component: ConfigurationHelperComponent,
-      //   children: []
-      // },
-      // {
-      //   path: 'sales-helper', component: SalesHelperComponent,
-      //   children: []
-      // },
       {
         path: 'authority-system', component: AuthoritySystemComponent,
         children: []
@@ -75,15 +41,8 @@ const backendFrameRoutes = [
         path: 'demo', component: DemoComponent,
         children: [
           {path: '', redirectTo: '/backend-frame/demo/demo-page', pathMatch: 'full'},
-          {path: 'demo-page', component: ProductManageComponent},
-          {path: 'demo-affairs', component: OverviewComponent},
-
-          // {path: 'plan-order', component: PlanOrderComponent},
-          // {path: 'distribution-manage', component: DistributionManageComponent},
-          // {path: 'operation-center', component: OperationCenterComponent},
-          // {path: 'data-statistics', component: DataStatisticsComponent},
-          // {path: 'traceability-manage', component: TraceabilityManageComponent},
-          // {path: 'exception-query', component: ExceptionQueryComponent},
+          {path: 'demo-page', component: DemoPageComponent},
+          {path: 'demo-affairs', component: DemoAffairsComponent},
           {path: '**', component: PageNotFound3Component}
         ]
       },
@@ -114,25 +73,15 @@ const backendFrameRoutes = [
   declarations: [
     AuthoritySystemComponent,
     DemoComponent,
-    HomeComponent,
-    ConfigurationHelperComponent,
-    SalesHelperComponent,
     FooterInfoComponent,
     TopMenuComponent,
     BackendFrameComponent,
-    AddPlanComponent,
-    OverviewComponent,
-    ProductManageComponent,
-    PlanOrderComponent,
-    DistributionManageComponent,
-    OperationCenterComponent,
-    DataStatisticsComponent,
-    TraceabilityManageComponent,
-    ExceptionQueryComponent,
+    DemoAffairsComponent,
+    DemoPageComponent,
     PageNotFound2Component,
     PageNotFound3Component
   ],
-  providers: [requestOptionsProvider, ConfirmationService,CookieService]
+  providers: [requestOptionsProvider, ConfirmationService, CookieService]
 })
 export class BackendFrameModule {
 }
