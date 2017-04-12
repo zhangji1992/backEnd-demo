@@ -16,16 +16,16 @@ import {DialogModule} from "primeng/primeng";
 export class RequestService {
   userName: string;
 
-  constructor(private http: Http,
-              private route: ActivatedRoute,
-              private router: Router) {
+  constructor(protected http: Http,
+              protected route: ActivatedRoute,
+              protected router: Router) {
   }
 
-  private handleError(error: any): Promise<any> {
+  protected handleError(error: any): Promise<any> {
      return Promise.reject(error);
   }
 
-  private httpPost(url, param?): Promise<any> {
+  protected httpPost(url, param?): Promise<any> {
     return this.http.post(url, JSON.stringify(param))               //请求头已在app.module.ts中预设并注入
       .toPromise()
       .then(res => {

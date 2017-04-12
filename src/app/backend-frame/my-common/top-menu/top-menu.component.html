@@ -20,7 +20,7 @@
   </nav>
 </div>
 
-<p-confirmDialog width="500" acceptLabel="确定" rejectLabel="取消"></p-confirmDialog>
+<p-confirmDialog key="topmenuDialogKey" width="500" acceptLabel="确定" rejectLabel="取消" [closable]="false" [closeOnEscape]="false"></p-confirmDialog>
 
 <p-dialog header="异常提示" [(visible)]="ifException" modal="true" dismissableMask="true" width="300" responsive="true" >
   <p>{{myException}}</p>

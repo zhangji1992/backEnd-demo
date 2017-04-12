@@ -20,7 +20,7 @@ import {
   PanelModule,
   ConfirmDialogModule,
   ConfirmationService,
-  GrowlModule
+  GrowlModule,RadioButtonModule
 } from "primeng/primeng";
 import {requestOptionsProvider} from "../default-request-options.service";
 import {PermissionComponent} from "./permission/permission";
@@ -75,7 +75,7 @@ const backendFrameRoutes = [
     DialogModule,
     TabViewModule,
     CheckboxModule,
-    PanelModule,
+    PanelModule,RadioButtonModule,
     RouterModule.forChild(backendFrameRoutes)
   ],
   exports: [],

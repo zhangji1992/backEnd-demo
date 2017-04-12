@@ -12,6 +12,7 @@ import {Router} from "@angular/router";
 })
 export class TopMenuComponent implements OnInit {
   selectedMenu: string;
+  isExits:boolean=false;
   topMenu: any[];
   ifException: boolean = false;
   myException: string;
@@ -53,11 +54,16 @@ export class TopMenuComponent implements OnInit {
     this.confirmationService.confirm({
       header: '退出登录',
       message: '确定要退出登录吗？',
+      key:'topmenuDialogKey',
       accept: () => {
+        this.isExits=false;
         this.service.logout()
           .then(() => {
             this._cookieService.remove('userName');
           });
+      },
+      reject:() =>{
+        this.isExits=false;
       }
     });
   }
