@@ -25,10 +25,14 @@ export class PermissionComponent implements OnInit {
 
   ngOnInit() {
     let param = {         //请求topMenu第二项对应的leftMenu
-      id: 2
+      id: 1
     };
     this.service.getLeftMenu(param)
-      .then(leftMenu => this.leftMenu = leftMenu, error => {
+      .then(leftMenu => {
+          console.log('leftMenu', leftMenu);
+          this.leftMenu = leftMenu;
+        },
+        error => {
         /*this.confirmationService.confirm({
          message: error.errorMassage,
          });*/

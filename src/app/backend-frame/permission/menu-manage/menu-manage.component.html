@@ -17,9 +17,6 @@
               <input class="myInputWidth" pInputText type="text" id="parentId" placeholder="请选择父级ID"
                      formControlName="parentId">
             </div>
-            <div class="myInputError" *ngIf="formErrors.parentId">
-              <i class="fa fa-close"></i>{{formErrors.parentId}}
-            </div>
           </div>
 
           <div class="myFormGroup">
@@ -37,9 +34,7 @@
             <div class="myInput">
               <input pInputText type="text" class="myInputWidth" id="order" formControlName="order">
             </div>
-            <div class="myInputError" *ngIf="formErrors.order">
-              <i class="fa fa-close">{{formErrors.order}}</i>
-            </div>
+            <div style="display: inline-block;color: #ababab;">排列顺序，升序。当值为空时，后台会自添加排序。</div>
           </div>
 
           <div class="myFormGroup">
@@ -47,9 +42,7 @@
             <div class="myInput">
               <input pInputText type="text" class="myInputWidth" id="url" formControlName="url">
             </div>
-            <div class="myInputError" *ngIf="formErrors.url">
-              <i class="fa fa-close">{{formErrors.url}}</i>
-            </div>
+            <div style="display: inline-block;color: #ababab;">点击菜单跳转的页面</div>
           </div>
 
           <div class="myFormGroup">
@@ -57,6 +50,7 @@
             <div class="myInput">
               <input pInputText type="text" class="myInputWidth" id="target" formControlName="target">
             </div>
+            <div style="display: inline-block;color: #ababab;">链接地址打开的目标窗口，默认：mainFrame</div>
             <div class="myInputError" *ngIf="formErrors.target">
               <i class="fa fa-close">{{formErrors.target}}</i>
             </div>
@@ -67,18 +61,13 @@
             <div class="myInput">
               <input pInputText type="text" class="myInputWidth" id="icon" formControlName="icon">
             </div>
-            <div class="myInputError" *ngIf="formErrors.icon">
-              <i class="fa fa-close">{{formErrors.icon}}</i>
-            </div>
           </div>
 
           <div class="myFormGroup">
-            <label for="ifShow" class="myLabel">是否可见:</label>
+            <label class="myLabel">是否可见:</label>
             <div class="myInput">
-              <input pInputText type="text" class="myInputWidth" id="ifShow" formControlName="ifShow">
-            </div>
-            <div class="myInputError" *ngIf="formErrors.ifShow">
-              <i class="fa fa-close">{{formErrors.ifShow}}</i>
+              <p-radioButton name="myRadio1" value="true" label="是" formControlName="ifShow"></p-radioButton>
+              <p-radioButton name="myRadio1" value="false" label="否" formControlName="ifShow"></p-radioButton>
             </div>
           </div>
 
@@ -87,43 +76,36 @@
             <div class="myInput">
               <input pInputText type="text" class="myInputWidth" id="identify" formControlName="identify">
             </div>
-            <div class="myInputError" *ngIf="formErrors.identify">
-              <i class="fa fa-close">{{formErrors.identify}}</i>
-            </div>
+            <div style="display: inline-block;color: #ababab;">控制器中定义的权限标识，格式如：pms:menu:view</div>
           </div>
 
           <div class="myFormGroup">
-            <label for="ifManage" class="myLabel">添加管理路径:</label>
+            <label class="myLabel">添加管理路径:</label>
             <div class="myInput">
-              <input pInputText type="text" class="myInputWidth" id="ifManage" formControlName="ifManage">
+              <p-radioButton name="myRadio2" value="true" label="是" formControlName="ifManage"></p-radioButton>
+              <p-radioButton name="myRadio2" value="false" label="否" formControlName="ifManage"></p-radioButton>
             </div>
-            <div class="myInputError" *ngIf="formErrors.ifManage">
-              <i class="fa fa-close">{{formErrors.ifManage}}</i>
-            </div>
+            <div style="display: inline-block;color: #ababab;">在路径映射时添加上了${{'{adminPath}'}}，如：@RequestMapping("${{'{adminPath}'}}/demo")</div>
           </div>
 
           <div class="myFormGroup">
-            <label for="ifDecorate" class="myLabel">添加装饰路径:</label>
+            <label class="myLabel">添加装饰路径:</label>
             <div class="myInput">
-              <input pInputText type="text" class="myInputWidth" id="ifDecorate" formControlName="ifDecorate">
+              <p-radioButton name="myRadio3" value="true" label="是" formControlName="ifDecorate"></p-radioButton>
+              <p-radioButton name="myRadio3" value="false" label="否" formControlName="ifDecorate"></p-radioButton>
             </div>
-            <div class="myInputError" *ngIf="formErrors.ifDecorate">
-              <i class="fa fa-close">{{formErrors.ifDecorate}}</i>
-            </div>
+            <div style="display: inline-block;color: #ababab;">在路径映射时添加上了${{'{excludedPath}'}}，如：@RequestMapping("${{'{excludedPath}'}}/demo")</div>
           </div>
 
           <div class="myFormGroup">
-            <label for="remarks" class="myLabel">备注:</label>
-            <div class="myInput">
-              <input pInputText type="text" class="myInputWidth" id="remarks" formControlName="remarks">
-            </div>
-            <div class="myInputError" *ngIf="formErrors.remarks">
-              <i class="fa fa-close">{{formErrors.remarks}}</i>
-            </div>
+            <label for="remarks" style="float: left" class="myLabel">备注：</label>
+            <textarea style="margin-left: 36px" rows="5" cols="30" pInputTextarea autoResize="autoResize"
+                      id="remarks" name="remarks" formControlName="remarks"></textarea>
           </div>
 
           <div class="myFormGroup">
             <div style="margin-left: 115px;">
+              <button pButton type="text" class="ui-button-secondary" label="取消"></button>
               <button pButton [disabled]="!menuForm.valid" type="submit" label="保存"></button>
             </div>
           </div>
