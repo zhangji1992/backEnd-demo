@@ -30,14 +30,12 @@
           <div style="margin-left:29px;">
             <label>更新时间</label>
             <p-calendar [inputStyle]="{'width': '160px'}" name="name-searchUpdateStartTime" [(ngModel)]="searchUpdateStartTime" [showIcon]="true"
-                        dateFormat="yy-mm-dd"  [showTime]="true" [showSeconds]="true"  [locale]="en"   dataType="string" [readonlyInput]="true"
-                        [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030"></p-calendar>
+                        dateFormat="yy-mm-dd"  [showTime]="true" [showSeconds]="true"  [locale]="en"   dataType="date" [readonlyInput]="true"
+                        [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030" (onSelect)="getValue($event)"></p-calendar>
             <div class="intervalLine">-</div>
             <p-calendar [inputStyle]="{'width': '160px'}" name="name-searchUpdateEndTime" [(ngModel)]="searchUpdateEndTime" [showIcon]="true"
-                        dateFormat="yy-mm-dd"  [showTime]="true" [showSeconds]="true"  [locale]="en"   dataType="string" [readonlyInput]="true"
-                        [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030"></p-calendar>
-
-
+                        dateFormat="yy-mm-dd"  [showTime]="true" [showSeconds]="true"  [locale]="en"   dataType="date" [readonlyInput]="true"
+                        [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030" (onSelect)="getValue($event)"></p-calendar>
           </div>
 
 
@@ -125,6 +123,12 @@
                  [(ngModel)]="product_password"/><span style="color: red">*</span>
         </div>
         <div class="product-details">
+          <label for="product_hits" style="vertical-align: top">备注</label>
+          <textarea pInputTextarea name="product_remarks" [(ngModel)]="product_remarks" style="resize: none" ></textarea>
+
+        </div>
+
+        <div class="product-details">
           <p-checkbox id="product-details" name="product_ifEnable" label="是否启用" value="" binary="true"
                       [(ngModel)]="product_ifEnable"></p-checkbox>
         </div>
@@ -139,13 +143,7 @@
                  [(ngModel)]="product_hits"/><span style="color: red">*</span>
         </div>
 
-        <div class="product-details">
-          <label for="product_hits">更新时间</label>
-          <p-calendar  name="product_updateTime" [(ngModel)]="product_updateTime" [showIcon]="true"
-                      dateFormat="yy-mm-dd" [showTime]="true" [showSeconds]="true"    [locale]="en" [readonlyInput]="true"
-                      [monthNavigator]="true" [yearNavigator]="true" yearRange="1960:2030"  dataType="string"></p-calendar>
 
-        </div>
 
         <div class="product_btn">
           <button type="text" pButton label="取消" class="ui-button-secondary" (click)="product_cancel()"></button>
