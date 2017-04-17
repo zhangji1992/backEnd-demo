@@ -26,6 +26,7 @@ export class DemoPageComponent implements OnInit {
   searchRemarks: string = '';
   searchBeginTime: Date;
   searchEndTime: Date;
+  searchUpdateStartTime: Date; searchUpdateEndTime: Date;
   product: Product = new PrimeProduct();
 
   newTabPanel: string = '添加演示';                 //新标签页名称
@@ -41,10 +42,10 @@ export class DemoPageComponent implements OnInit {
   product_ifEnable: boolean;
   product_score: string;
   product_hits: number;
-
   product_remarks: string;
   product_price: number;
   product_birthday: Date;
+  product_updateTime:Date;
 
   showForm:boolean=false; //默认不显示添加演示表单
 
@@ -133,6 +134,8 @@ export class DemoPageComponent implements OnInit {
     this.searchRemarks = null;
     this.searchBeginTime = null;
     this.searchEndTime = null;
+    this.searchUpdateStartTime = null;
+    this.searchUpdateEndTime=null;
   }
 
   edit(product) {
@@ -173,6 +176,7 @@ export class DemoPageComponent implements OnInit {
     this.product_age = item.age;
 
     this.product_birthday = new Date(item.birthday);
+    this.product_updateTime=new Date(item.updateDate);
     this.product_email = item.loginEmail;
     this.product_password = item.password;
     this.product_ifEnable = item.isEnable;
@@ -203,6 +207,7 @@ export class DemoPageComponent implements OnInit {
       this.product_ifEnable = false;
       this.product_score = '';
       this.product_hits = null;
+      this.product_updateTime=null;
 
       let param = {
         id: ''
@@ -256,6 +261,7 @@ export class DemoPageComponent implements OnInit {
       "isScore": this.product_score,
       "score": null,
       "hits": this.product_hits,
+      'updateDate':this.product_updateTime,
       "type": null,
       "info": null
     };

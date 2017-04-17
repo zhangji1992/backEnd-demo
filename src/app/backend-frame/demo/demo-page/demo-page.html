@@ -1,7 +1,7 @@
 <div class="content">
   <nav-position [items]="position"></nav-position>
   <loading [displayLoading]="display" ></loading>
-  <h3>产品列表</h3>
+  <h3>演示列表</h3>
   <p-tabView [style]="{'background': '#eee'}" (onChange)="changeTab($event)">
     <p-tabPanel header="演示列表" [selected]="ifTab1Active">
       <div class="form">
@@ -9,24 +9,39 @@
           <div>
             <label for="searchName">姓名</label>
             <input type="text" name="name-searchName" id="searchName" pInputText placeholder="请输入姓名"
-                   [(ngModel)]="searchName" />
+                   [(ngModel)]="searchName" style="width:120px" />
           </div>
           <div>
             <label for="searchRemarks">备注</label>
             <input type="text" name="name-searchRemarks" id="searchRemarks" pInputText placeholder="请输入备注"
-                   [(ngModel)]="searchRemarks"/>
+                   [(ngModel)]="searchRemarks" style="width:120px" />
           </div>
           <div>
             <label>生日</label>
-            <p-calendar name="name-searchBeginTime" [(ngModel)]="searchBeginTime" [showIcon]="true"
+            <p-calendar [inputStyle]="{'width': '110px'}" name="name-searchBeginTime" [(ngModel)]="searchBeginTime" [showIcon]="true"
                         dateFormat="yy-mm-dd" [locale]="en"   dataType="string" [readonlyInput]="true"
+                        [monthNavigator]="true" [yearNavigator]="true" yearRange="1960:2030"></p-calendar>
+            <div class="intervalLine">-</div>
+            <p-calendar [inputStyle]="{'width': '110px'}" name="name-searchEndTime" [(ngModel)]="searchEndTime" [showIcon]="true"
+                        dateFormat="yy-mm-dd" [locale]="en"   dataType="string" [readonlyInput]="true"
+                        [monthNavigator]="true" [yearNavigator]="true" yearRange="1960:2030"></p-calendar>
+          </div>
+
+          <div style="margin-left:29px;">
+            <label>更新时间</label>
+            <p-calendar [inputStyle]="{'width': '160px'}" name="name-searchUpdateStartTime" [(ngModel)]="searchUpdateStartTime" [showIcon]="true"
+                        dateFormat="yy-mm-dd"  [showTime]="true" [showSeconds]="true"  [locale]="en"   dataType="string" [readonlyInput]="true"
                         [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030"></p-calendar>
             <div class="intervalLine">-</div>
-            <p-calendar name="name-searchEndTime" [(ngModel)]="searchEndTime" [showIcon]="true"
-                        dateFormat="yy-mm-dd" [locale]="en"   dataType="string" [readonlyInput]="true"
+            <p-calendar [inputStyle]="{'width': '160px'}" name="name-searchUpdateEndTime" [(ngModel)]="searchUpdateEndTime" [showIcon]="true"
+                        dateFormat="yy-mm-dd"  [showTime]="true" [showSeconds]="true"  [locale]="en"   dataType="string" [readonlyInput]="true"
                         [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030"></p-calendar>
+
+
           </div>
-          <div>
+
+
+          <div style="margin-left:29px;">
             <button pButton type="button" label="搜索" (click)="search()"></button>
           </div>
           <div>
@@ -51,9 +66,9 @@
             <p-checkbox name="groupname" [value]="product.id" [(ngModel)]="selectedProducts"></p-checkbox>
           </template>
         </p-column>
-        <p-column [style]="{'width': '10%', 'margin-top': '20px', 'text-align': 'center'}" field="name"
+        <p-column [style]="{'width': '15%', 'margin-top': '20px', 'text-align': 'center'}" field="name"
                   header="姓名"></p-column>
-        <p-column [style]="{'width':'12%', 'margin-top': '20px', 'text-align': 'center','word-break':'break-all'}" field="loginEmail"
+        <p-column [style]="{'width':'17%', 'margin-top': '20px', 'text-align': 'center','word-break':'break-all'}" field="loginEmail"
                   header="邮箱"></p-column>
         <p-column [style]="{'width': '8%', 'margin-top': '20px', 'text-align': 'center'}" field="birthday"
                   header="生日">
@@ -62,9 +77,15 @@
           </template>
 
         </p-column>
-        <p-column [style]="{'width':'10%', 'margin-top': '20px', 'text-align': 'center'}" field="remarks"
+        <p-column [style]="{'width':'15%', 'margin-top': '20px', 'text-align': 'center'}" field="remarks"
                   header="备注"></p-column>
-        <p-column [style]="{'width':'50%', 'margin-top': '20px', 'text-align': 'center'}" field="operation" header="操作">
+        <p-column [style]="{'width':'15%', 'margin-top': '20px', 'text-align': 'center'}" field="updateDate"
+                  header="更新时间">
+          <template let-col let-product="rowData" pTemplate="body">
+            {{product.updateDate | date:"y-MM-dd HH:mm:ss"}}
+          </template>
+        </p-column>
+        <p-column [style]="{'width':'20%', 'margin-top': '20px', 'text-align': 'center'}" field="operation" header="操作">
           <template let-col let-product="rowData" pTemplate="body">
             <button type="button" pButton class="ui-button-secondary" icon="fa-pencil" (click)="edit(product)"
                     label="编辑"></button>
@@ -91,7 +112,7 @@
           <label for="product_birthday">生日</label>
           <p-calendar id="product_birthday" name="product_birthday" [(ngModel)]="product_birthday" [showIcon]="true"
                       dateFormat="yy-mm-dd"   [locale]="en" [readonlyInput]="true"
-                      [monthNavigator]="true" [yearNavigator]="true" yearRange="1960:2017"  dataType="string"></p-calendar>
+                      [monthNavigator]="true" [yearNavigator]="true" yearRange="1960:2030"  dataType="string"></p-calendar>
         </div>
         <div class="product-details">
           <label for="product_email">邮箱</label>
@@ -117,6 +138,15 @@
           <input type="number" pInputText id="product_hits" name="product_hits"
                  [(ngModel)]="product_hits"/><span style="color: red">*</span>
         </div>
+
+        <div class="product-details">
+          <label for="product_hits">更新时间</label>
+          <p-calendar  name="product_updateTime" [(ngModel)]="product_updateTime" [showIcon]="true"
+                      dateFormat="yy-mm-dd" [showTime]="true" [showSeconds]="true"    [locale]="en" [readonlyInput]="true"
+                      [monthNavigator]="true" [yearNavigator]="true" yearRange="1960:2030"  dataType="string"></p-calendar>
+
+        </div>
+
         <div class="product_btn">
           <button type="text" pButton label="取消" class="ui-button-secondary" (click)="product_cancel()"></button>
           <button type="text" pButton label="保存" icon="fa-check" (click)="product_save()"></button>
