@@ -27,5 +27,20 @@ export const interfaceUrl = {
   save: `${server}/a/demo/testPage/save.do`,
 
   //删除
-  del: `${server}/a/demo/testPage/deletes.do`
+  del: `${server}/a/demo/testPage/deletes.do`,
+
+  //获取角色列表
+  getRoleTable: `src/mock-data/role.json`,
+
+  //获取角色授权树形菜单
+  getPowerTree: `src/mock-data/power-tree.json`,
+
+  //获取待分配角色表
+  getDistributeTable: `src/mock-data/distribute-table.json`,
+
+  //获取分配角色弹窗列表
+  getDistributeDialogueTable: `src/mock-data/distribute-dialogue.json`,
+
+  //角色分配弹窗搜索（待后台提供）
+  search3: `${server}/a/demo/testPage/list.do`
 };

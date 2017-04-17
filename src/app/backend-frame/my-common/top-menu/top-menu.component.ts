@@ -8,7 +8,6 @@ import {Router} from "@angular/router";
   selector: 'top-menu',
   templateUrl: './top-menu.component.html',
   styleUrls: ['./top-menu.component.scss'],
-  providers: [RequestService],
 })
 export class TopMenuComponent implements OnInit {
   selectedMenu: string;
@@ -18,25 +17,27 @@ export class TopMenuComponent implements OnInit {
   myException: string;
   userName: string = this._cookieService.get('userName');
 
-  constructor(public router: Router,public service: RequestService,
-              private confirmationService: ConfirmationService,private _cookieService:CookieService) {
+  constructor(public router: Router,
+              public service: RequestService,
+              private confirmService: ConfirmationService,
+              private _cookieService: CookieService) {
   }
 
   ngOnInit() {
-    console.log("dddd: ",JSON.stringify(this._cookieService.getAll()));
+    // console.log("dddd: ", JSON.stringify(this._cookieService.getAll()));
 
     this.service.getTopMenu()
       .then(topMenu => {
-        console.log('ngOnInit getTopMenu', topMenu, this.service.userName);
+        // console.log('ngOnInit getTopMenu', topMenu, this.service.userName);
         this.topMenu = topMenu;
-      },error=>{
-        if(error.resultStatus=='error' && error.errorMassage=='未登录或登录超时！'){
+      }, error => {
+        if (error.resultStatus == 'error' && error.errorMassage == '未登录或登录超时！') {
           this.router.navigateByUrl("/login");
-        }else{
+        } else {
           /*this.confirmationService.confirm({
-            header: '提示',
-            message: error.errorMassage,
-          });*/
+           header: '提示',
+           message: error.errorMassage,
+           });*/
         }
       })
       .catch(err => {
@@ -51,10 +52,11 @@ export class TopMenuComponent implements OnInit {
   }
 
   logout() {
-    this.confirmationService.confirm({
+    this.isExits = true;
+    this.confirmService.confirm({
+      key:'topmenuDialogKey',
       header: '退出登录',
       message: '确定要退出登录吗？',
-      key:'topmenuDialogKey',
       accept: () => {
         this.isExits=false;
         this.service.logout()

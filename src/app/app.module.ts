@@ -8,7 +8,7 @@ import {AppComponent} from './app.component';
 import {PageNotFoundComponent} from "./backend-frame/my-common/page-not-found/page-not-found.component";
 import {ComponentsModule} from "./backend-frame/my-common/components/components.module";
 import {ProvidersModule} from "./providers/providers.module";
-import {InputTextModule} from "primeng/primeng";
+import {InputTextModule, TreeModule} from "primeng/primeng";
 import {LoginModule} from "./login/login.module";
 import {requestOptionsProvider} from "./default-request-options.service";
 
@@ -27,6 +27,7 @@ const appRoutes = [
     RouterModule,
     ComponentsModule,
     InputTextModule,
+    TreeModule,
     ReactiveFormsModule,
     ProvidersModule,
     LoginModule,

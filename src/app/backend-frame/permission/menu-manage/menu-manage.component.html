@@ -1,3 +1,158 @@
-<p>
-  menu-manage works!
-</p>
+<div class="content">
+  <!--<nav-position [items]="position"></nav-position>-->
+  <!--<h3>产品列表</h3>-->
+  <h3>&nbsp;</h3>
+
+  <p-tabView [style]="{'background': '#eee'}" (onChange)="changeTab($event)">
+    <p-tabPanel header="菜单列表" [selected]="ifTab1Active">
+    </p-tabPanel>
+    <p-tabPanel [header]="newTabPanel" leftIcon="fa-plus" [selected]="ifTab2Active">
+      <div class="newTabPanel" *ngIf="newTabPanel == '菜单添加' || newTabPanel == '菜单编辑'">
+
+        <form [formGroup]="menuForm" (ngSubmit)="onSubmit()">
+
+          <div class="myFormGroup">
+            <label class="myLabel" for="parentId">父级ID:</label>
+            <div class="myInput">
+              <input class="myInputWidth" pInputText type="text" id="parentId" placeholder="请选择父级ID"
+                     formControlName="parentId">
+            </div>
+            <div class="myInputError" *ngIf="formErrors.parentId">
+              <i class="fa fa-close"></i>{{formErrors.parentId}}
+            </div>
+          </div>
+
+          <div class="myFormGroup">
+            <label for="menu_name" class="myLabel">名称<span style="color: red;">*</span>:</label>
+            <div class="myInput">
+              <input pInputText type="text" class="myInputWidth" id="menu_name" formControlName="name">
+            </div>
+            <div class="myInputError" *ngIf="formErrors.name">
+              <i class="fa fa-close">{{formErrors.name}}</i>
+            </div>
+          </div>
+
+          <div class="myFormGroup">
+            <label for="order" class="myLabel">排序:</label>
+            <div class="myInput">
+              <input pInputText type="text" class="myInputWidth" id="order" formControlName="order">
+            </div>
+            <div class="myInputError" *ngIf="formErrors.order">
+              <i class="fa fa-close">{{formErrors.order}}</i>
+            </div>
+          </div>
+
+          <div class="myFormGroup">
+            <label for="url" class="myLabel">链接:</label>
+            <div class="myInput">
+              <input pInputText type="text" class="myInputWidth" id="url" formControlName="url">
+            </div>
+            <div class="myInputError" *ngIf="formErrors.url">
+              <i class="fa fa-close">{{formErrors.url}}</i>
+            </div>
+          </div>
+
+          <div class="myFormGroup">
+            <label for="target" class="myLabel">目标:</label>
+            <div class="myInput">
+              <input pInputText type="text" class="myInputWidth" id="target" formControlName="target">
+            </div>
+            <div class="myInputError" *ngIf="formErrors.target">
+              <i class="fa fa-close">{{formErrors.target}}</i>
+            </div>
+          </div>
+
+          <div class="myFormGroup">
+            <label for="icon" class="myLabel">图标:</label>
+            <div class="myInput">
+              <input pInputText type="text" class="myInputWidth" id="icon" formControlName="icon">
+            </div>
+            <div class="myInputError" *ngIf="formErrors.icon">
+              <i class="fa fa-close">{{formErrors.icon}}</i>
+            </div>
+          </div>
+
+          <div class="myFormGroup">
+            <label for="ifShow" class="myLabel">是否可见:</label>
+            <div class="myInput">
+              <input pInputText type="text" class="myInputWidth" id="ifShow" formControlName="ifShow">
+            </div>
+            <div class="myInputError" *ngIf="formErrors.ifShow">
+              <i class="fa fa-close">{{formErrors.ifShow}}</i>
+            </div>
+          </div>
+
+          <div class="myFormGroup">
+            <label for="identify" class="myLabel">权限标识:</label>
+            <div class="myInput">
+              <input pInputText type="text" class="myInputWidth" id="identify" formControlName="identify">
+            </div>
+            <div class="myInputError" *ngIf="formErrors.identify">
+              <i class="fa fa-close">{{formErrors.identify}}</i>
+            </div>
+          </div>
+
+          <div class="myFormGroup">
+            <label for="ifManage" class="myLabel">添加管理路径:</label>
+            <div class="myInput">
+              <input pInputText type="text" class="myInputWidth" id="ifManage" formControlName="ifManage">
+            </div>
+            <div class="myInputError" *ngIf="formErrors.ifManage">
+              <i class="fa fa-close">{{formErrors.ifManage}}</i>
+            </div>
+          </div>
+
+          <div class="myFormGroup">
+            <label for="ifDecorate" class="myLabel">添加装饰路径:</label>
+            <div class="myInput">
+              <input pInputText type="text" class="myInputWidth" id="ifDecorate" formControlName="ifDecorate">
+            </div>
+            <div class="myInputError" *ngIf="formErrors.ifDecorate">
+              <i class="fa fa-close">{{formErrors.ifDecorate}}</i>
+            </div>
+          </div>
+
+          <div class="myFormGroup">
+            <label for="remarks" class="myLabel">备注:</label>
+            <div class="myInput">
+              <input pInputText type="text" class="myInputWidth" id="remarks" formControlName="remarks">
+            </div>
+            <div class="myInputError" *ngIf="formErrors.remarks">
+              <i class="fa fa-close">{{formErrors.remarks}}</i>
+            </div>
+          </div>
+
+          <div class="myFormGroup">
+            <div style="margin-left: 115px;">
+              <button pButton [disabled]="!menuForm.valid" type="submit" label="保存"></button>
+            </div>
+          </div>
+          <div style="text-align:center;margin-top:20px" *ngIf="submitted">
+            表单已提交
+            <br>
+            {{diagnostic}}
+          </div>
+        </form>
+
+      </div>
+    </p-tabPanel>
+  </p-tabView>
+
+  <p-confirmDialog [header]="confirmDialogHeader" acceptLabel="确定" rejectLabel="取消" icon="fa fa-question-circle"
+                   key="menu-manage"
+                   width="425"></p-confirmDialog>
+
+  <p-dialog header="异常提示" [closable]="false" [closeOnEscape]="false" [(visible)]="ifException" modal="true" width="500"
+            [responsive]="true">
+    <p>{{myException}}</p>
+    <p-footer>
+      <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+        <button type="button" *ngIf="gotoLog" pButton (click)="goLogin()" label="确定"></button>
+        <button type="button" *ngIf="!gotoLog" pButton (click)="confirmDialog()" label="确定"></button>
+      </div>
+    </p-footer>
+  </p-dialog>
+
+  <p-growl [value]="msgs" life="2000"></p-growl>
+
+</div>

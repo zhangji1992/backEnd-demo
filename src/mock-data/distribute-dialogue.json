@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "loginName": "admin",
+    "name": "超级管理员",
+    "jobId": "1",
+    "remarks": "超级管理员！！"
+  },
+  {
+    "id": 2,
+    "loginName": "admin2",
+    "name": "不超级管理员",
+    "jobId": "2",
+    "remarks": "不超级管理员！！"
+  }
+]

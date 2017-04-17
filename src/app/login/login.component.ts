@@ -68,7 +68,7 @@ export class LoginComponent implements OnInit {
       if (control && control.dirty && !control.valid) { //当组件不正确的时候，获取值被改变的时候
         this.submitted = true;
         const messages = this.validationMessages[field];
-        console.log(control.errors);
+        // console.log(control.errors);
         for (const key in control.errors) {
           this.formErrors[field] += messages[key] + ' ';
         }
@@ -98,13 +98,14 @@ export class LoginComponent implements OnInit {
       username: this.loginForm.value.username,
       password: this.loginForm.value.password
     };
-    console.log('param', param);
+    // console.log('param', param);
     this.service.login(param)
       .then(res => {
         this._cookieService.put('userName', res.name);
-        console.log('vvv2', this.service.userName);
+        // console.log('vvv2', this.service.userName);
         // this.router.navigate(['../backend-frame', 'demo', 'demo-page'], { relativeTo: this.route });
-        this.router.navigateByUrl('/backend-frame/permission/user-manage');
+        // this.router.navigateByUrl('/backend-frame/permission/role-manage');
+        this.router.navigateByUrl('/backend-frame/permission/menu-manage');
       }, error => {
         this.alertDialog(error)
       })

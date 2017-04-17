@@ -20,7 +20,8 @@ import {
   PanelModule,
   ConfirmDialogModule,
   ConfirmationService,
-  GrowlModule, RadioButtonModule, TreeModule, TreeNode, SharedModule, TreeTableModule,BlockUIModule
+  GrowlModule, RadioButtonModule, SharedModule, TreeTableModule,BlockUIModule,
+  InputTextareaModule, InputSwitchModule, TreeModule, TreeNode
 } from "primeng/primeng";
 import {requestOptionsProvider} from "../default-request-options.service";
 import {PermissionComponent} from "./permission/permission";
@@ -71,12 +72,20 @@ const backendFrameRoutes = [
     ComponentsModule,
     DialogModule,
     DropdownModule,
+    InputTextareaModule,
+    InputSwitchModule,
+    TreeModule,
     CalendarModule,
     DataTableModule,
     DialogModule,
     TabViewModule,
-    CheckboxModule,TreeTableModule,SharedModule,
-    PanelModule,RadioButtonModule,TreeModule,BlockUIModule,
+    CheckboxModule,
+    TreeTableModule,
+    SharedModule,
+    PanelModule,
+    RadioButtonModule,
+    TreeModule,
+    BlockUIModule,
     RouterModule.forChild(backendFrameRoutes)
   ],
   exports: [],
