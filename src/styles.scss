@@ -33,3 +33,7 @@ body {
 .ui-datatable .ui-datatable-data>tr>td{
   text-align: center;
 }
+//修改树形菜单，与label保持在同一行
+.ui-tree {
+  display: inline-table;
+}

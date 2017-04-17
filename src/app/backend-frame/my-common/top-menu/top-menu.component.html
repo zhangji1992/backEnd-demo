@@ -20,13 +20,14 @@
   </nav>
 </div>
 
-<p-confirmDialog width="500" acceptLabel="确定" rejectLabel="取消"></p-confirmDialog>
+<p-confirmDialog header="提示" width="500" acceptLabel="确定" rejectLabel="取消" key="top-menu"></p-confirmDialog>
 
 <p-dialog header="异常提示" [(visible)]="ifException" modal="true" dismissableMask="true" width="300" responsive="true" >
   <p>{{myException}}</p>
   <p-footer>
     <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
       <button type="button" pButton (click)="ifException = false" label="确定"></button>
+      <button type="button" pButton (click)="ifException = false" label="取消"></button>
     </div>
   </p-footer>
 </p-dialog>

@@ -10,7 +10,7 @@ import {interfaceUrl} from "./serverUrls";
 import {Observable} from "rxjs";
 import {requestOptionsProvider} from "../default-request-options.service";
 import {Error} from "tslint/lib/error";
-import {DialogModule} from "primeng/primeng";
+import {DialogModule, TreeNode} from "primeng/primeng";
 
 @Injectable()
 export class RequestService {
@@ -22,7 +22,7 @@ export class RequestService {
   }
 
   private handleError(error: any): Promise<any> {
-     return Promise.reject(error);
+    return Promise.reject(error);
   }
 
   private httpPost(url, param?): Promise<any> {
@@ -30,19 +30,37 @@ export class RequestService {
       .toPromise()
       .then(res => {
         let data = res.json();
-        console.log('data', data);
+        // console.log('data', data);
         let resultStatus = data.resultStatus;
 
+        // switch(resultStatus){
+        //   case 'success':
+        //     return data.infoData;
+        //   // case 'error':
+        //   //   console.log('fail:', data.errorMassage || data.errorStackTrace || data.exception);
+        //   //   return Promise.reject(data.infoData || data.errorMassage);
+        //   // case 'exception':
+        //   //   console.log('exception:', data.errorMassage || data.errorStackTrace || data.exception);
+        //   //   return Promise.reject(data.errorMassage);
+        //   // case 'validate':
+        //   //   console.log('validate:', data.errorMassage || data.errorStackTrace || data.exception);
+        //   //   return Promise.reject(data.infoData);
+        //   // case 'validates':
+        //   //   console.log('validates:', data.errorMassage || data.errorStackTrace || data.exception);
+        //   //   return Promise.reject(data.infoData);
+        //   default:
+        //     return Promise.reject(data.infoData);
+        // }
         if (resultStatus == 'success') {
           return data.infoData;
-        } else if (resultStatus == 'error'){
+        } else if (resultStatus == 'error') {
           console.log('fail:', data.errorMassage || data.errorStackTrace || data.exception);
           return Promise.reject(data.infoData || data.errorMassage);
-        }else if (resultStatus == 'exception'){
+        } else if (resultStatus == 'exception') {
           return Promise.reject(data.errorMassage);
-        }else if(resultStatus == 'validate'){
+        } else if (resultStatus == 'validate') {
           return Promise.reject(data.infoData);
-        }else if(resultStatus == 'validates'){
+        } else if (resultStatus == 'validates') {
           return Promise.reject(data.infoData);
         }
       })
@@ -62,9 +80,9 @@ export class RequestService {
     return this.httpPost(interfaceUrl.login, param)
       .then(res => {
         this.userName = res.name;
-        console.log('登录成功', res, this.userName);
+        // console.log('登录成功', res, this.userName);
         // this.router.navigateByUrl("/backend-frame/demo/demo-page");
-        this.router.navigate(['../backend-frame', 'demo', 'demo-page'], { relativeTo: this.route });
+        this.router.navigate(['../backend-frame', 'demo', 'demo-page'], {relativeTo: this.route});
         return res;
       })
       .catch(this.handleError);
@@ -86,7 +104,7 @@ export class RequestService {
       .catch(this.handleError);
   }
 
-  getUserName(){
+  getUserName() {
     return this.userName;
   }
 
@@ -99,7 +117,7 @@ export class RequestService {
   getTopMenu(param?): Promise<any> {
     return this.httpPost(interfaceUrl.getTopMenu, param)
       .then(res => {
-        console.log('111', this.userName);
+        // console.log('111', this.userName);
         return res;
       })
       .catch(this.handleError);
@@ -127,6 +145,65 @@ export class RequestService {
     return this.httpPost(`${interfaceUrl.search}?pageNo=${pageNo}&pageSize=${pageSize}`, param)
       .then(res => res.items)
       .catch(this.handleError);
+  }
+
+  /**
+   * 搜索角色列表
+   * @returns {Promise<Error>}
+   */
+  getRoleTable(): Promise<any> {
+    console.log('url', interfaceUrl.getRoleTable);
+    return this.http.get(interfaceUrl.getRoleTable)
+      .toPromise()
+      .then(res => {
+        console.log('in', res.json());
+        return res.json();
+      })
+      .catch(error => new Error('服务器错误'));
+  }
+
+  /**
+   * 搜索角色授权树形菜单
+   * @returns {Promise<Error>}
+   */
+  getPowerTree(): Promise<any> {
+    return this.http.get(interfaceUrl.getPowerTree)
+      .toPromise()
+      .then(res => <TreeNode[]> res.json())
+      .catch(error => new Error('服务器错误'));
+  }
+
+  /**
+   * 角色分配提示窗搜索
+   * @param param
+   * @returns {Promise<any>}
+   */
+  search3(param): Promise<any>{
+    return this.httpPost(interfaceUrl.search3, param)
+      .then(res => res.items)
+      .catch(this.handleError);
+  }
+
+  /**
+   * 获取待分配角色列表
+   * @returns {Promise<Error>}
+   */
+  getDistributeTable(): Promise<any> {
+    return this.http.get(interfaceUrl.getDistributeTable)
+      .toPromise()
+      .then(res => res.json())
+      .catch(error => new Error('服务器错误'));
+  }
+
+  /**
+   * 获取分配角色提示窗列表
+   * @returns {Promise<Error>}
+   */
+  getDistributeDialogueTable(): Promise<any>{
+    return this.http.get(interfaceUrl.getDistributeDialogueTable)
+      .toPromise()
+      .then(res => res.json())
+      .catch(error => new Error('服务器错误'));
   }
 
   /**

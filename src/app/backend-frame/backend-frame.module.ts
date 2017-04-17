@@ -20,7 +20,7 @@ import {
   PanelModule,
   ConfirmDialogModule,
   ConfirmationService,
-  GrowlModule
+  GrowlModule, InputTextareaModule, InputSwitchModule, TreeModule, TreeNode
 } from "primeng/primeng";
 import {requestOptionsProvider} from "../default-request-options.service";
 import {PermissionComponent} from "./permission/permission";
@@ -70,6 +70,9 @@ const backendFrameRoutes = [
     ComponentsModule,
     DialogModule,
     DropdownModule,
+    InputTextareaModule,
+    InputSwitchModule,
+    TreeModule,
     CalendarModule,
     DataTableModule,
     DialogModule,

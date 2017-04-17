@@ -1,3 +1,232 @@
-<p>
-  role-manage works!
-</p>
+<div class="content">
+  <!--<nav-position [items]="position"></nav-position>-->
+  <!--<h3>产品列表</h3>-->
+  <h3>&nbsp;</h3>
+
+  <p-tabView [style]="{'background': '#eee'}" (onChange)="changeTab($event)">
+    <p-tabPanel header="角色列表" [selected]="ifTab1Active">
+      <div class="form">
+        <form>
+
+          <div>
+            <label for="searchName">角色名称</label>
+            <input type="text" name="name-searchName" id="searchName" pInputText placeholder="请输入角色名称"
+                   [(ngModel)]="searchName"/>
+          </div>
+
+          <div>
+            <button pButton type="button" label="查询" (click)="search()"></button>
+          </div>
+
+        </form>
+      </div>
+
+      <div style="width: 100%;margin-bottom: 20px;height: 30px;">
+        <button type="button" class="ui-button-secondary" pButton icon="fa-trash" style="float:right"
+                (click)="batchDel()"
+                label="删除/批量删除" [disabled]="selectedProducts.length == 0"></button>
+      </div>
+
+      <p-dataTable [value]="products" [rows]="10" [paginator]="true" [pageLinks]="1" [rowsPerPageOptions]="[5,10,20]"
+                   emptyMessage="未查询到相关记录">
+        <p-column [style]="{'width':'10%;', 'margin-top': '20px', 'text-align': 'center'}" field="id">
+          <template pTemplate="header">
+            <p-checkbox name="groupname" value="" [(ngModel)]="ifAllSelected" (onChange)="selectAll()" binary="true"
+                        label="全选"></p-checkbox>
+          </template>
+          <template let-col let-product="rowData" pTemplate="body">
+            <p-checkbox name="groupname" [value]="product.id" [label]="product.id"
+                        [(ngModel)]="selectedProducts"></p-checkbox>
+          </template>
+        </p-column>
+        <p-column [style]="{'width': '10%', 'margin-top': '20px', 'text-align': 'center'}" field="name"
+                  header="角色名称"></p-column>
+        <p-column [style]="{'width':'10%', 'margin-top': '20px', 'text-align': 'center'}" field="num"
+                  header="角色编号"></p-column>
+        <p-column [style]="{'width':'10%', 'margin-top': '20px', 'text-align': 'center'}" field="ifEnable"
+                  header="是否可用"></p-column>
+        <p-column [style]="{'width':'10%', 'margin-top': '20px', 'text-align': 'center'}" field="lastEditBy"
+                  header="最后修改人"></p-column>
+        <p-column [style]="{'width':'10%', 'margin-top': '20px', 'text-align': 'center'}" field="lastEditTime"
+                  header="最后修改时间"></p-column>
+        <p-column [style]="{'width':'10%', 'margin-top': '20px', 'text-align': 'center'}" field="remarks"
+                  header="备注"></p-column>
+        <p-column [style]="{'width':'30%', 'margin-top': '20px', 'text-align': 'center'}" field="operation" header="操作">
+          <template let-col let-product="rowData" pTemplate="body">
+            <button type="button" pButton class="ui-button-secondary" icon="fa-pencil" (click)="edit(product)"
+                    label="编辑"></button>
+            <button type="button" pButton class="ui-button-secondary" icon="fa-plus-circle"
+                    (click)="goDistributePanel(product)"
+                    label="分配"></button>
+            <button type="button" pButton class="ui-button-secondary" icon="fa-trash" (click)="delete(product)"
+                    label="删除"></button>
+          </template>
+        </p-column>
+      </p-dataTable>
+    </p-tabPanel>
+    <p-tabPanel [header]="newTabPanel" leftIcon="fa-plus" [selected]="ifTab2Active">
+      <div class="newTabPanel" *ngIf="newTabPanel == '角色添加' || newTabPanel == '角色编辑'">
+        <!--<form>-->
+        <div class="product-details">
+          <label for="product_name">角色名称</label>
+          <input type="text" id="product_name" pInputText name="product_name"
+                 [(ngModel)]="product_name"/><span style="color: red">*</span><span style="color: #ABABAB;">控制器中定义的权限标识,如：@RequiresRoles("角色编号")</span>
+        </div>
+        <div class="product-details">
+          <label for="product_num">角色编号</label>
+          <input type="text" id="product_num" pInputText name="product_num"
+                 [(ngModel)]="product_num"/>
+        </div>
+        <div class="product-details">
+          <label for="product_ifEnable">是否启用</label>
+          <p-checkbox id="product_ifEnable" name="product_ifEnable" binary="true"
+                      [(ngModel)]="product_ifEnable"></p-checkbox>
+        </div>
+        <div class="product-details">
+          <label for="product_score" style="float: left">备注</label>
+          <textarea style="margin-left: 36px" rows="5" cols="30" pInputTextarea autoResize="autoResize"
+                    id="product_score" name="product_score" [(ngModel)]="product_score"></textarea>
+        </div>
+        <div class="product_detail">
+          <label for="product_power" style="margin-left: 15px;">角色授权</label>
+          <p-tree id="product_power" name="product_power" [value]="powerTree" selectionMode="checkbox"
+                  [(selection)]="selectedPowers"></p-tree>
+        </div>
+        <div class="product_btn">
+          <button type="text" pButton label="取消" class="ui-button-secondary" (click)="product_cancel()"></button>
+          <button type="text" pButton label="保存" icon="fa-check" (click)="product_save()"></button>
+        </div>
+        <!--</form>-->
+
+      </div>
+      <div *ngIf="newTabPanel == '角色分配'">
+        <div class="form">
+          <div style="float: left">
+            角色名称：{{distributeItem.name}}
+          </div>
+          <div style="margin-left: 500px;">
+            是否启用：
+            <span *ngIf="distributeItem.ifEnable == true">是</span>
+            <span *ngIf="distributeItem.ifEnable == false">否</span>
+          </div>
+        </div>
+
+        <div style="width: 100%;margin-bottom: 20px;">
+          <button type="button" pButton label="分配角色" (click)="distributeRole()"></button>
+        </div>
+
+        <p-dataTable [value]="distributeTable" emptyMessage="未查询到相关记录">
+          <p-column [style]="{'width':'5%;', 'margin-top': '20px', 'text-align': 'center'}" field="id"
+                    header="序号"></p-column>
+          <p-column [style]="{'width': '10%', 'margin-top': '20px', 'text-align': 'center'}" field="loginName"
+                    header="登录名"></p-column>
+          <p-column [style]="{'width':'10%', 'margin-top': '20px', 'text-align': 'center'}" field="name"
+                    header="姓名"></p-column>
+          <p-column [style]="{'width':'10%', 'margin-top': '20px', 'text-align': 'center'}" field="jobId"
+                    header="工号"></p-column>
+          <p-column [style]="{'width':'10%', 'margin-top': '20px', 'text-align': 'center'}" field="ifEnable"
+                    header="是否可登录"></p-column>
+          <p-column [style]="{'width':'10%', 'margin-top': '20px', 'text-align': 'center'}" field="remarks"
+                    header="备注"></p-column>
+          <p-column [style]="{'width':'45%', 'margin-top': '20px', 'text-align': 'center'}" field="operation"
+                    header="操作">
+            <template let-col let-product="rowData" pTemplate="body">
+              <button type="button" pButton class="ui-button-secondary" icon="fa-trash" (click)="delete(product)"
+                      label="移除"></button>
+            </template>
+          </p-column>
+        </p-dataTable>
+
+      </div>
+    </p-tabPanel>
+  </p-tabView>
+
+  <p-dialog header="产品信息" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true">
+    <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="product">
+      <div class="ui-grid-row">
+        <div class="ui-grid-col-4"><label for="name">产品名称</label></div>
+        <div class="ui-grid-col-8"><input id="name" pInputText [(ngModel)]="product.name"/></div>
+      </div>
+      <div class="ui-grid-row">
+        <div class="ui-grid-col-4"><label for="type">产品类型</label></div>
+        <div class="ui-grid-col-8"><input id="type" pInputText [(ngModel)]="product.type"/></div>
+      </div>
+    </div>
+    <p-footer>
+      <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+        <button pButton type="text" icon="fa-check" (click)="save()" label="保存"></button>
+        <button pButton type="text" icon="fa-times" (click)="cancel()" label="取消"></button>
+      </div>
+    </p-footer>
+  </p-dialog>
+
+  <p-confirmDialog [header]="confirmDialogHeader" acceptLabel="确定" rejectLabel="取消" icon="fa fa-question-circle"
+                   key="role-manage"
+                   width="425"></p-confirmDialog>
+
+  <p-dialog header="异常提示" [closable]="false" [closeOnEscape]="false" [(visible)]="ifException" modal="true" width="500"
+            [responsive]="true">
+    <p>{{myException}}</p>
+    <p-footer>
+      <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+        <button type="button" *ngIf="gotoLog" pButton (click)="goLogin()" label="确定"></button>
+        <button type="button" *ngIf="!gotoLog" pButton (click)="confirmDialog()" label="确定"></button>
+      </div>
+    </p-footer>
+  </p-dialog>
+
+  <p-dialog header="分配角色" [closeOnEscape]="false" [(visible)]="ifDistribute" modal="true"
+            width="1000" [responsive]="true">
+    <div class="form">
+      <form>
+        <div>
+          <label for="loginName">登录名</label>
+          <input type="text" name="loginName" id="loginName" pInputText placeholder="请输入登录名"
+                 [(ngModel)]="searchLoginName"/>
+        </div>
+        <div>
+          <label for="distributeName">姓名</label>
+          <input type="text" name="distributeName" id="distributeName" pInputText placeholder="请输入姓名"
+                 [(ngModel)]="searchDistributeName"/>
+        </div>
+
+        <div>
+          <button pButton type="button" label="查询" (click)="search2()"></button>
+        </div>
+      </form>
+    </div>
+
+    <p-dataTable [value]="distributeDialogueTable" [rows]="5" [paginator]="true" [pageLinks]="1"
+                 [rowsPerPageOptions]="[5,10,20]" emptyMessage="未查询到相关记录">
+      <p-column [style]="{'width':'16%;', 'margin-top': '20px', 'text-align': 'center'}" field="id">
+        <template pTemplate="header">
+          <p-checkbox name="groupname" value="" [(ngModel)]="ifAllRolesSelected" (onChange)="selectAllRoles()" binary="true"
+                      label="全选"></p-checkbox>
+        </template>
+        <template let-col let-product="rowData" pTemplate="body">
+          <p-checkbox name="groupname" [value]="product.id" [label]="product.id"
+                      [(ngModel)]="selectedRoles"></p-checkbox>
+        </template>
+      </p-column>
+      <p-column [style]="{'width': '14%', 'margin-top': '20px', 'text-align': 'center'}" field="loginName"
+                header="登录名"></p-column>
+      <p-column [style]="{'width':'10%', 'margin-top': '20px', 'text-align': 'center'}" field="name"
+                header="姓名"></p-column>
+      <p-column [style]="{'width':'10%', 'margin-top': '20px', 'text-align': 'center'}" field="jobId"
+                header="工号"></p-column>
+      <p-column [style]="{'width':'50%', 'margin-top': '20px', 'text-align': 'center'}" field="remarks"
+                header="备注"></p-column>
+    </p-dataTable>
+
+    <p-footer>
+      <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+        <button type="button" pButton (click)="confirmDistribute()" label="确定分配"></button>
+        <button type="button" pButton (click)="ifDistribute = false" label="取消"></button>
+      </div>
+    </p-footer>
+  </p-dialog>
+
+  <p-growl [value]="msgs" life="2000"></p-growl>
+
+
+</div>

@@ -1,0 +1,29 @@
+.newTabPanel {
+  background: #F0F1F4;
+  border: 1px solid #ddd;
+
+  .myFormGroup {
+    margin: 10px 0 10px 40px;
+
+    .myLabel {
+      margin-left: 30px;
+      text-align: right;
+    }
+
+    .myInput {
+      display: inline-block;
+      margin-left: 20px;
+      width: 300px;
+
+      .myInputWidth {
+        width: 280px;
+      }
+    }
+
+    .myInputError {
+      display: inline-block;
+      width: 300px;
+      color: red;
+    }
+  }
+}

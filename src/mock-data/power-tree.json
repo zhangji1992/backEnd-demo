@@ -1,0 +1,78 @@
+[
+  {
+    "label": "权限系统",
+    "data": "powerSystem",
+    "children": [
+      {
+        "label": "权限管理",
+        "data": "powerManage",
+        "children": [
+          {
+            "label": "用户管理",
+            "data": "userManage"
+          },
+          {
+            "label": "角色管理",
+            "data": "roleManage"
+          },
+          {
+            "label": "菜单管理",
+            "data": "menuManage"
+          }
+        ]
+      },
+      {
+        "label": "基础设置",
+        "data": "baseConfig",
+        "children": [
+          {
+            "label": "职员管理",
+            "data": "employeeManage"
+          },
+          {
+            "label": "子系统管理",
+            "data": "subSystemManage"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "label": "演示系统",
+    "data": "systemDemo",
+    "children": [
+      {
+        "label": "页面演示",
+        "data": "pageDemo"
+      },
+      {
+        "label": "功能演示",
+        "data": "functionDemo",
+        "children": [
+          {
+            "label": "事务演示",
+            "data": "affairsDemo",
+            "children": [
+              {
+                "label": "未加事务",
+                "data": "1"
+              },
+              {
+                "label": "加事务走主库",
+                "data": "2"
+              },
+              {
+                "label": "直接设置为走主库",
+                "data": "3"
+              },
+              {
+                "label": "事务1",
+                "data": "4"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

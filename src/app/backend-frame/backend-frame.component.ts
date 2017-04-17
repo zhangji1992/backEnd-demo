@@ -11,6 +11,6 @@ export class BackendFrameComponent implements OnInit {
   }
 
   ngOnInit() {
-      console.log('333', this.service, this.service.userName);
+      // console.log('333', this.service, this.service.userName);
   }
 }

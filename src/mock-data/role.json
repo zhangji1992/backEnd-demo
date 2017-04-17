@@ -1,0 +1,29 @@
+[
+  {
+    "id": 1,
+    "name":"超级管理员",
+    "num": "admin",
+    "ifEnable": true,
+    "lastEditBy": "超级管理员",
+    "lastEditTime": "2017-03-20",
+    "remarks": "超级管理员的角色"
+  },
+  {
+    "id": 2,
+    "name":"超级管理员2",
+    "num": "admin2",
+    "ifEnable": true,
+    "lastEditBy": "超级管理员2",
+    "lastEditTime": "2017-03-21",
+    "remarks": "超级管理员的角色2"
+  },
+  {
+    "id": 3,
+    "name":"超级管理员3",
+    "num": "admin3",
+    "ifEnable": false,
+    "lastEditBy": "超级管理员3",
+    "lastEditTime": "2017-03-22",
+    "remarks": "超级管理员的角色3"
+  }
+]
