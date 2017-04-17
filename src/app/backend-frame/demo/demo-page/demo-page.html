@@ -1,6 +1,6 @@
 <div class="content">
   <nav-position [items]="position"></nav-position>
-  <loading [displayLoading]="display" ></loading>
+  <loading [displayLoading]="display"></loading>
   <h3>产品列表</h3>
   <p-tabView [style]="{'background': '#eee'}" (onChange)="changeTab($event)">
     <p-tabPanel header="演示列表" [selected]="ifTab1Active">
@@ -9,7 +9,7 @@
           <div>
             <label for="searchName">姓名</label>
             <input type="text" name="name-searchName" id="searchName" pInputText placeholder="请输入姓名"
-                   [(ngModel)]="searchName" />
+                   [(ngModel)]="searchName"/>
           </div>
           <div>
             <label for="searchRemarks">备注</label>
@@ -19,11 +19,11 @@
           <div>
             <label>生日</label>
             <p-calendar name="name-searchBeginTime" [(ngModel)]="searchBeginTime" [showIcon]="true"
-                        dateFormat="yy-mm-dd" [locale]="en"   dataType="string"
+                        dateFormat="yy-mm-dd" [locale]="en" dataType="string"
                         [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030"></p-calendar>
             <div class="intervalLine">-</div>
             <p-calendar name="name-searchEndTime" [(ngModel)]="searchEndTime" [showIcon]="true"
-                        dateFormat="yy-mm-dd" [locale]="en"   dataType="string"
+                        dateFormat="yy-mm-dd" [locale]="en" dataType="string"
                         [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030"></p-calendar>
           </div>
           <div>
@@ -36,7 +36,8 @@
       </div>
 
       <div style="width: 100%;margin-bottom: 20px;overflow: hidden">
-        <button type="button" class="ui-button-secondary" pButton icon="fa-trash" style="float:right" (click)="batchDel()"
+        <button type="button" class="ui-button-secondary" pButton icon="fa-trash" style="float:right"
+                (click)="batchDel()"
                 label="批量删除" [disabled]="selectedProducts.length == 0"></button>
       </div>
 
@@ -90,8 +91,9 @@
         <div class="product-details">
           <label for="product_birthday">生日</label>
           <p-calendar id="product_birthday" name="product_birthday" [(ngModel)]="product_birthday" [showIcon]="true"
-                      dateFormat="yy-mm-dd"   [locale]="en"
-                      [monthNavigator]="true" [yearNavigator]="true" yearRange="1960:2017"  dataType="string"></p-calendar>
+                      dateFormat="yy-mm-dd" [locale]="en"
+                      [monthNavigator]="true" [yearNavigator]="true" yearRange="1960:2017"
+                      dataType="string"></p-calendar>
         </div>
         <div class="product-details">
           <label for="product_email">邮箱</label>
@@ -152,9 +154,11 @@
   </p-dialog>
 
 
-  <p-confirmDialog [header]="dialogHeader" [closable]="false" [closeOnEscape]="false" acceptLabel="确定"  rejectLabel="取消" icon="fa fa-question-circle" width="425"></p-confirmDialog>
+  <p-confirmDialog [header]="dialogHeader" [closable]="false" [closeOnEscape]="false" acceptLabel="确定" rejectLabel="取消"
+                   icon="fa fa-question-circle" width="425"></p-confirmDialog>
 
-  <p-dialog header="异常提示" showHeader="false" closeOnEscape="false" [(visible)]="ifException" modal="true" width="500" responsive="true" closable="false">
+  <p-dialog header="异常提示" showHeader="false" closeOnEscape="false" [(visible)]="ifException" modal="true" width="500"
+            responsive="true" closable="false">
     <p>{{myException}}</p>
     <p-footer>
       <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">

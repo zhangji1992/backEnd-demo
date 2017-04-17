@@ -62,9 +62,9 @@ export class RequestService {
     return this.httpPost(interfaceUrl.login, param)
       .then(res => {
         this.userName = res.name;
-        // console.log('登录成功', res, this.userName);
+        console.log('登录成功', res, this.userName);
         // this.router.navigateByUrl("/backend-frame/demo/demo-page");
-        this.router.navigate(['../backend-frame', 'demo', 'demo-page'], { relativeTo: this.route });
+        // this.router.navigate(['../backend-frame', 'demo', 'demo-page'], { relativeTo: this.route });
         return res;
       })
       .catch(this.handleError);

@@ -30,6 +30,9 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+    if(this._cookieService.get('userName')){
+      this.router.navigate(['../backend-frame', 'demo', 'demo-page'], { relativeTo: this.route });
+    }
     this.buildForm();
   }
 
@@ -98,14 +101,14 @@ export class LoginComponent implements OnInit {
       username: this.loginForm.value.username,
       password: this.loginForm.value.password
     };
-    // console.log('param', param);
+    console.log('param', param);
     this.service.login(param)
       .then(res => {
         this._cookieService.put('userName', res.name);
         // console.log('vvv2', this.service.userName);
-        // this.router.navigate(['../backend-frame', 'demo', 'demo-page'], { relativeTo: this.route });
+        this.router.navigate(['../backend-frame', 'demo', 'demo-page'], { relativeTo: this.route });
         // this.router.navigateByUrl('/backend-frame/permission/role-manage');
-        this.router.navigateByUrl('/backend-frame/permission/menu-manage');
+        // this.router.navigateByUrl('/backend-frame/permission/menu-manage');
       }, error => {
         this.alertDialog(error)
       })

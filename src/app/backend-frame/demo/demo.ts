@@ -29,11 +29,14 @@ export class DemoComponent implements OnInit {
       id: 2
     };
     this.service.getLeftMenu(param)
-      .then(leftMenu => this.leftMenu = leftMenu,error=>{
-        /*this.confirmationService.confirm({
-          message: error.errorMassage,
-        });*/
-      });
+      .then(leftMenu => {
+          this.leftMenu = leftMenu;
+          this.selectedItem = this.leftMenu[0].id;
+          this.leftMenu[0].expression = 'open';
+          this.selectedChildItem = this.leftMenu[0].children[0].id;
+        },
+        error => {
+        });
   }
 
   clickItem(menu: any) {

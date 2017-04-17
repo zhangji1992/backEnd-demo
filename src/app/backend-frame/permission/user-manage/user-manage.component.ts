@@ -2,7 +2,7 @@ import {Component, OnInit, Output} from '@angular/core';
 import {User} from "./user";
 import {RequestService} from "../../../providers/request.service";
 import {Router} from "@angular/router";
-import {UserService} from "./user.service";
+// import {UserService} from "./user.service";
 import {ConfirmationService} from "primeng/primeng";
 import {forEach} from "@angular/router/src/utils/collection";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
@@ -12,7 +12,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
   selector: 'user-manage',
   templateUrl: './user-manage.component.html',
   styleUrls: ['./user-manage.component.scss'],
-  providers: [UserService],
+  // providers: [UserService],
 })
 export class UserManageComponent implements OnInit {
   /*这里是全选用到的标量*/
@@ -40,7 +40,7 @@ export class UserManageComponent implements OnInit {
   user: User = new User('','', '', '', '', 1, false, '');
 
   constructor(private router: Router,
-              private service: UserService,
+              // private service: UserService,
               private cService: ConfirmationService) {
   }
 
@@ -54,15 +54,15 @@ export class UserManageComponent implements OnInit {
   }
 
   search() {
-    this.service.searchForm(this.searchForm)
-      .then(products => {
-        console.log('search get', products);
-        this.users = products.items;
-      }, error => {
-        this.alertDialog(error);
-      }).catch(err => {
-
-    })
+    // this.service.searchForm(this.searchForm)
+    //   .then(products => {
+    //     console.log('search get', products);
+    //     this.users = products.items;
+    //   }, error => {
+    //     this.alertDialog(error);
+    //   }).catch(err => {
+    //
+    // })
   }
 
   /*
