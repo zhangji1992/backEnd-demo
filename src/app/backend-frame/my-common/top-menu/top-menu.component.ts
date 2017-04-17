@@ -1,8 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {RequestService} from "../../../providers/request.service";
+import {ConfirmationService} from "primeng/primeng";
 import {CookieService} from "angular2-cookie/core";
 import {Router} from "@angular/router";
-import {ConfirmationService} from "primeng/primeng";
 
 @Component({
   selector: 'top-menu',
@@ -11,8 +11,8 @@ import {ConfirmationService} from "primeng/primeng";
 })
 export class TopMenuComponent implements OnInit {
   selectedMenu: string;
+  isExits:boolean=false;
   topMenu: any[];
-  ifExit: boolean = false;
   ifException: boolean = false;
   myException: string;
   userName: string = this._cookieService.get('userName');
@@ -52,23 +52,21 @@ export class TopMenuComponent implements OnInit {
   }
 
   logout() {
-    this.ifExit = true;
+    this.isExits = true;
     this.confirmService.confirm({
-      key: 'top-menu',
+      key:'topmenuDialogKey',
       header: '退出登录',
       message: '确定要退出登录吗？',
       accept: () => {
-        this.ifExit = false;
+        this.isExits=false;
         this.service.logout()
           .then(() => {
-            this.ifExit = false;
             this._cookieService.remove('userName');
           });
       },
-      reject: () => {
-        this.ifExit = false;
+      reject:() =>{
+        this.isExits=false;
       }
     });
   }
-
 }

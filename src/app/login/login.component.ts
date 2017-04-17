@@ -15,7 +15,7 @@ import {CookieService} from 'angular2-cookie/core';
   providers: [ConfirmationService, CookieService]
 })
 export class LoginComponent implements OnInit {
-  loginForm: FormGroup;
+  loginForm: FormGroup; //FormGroup继承了AbstractControl类
   submitted: boolean;
   autoLogin: false;
   autoLoginChecked: boolean = false;
@@ -35,12 +35,22 @@ export class LoginComponent implements OnInit {
 
 
   buildForm() {
+    //FormBuilder.group()返回一个FormGroup对象,我们也可以不通过FormBuilder来手动建立一个FormGroup对象
     this.loginForm = this.fb.group({
       'username': ['', [Validators.required]],
       'password': ['', Validators.required],
       'result': []
       // 'forgetPass': [this.autoLoginChecked]
     });
+
+    //通过FormBuilder来手动建立一个FormGroup对象
+    /*this.loginForm=new FormGroup({
+     username: new FormControl("", Validators.required),
+     password: new FormControl("", Validators.required),
+     result:new FormControl(),
+    });*/
+
+
     this.loginForm.valueChanges
       .subscribe(data => this.onValueChanged(data));
     this.onValueChanged(); // (re)set validation messages now

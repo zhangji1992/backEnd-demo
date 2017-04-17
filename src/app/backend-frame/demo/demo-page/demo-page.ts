@@ -10,7 +10,7 @@ import {Router} from "@angular/router";
   styleUrls: ['./demo-page.scss']
 })
 export class DemoPageComponent implements OnInit {
-  position = ['产品管理', '产品'];
+  display: boolean = false; //设置是否显示loading动画
   ifException: boolean = false;
   myException: string;
   displayDialog: boolean;
@@ -24,11 +24,11 @@ export class DemoPageComponent implements OnInit {
   searchName: string = '';
   searchType: string;
   searchRemarks: string = '';
-  searchBeginTime: string;
-  searchEndTime: string;
+  searchBeginTime: Date;
+  searchEndTime: Date;
   product: Product = new PrimeProduct();
 
-  newTabPanel: string = '添加产品';                 //新标签页名称
+  newTabPanel: string = '添加演示';                 //新标签页名称
   ifTab1Active: boolean = true;
   ifTab2Active: boolean = false;
 
@@ -44,9 +44,9 @@ export class DemoPageComponent implements OnInit {
 
   product_remarks: string;
   product_price: number;
-  product_birthday: string;
+  product_birthday: Date;
 
-  gotoLog: boolean = false;
+  showForm:boolean=false; //默认不显示添加演示表单
 
   confrim: any;
   tabViewCss = {
@@ -54,6 +54,7 @@ export class DemoPageComponent implements OnInit {
   };
 
   dialogHeader: string;
+  en: any; //配置日历语言
 
   constructor(private router: Router,
               private service: RequestService,
@@ -62,20 +63,23 @@ export class DemoPageComponent implements OnInit {
 
   ngOnInit() {
     this.search();
+    this.setCalenderLanguage();
+  }
+
+  setCalenderLanguage(){
+    this.en = {
+      firstDayOfWeek: 0,
+      dayNames: ["日","一","二","三","四","五","六"],
+      dayNamesShort: ["日","一","二","三","四","五","六"],
+      dayNamesMin: ["日","一","二","三","四","五","六"],
+      monthNames: [ "一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月" ],
+      monthNamesShort: [ "一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"]
+    };
   }
 
   alertDialog(errorMsg) {
     this.ifException = true;
     this.myException = errorMsg;
-    /*this.dialogHeader='提示';
-     this.confirmationService.confirm({
-     message: error.errorMassage,
-     accept: ()=>{
-
-     },
-     reject: ()=>{
-
-     );*/
   }
 
   search() {
@@ -83,15 +87,20 @@ export class DemoPageComponent implements OnInit {
       "name": this.searchName,
       "remarks": this.searchRemarks
     };
+
+    this.display=true;//显示loading层
+
     this.service.search(this.pageNo, this.pageSize, param)
       .then(products => {
         console.log('search get', products);
+        this.display=false;
         this.products = products;
       }, error => {
-        this.gotoLog = true;
+        this.display=false;
         this.alertDialog(error);
       })
       .catch(err => {
+        this.display=false;
         this.ifException = true;
         console.log('err', err, err.json());
         this.myException = err;
@@ -121,6 +130,7 @@ export class DemoPageComponent implements OnInit {
   reset() {
     this.searchName = null;
     this.searchType = null;
+    this.searchRemarks = null;
     this.searchBeginTime = null;
     this.searchEndTime = null;
   }
@@ -128,9 +138,11 @@ export class DemoPageComponent implements OnInit {
   edit(product) {
     console.log('eidt', product);
 
-    this.newTabPanel = '编辑产品';
+    this.newTabPanel = '编辑演示';
     this.ifTab1Active = false;
     this.ifTab2Active = true;
+    this.display=true;
+    this.showForm=true;
 
     // this.newProduct = false;
     // this.product = this.cloneProduct(product);
@@ -141,10 +153,16 @@ export class DemoPageComponent implements OnInit {
     };
     this.service.addOrEdit(param)
       .then(item => {
+        this.showForm=true;
+        this.display=false;
         this.initProduct(item);
       }, error => {
-        this.gotoLog = false;
+        this.showForm=false;
+        this.display=false;
         this.alertDialog(error)
+      }).catch(error=>{
+        this.showForm=false;
+        this.display=false;
       });
   }
 
@@ -153,7 +171,8 @@ export class DemoPageComponent implements OnInit {
     this.product_id = item.id;
     this.product_name = item.name;
     this.product_age = item.age;
-    this.product_birthday = item.birthday;
+
+    this.product_birthday = new Date(item.birthday);
     this.product_email = item.loginEmail;
     this.product_password = item.password;
     this.product_ifEnable = item.isEnable;
@@ -163,15 +182,18 @@ export class DemoPageComponent implements OnInit {
     this.product_price = item.price;
   }
 
+
   changeTab(event) {
-    console.log('ininin', event.index);
     if (event.index == 0) {
-      this.newTabPanel = '添加产品';
+      this.newTabPanel = '添加演示';
       this.ifTab1Active = true;
       this.ifTab2Active = false;
+      this.showForm=true;
     } else if (event.index == 1) {
-      this.ifTab1Active = false;
+      this.ifTab1Active = false ;
       this.ifTab2Active = true;
+      this.display=true;
+      this.showForm=false;
 
       this.product_id = '';
       this.product_name = '';
@@ -187,39 +209,46 @@ export class DemoPageComponent implements OnInit {
       };
       this.service.addOrEdit(param)
         .then(item => {
+          this.display=false; this.showForm=true;
           this.initProduct(item);
         }, error => {
           console.log('111', error);
           this.dialogHeader = '提示';
+          this.display=false;
           this.confirmationService.confirm({
             message: error,
             accept: () => {
               this.ifTab1Active = true;
               this.ifTab2Active = false;
+              this.showForm=true;
             },
             reject: () => {
               this.ifTab1Active = true;
               this.ifTab2Active = false;
+              this.showForm=true;
             }
           });
-        });
+        }).catch(error=>{
+        this.display=false;
+      });
     }
   }
 
   product_cancel() {
-    this.newTabPanel = '添加产品';
+    this.newTabPanel = '添加演示';
 
     this.ifTab1Active = true;
     this.ifTab2Active = false;
   }
 
   product_save() {
+    this.display=true;
     let param = {
       "id": this.product_id,
       "remarks": '',
       "name": this.product_name,
       "age": null,
-      "birthday": null,
+      "birthday": this.product_birthday,
       "loginEmail": this.product_email,
       "password": this.product_password,
       "price": null,
@@ -230,17 +259,21 @@ export class DemoPageComponent implements OnInit {
       "type": null,
       "info": null
     };
+    console.log( this.product_birthday);
     this.service.save(param)
       .then(res => {
-        this.newTabPanel = '添加产品';
+        this.display=false;
+        this.newTabPanel = '添加演示';
 
         this.ifTab1Active = true;
         this.ifTab2Active = false;
 
         this.search();
       }, error => {
-        this.gotoLog = false;
+        this.display= false;
         this.alertDialog(error)
+      }).catch(error=>{
+        this.display=false;
       });
   }
 
@@ -276,21 +309,29 @@ export class DemoPageComponent implements OnInit {
   }
 
   delete(product) {
-    this.dialogHeader = '删除产品';
+    this.dialogHeader = '删除演示';
+    let  _self=this;
     this.confirmationService.confirm({
-      message: '确定要删除该产品么',
+      message: '确定要删除该演示么',
       accept: () => {
+        _self.display=true;
         let param = [{
           id: product.id
         }];
         this.service.del(param)
           .then(res => {
+            _self.display=false;
             this.search();
           }, error => {
-            this.gotoLog = false;
+            _self.display=false;
             this.alertDialog(error)
-          });
+          }).catch(err=>{
+           _self.display=false;
+        });
       },
+      reject: () =>{
+        _self.display=false;
+      }
     });
     // this.products.splice(product.id - 1, 1);
 
@@ -298,19 +339,24 @@ export class DemoPageComponent implements OnInit {
 
   batchDel() {
     this.dialogHeader = '批量删除';
+    let  _self=this;
     this.confirmationService.confirm({
-      message: '确定批量删除这些产品吗？',
+      message: '确定批量删除这些演示吗？',
       accept: () => {
+        _self.display=true;
         let param = [];
         for (let id of this.selectedProducts) {
           param.push({id: id});
         }
         this.service.del(param)
           .then(res => {
+            _self.display=false;
             this.search();
           }, error => {
-            this.gotoLog = false;
+            _self.display=false;
             this.alertDialog(error)
+          }).catch(err=>{
+            _self.display=false;
           })
       },
     });

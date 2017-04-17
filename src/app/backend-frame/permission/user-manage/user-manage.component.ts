@@ -1,187 +1,171 @@
-import {Component, OnInit} from '@angular/core';
-import {Product, PrimeProduct} from "./product";
+import {Component, OnInit, Output} from '@angular/core';
+import {User} from "./user";
 import {RequestService} from "../../../providers/request.service";
-import {ConfirmationService} from 'primeng/primeng';
 import {Router} from "@angular/router";
+import {UserService} from "./user.service";
+import {ConfirmationService} from "primeng/primeng";
+import {forEach} from "@angular/router/src/utils/collection";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
+
 
 @Component({
   selector: 'user-manage',
   templateUrl: './user-manage.component.html',
-  styleUrls: ['./user-manage.component.scss']
+  styleUrls: ['./user-manage.component.scss'],
+  providers: [UserService],
 })
 export class UserManageComponent implements OnInit {
-  position = ['产品管理', '产品'];
-  ifException: boolean = false;
-  myException: string;
-  displayDialog: boolean;
-  pageNo: number = 1;
-  pageSize: number = 10;
-  newProduct: boolean;
-  selectedProduct: Product;
-  products: Product[];
+  /*这里是全选用到的标量*/
   ifAllSelected: boolean = false;
-  selectedProducts: string[] = [];
-  searchName: string = '';
-  searchType: string;
-  searchRemarks: string = '';
-  searchBeginTime: string;
-  searchEndTime: string;
-  product: Product = new PrimeProduct();
+  selectedUsers: string[] = [];
+  userform: FormGroup;
+  submitted: boolean = false;
 
-  newTabPanel: string = '添加产品';                 //新标签页名称
+  default = 1;
+  searchForm = {
+    pageSize: 10,
+    pageNo: 1,
+    loginName: '',
+    name: '',
+    is_login: this.default
+  }
+
+  users: any[]; //分页读取到的列表数据
+
+  newTabPanel: string = '添加用户';                 //新标签页名称
   ifTab1Active: boolean = true;
   ifTab2Active: boolean = false;
+  isSubmittedClicked:boolean=false; //保存按钮是否被触发
 
-  //产品详情
-  product_id: string;
-  product_name: string;
-  product_age: number;
-  product_email: string;
-  product_password: string;
-  product_ifEnable: boolean;
-  product_score: string;
-  product_hits: number;
-
-  product_remarks: string;
-  product_price: number;
-  product_birthday: string;
-
-  gotoLog: boolean = false;
-
-  confrim: any;
-  tabViewCss = {
-    'border': '1px solid red'
-  };
-
-  dialogHeader: string;
+  user: User = new User('','', '', '', '', 1, false, '');
 
   constructor(private router: Router,
-              private service: RequestService,
-              private confirmationService: ConfirmationService) {
+              private service: UserService,
+              private cService: ConfirmationService) {
   }
 
   ngOnInit() {
     this.search();
+    this.buildForm();
   }
 
   alertDialog(errorMsg) {
-    this.ifException = true;
-    this.myException = errorMsg;
-    /*this.dialogHeader='提示';
-     this.confirmationService.confirm({
-     message: error.errorMassage,
-     accept: ()=>{
 
-     },
-     reject: ()=>{
-
-     );*/
   }
 
   search() {
-    let param = {
-      "name": this.searchName,
-      "remarks": this.searchRemarks
-    };
-    this.service.search(this.pageNo, this.pageSize, param)
+    this.service.searchForm(this.searchForm)
       .then(products => {
         console.log('search get', products);
-        this.products = products;
+        this.users = products.items;
       }, error => {
-        this.gotoLog = true;
         this.alertDialog(error);
-      })
-      .catch(err => {
-        this.ifException = true;
-        console.log('err', err, err.json());
-        this.myException = err;
-      })
+      }).catch(err => {
+
+    })
   }
 
-
-  goLogin() {
-    this.ifException = false;
-    this.router.navigate(['login']);
+  /*
+   * 创建FromGroup对象，并且创建fromControl验证
+   */
+  buildForm() {
+    this.userform = new FormGroup({
+      id:new FormControl(this.user.id),
+      loginName: new FormControl(this.user.loginName, [
+        Validators.required,
+        Validators.maxLength(10),
+      ]),
+      password: new FormControl(this.user.password),
+      username: new FormControl(this.user.username, [
+        Validators.required,
+        Validators.maxLength(10),
+      ]),
+      userNo: new FormControl(this.user.userNo),
+      is_login: new FormControl(this.user.is_login),
+      role: new FormControl(this.user.role),
+      remarks: new FormControl(this.user.remarks)
+    })
+    this.userform.valueChanges
+      .subscribe(data => this.onValueChanged(data));
+    // this.onValueChanged(); // (re)set validation messages now
   }
 
-  confirmDialog() {
-    this.ifException = false;
+  /*
+   * form表单中的值有变化的时候触发的方法
+   */
+  onValueChanged(data?: any) {
+
+    if (!this.userform) {
+      return;
+    }
+    const form = this.userform;
+    for (const field in this.formErrors) {
+      // clear previous error message (if any)
+      this.formErrors[field] = ''; //相当于重置错误信息
+      const control = form.get(field); //获取表单中对应字段的组件
+      if (control && (control.dirty || (this.isSubmittedClicked && !control.touched)) && !control.valid) { //当组件不正确的时候，获取值被改变的时候
+        this.submitted = true;
+        const messages = this.validationMessages[field];
+        for (const key in control.errors) {
+          this.formErrors[field] += messages[key] + ' ';
+        }
+      }
+    }
   }
 
-  add() {
-    this.newProduct = true;
-    this.product = new PrimeProduct();
-    this.displayDialog = true;
-  }
+  formErrors = {
+    loginName: '',
+    username: '',
+  };
 
-  addPlan() {
+  validationMessages = {
+    'loginName': {
+      'required': '请填写登录名',
+      'maxlength': '登录名不得超过10个字'
+    },
+    'username': {
+      'required': '请填写姓名',
+      'maxlength': '姓名不得超过10个字'
+    }
+  };
 
-  }
 
   reset() {
-    this.searchName = null;
-    this.searchType = null;
-    this.searchBeginTime = null;
-    this.searchEndTime = null;
+    this.searchForm.loginName = null;
+    this.searchForm.name = null;
+    this.searchForm.is_login = this.default;
   }
 
   edit(product) {
-    console.log('eidt', product);
-
-    this.newTabPanel = '编辑产品';
-    this.ifTab1Active = false;
-    this.ifTab2Active = true;
-
-    // this.newProduct = false;
-    // this.product = this.cloneProduct(product);
-    // this.displayDialog = true;
-
-    let param = {
+     console.log('eidt', product);
+     this.newTabPanel = '编辑用户';
+     this.ifTab1Active = false;
+     this.ifTab2Active = true;
+    this.userform.reset({id:product.id,loginName: product.loginName, password:product.password,username:product.username,userNo:product.userNo,is_login:product.is_login,role:false,remarks:product.remarks});
+     /*let param = {
       id: product.id
-    };
-    this.service.addOrEdit(param)
-      .then(item => {
-        this.initProduct(item);
-      }, error => {
-        this.gotoLog = false;
-        this.alertDialog(error)
-      });
-  }
-
-  //初始化表单数据
-  initProduct(item) {
-    this.product_id = item.id;
-    this.product_name = item.name;
-    this.product_age = item.age;
-    this.product_birthday = item.birthday;
-    this.product_email = item.loginEmail;
-    this.product_password = item.password;
-    this.product_ifEnable = item.isEnable;
-    this.product_score = item.isScore;
-    this.product_hits = item.hits;
-    this.product_remarks = item.remarks;
-    this.product_price = item.price;
+     };
+      this.service.addOrEdit(param)
+     .then(item => {
+       this.initProduct(item);
+     }, error => {
+      this.alertDialog(error)
+     }); */
   }
 
   changeTab(event) {
     console.log('ininin', event.index);
     if (event.index == 0) {
-      this.newTabPanel = '添加产品';
+      this.newTabPanel = '添加用户';
       this.ifTab1Active = true;
       this.ifTab2Active = false;
     } else if (event.index == 1) {
       this.ifTab1Active = false;
       this.ifTab2Active = true;
-
-      this.product_id = '';
-      this.product_name = '';
-      this.product_age = null;
-      this.product_email = '';
-      this.product_password = '';
-      this.product_ifEnable = false;
-      this.product_score = '';
-      this.product_hits = null;
-
+      this.isSubmittedClicked=false;
+      //重置form表单中的数据
+      this.userform.reset({id:'',loginName: '', password:'',username: '',userNo:'',is_login:1,role:false,remarks:''});
+      /*
       let param = {
         id: ''
       };
@@ -202,145 +186,128 @@ export class UserManageComponent implements OnInit {
               this.ifTab2Active = false;
             }
           });
-        });
+        });*/
     }
   }
 
-  product_cancel() {
-    this.newTabPanel = '添加产品';
-
+  backToList() {
+    this.newTabPanel = '添加用户';
     this.ifTab1Active = true;
     this.ifTab2Active = false;
   }
 
-  product_save() {
-    let param = {
-      "id": this.product_id,
-      "remarks": '',
-      "name": this.product_name,
-      "age": null,
-      "birthday": null,
-      "loginEmail": this.product_email,
-      "password": this.product_password,
-      "price": null,
-      "isEnable": this.product_ifEnable,
-      "isScore": this.product_score,
-      "score": null,
-      "hits": this.product_hits,
-      "type": null,
-      "info": null
-    };
-    this.service.save(param)
-      .then(res => {
-        this.newTabPanel = '添加产品';
-
-        this.ifTab1Active = true;
-        this.ifTab2Active = false;
-
-        this.search();
-      }, error => {
-        this.gotoLog = false;
-        this.alertDialog(error)
-      });
-  }
-
-  cloneProduct(p: Product): Product {
-    let product = new PrimeProduct();
-    for (let prop in p) {
-      product[prop] = p[prop];
+  onSubmit(data) {
+    this.isSubmittedClicked=true;
+    if(this.userform.valid){
+      var _self=this;
+      if(!data.id){
+        _self.users.push(data);
+      }else{
+        _self.users.forEach(function(value,key){
+          if(value.id==data.id){
+            _self.users[key]=data;
+          }
+        })
+      }
+      this.newTabPanel = '添加用户';
+      this.ifTab1Active = true;
+      this.ifTab2Active = false;
+      // this.search();
+    }else{
+      this.onValueChanged();
+      return false;
     }
-    return product;
+
+
+
+
+    /*
+     this.service.save(param)
+     .then(res => {
+     this.newTabPanel = '添加产品';
+
+     this.ifTab1Active = true;
+     this.ifTab2Active = false;
+
+     this.search();
+     }, error => {
+     this.alertDialog(error)
+     });*/
   }
 
-  save() {
-    console.log('save', this.product);
-    if (this.newProduct) {
-      this.product.id = this.products.length;
-      console.log('add', this.product);
-      this.products.push(this.product);
-    }
-    else {
-      console.log('before', this.products);
-
-      this.products[this.product.id - 1] = this.product;
-      console.log('after', this.products);
-    }
-    this.product = null;
-    this.displayDialog = false;
-  }
-
-  cancel() {
-    // this.products.splice(this.product.id - 1, 1);
-    this.product = null;
-    this.displayDialog = false;
-  }
 
   delete(product) {
-    this.dialogHeader = '删除产品';
-    this.confirmationService.confirm({
-      message: '确定要删除该产品么',
+    this.cService.confirm({
+      message: '确定要删除该用户么',
+      header: '删除用户',
+      key: 'usermanageDialogKey',
       accept: () => {
         let param = [{
           id: product.id
         }];
-        this.service.del(param)
-          .then(res => {
-            this.search();
-          }, error => {
-            this.gotoLog = false;
-            this.alertDialog(error)
-          });
-      },
+        /*this.service.del(param)
+         .then(res => {
+         this.search();
+         }, error => {
+         this.alertDialog(error)
+         });*/
+        let deleteIndex: number;
+        this.users.forEach(function (arr, index) {
+          if (arr.id == product.id) {
+            deleteIndex = index;
+          }
+        })
+        this.users.splice(deleteIndex, 1);
+      }
     });
-    // this.products.splice(product.id - 1, 1);
 
   }
 
   batchDel() {
-    this.dialogHeader = '批量删除';
-    this.confirmationService.confirm({
-      message: '确定批量删除这些产品吗？',
+    let _self = this;
+    this.cService.confirm({
+      message: '确定要批量删除用户吗？',
+      header: '批量删除',
+      key: 'usermanageDialogKey',
       accept: () => {
-        let param = [];
-        for (let id of this.selectedProducts) {
-          param.push({id: id});
-        }
-        this.service.del(param)
-          .then(res => {
-            this.search();
-          }, error => {
-            this.gotoLog = false;
-            this.alertDialog(error)
+        /*this.service.del(param)
+         .then(res => {
+         this.search();
+         }, error => {
+
+         this.alertDialog(error)
+         });*/
+        let newUsers: any[] = [];
+        _self.users.forEach(function (arr, index) {
+          let count = 0;
+          _self.selectedUsers.forEach(function (selectUser, key) {
+            if (arr.id == selectUser) {
+              count++;
+            }
           })
-      },
-    });
+          if (count == 0) {
+            newUsers.push(arr)
+          }
+        });
+        _self.users = newUsers;
+      }
+    })
   }
 
-  findSelectedProductIndex(): number {
-    return this.products.indexOf(this.selectedProduct);
-  }
 
   selectAll() {
     let temp = [];
     if (this.ifAllSelected == true) {
-      for (let item of this.products) {
+      for (let item of this.users) {
         for (let prop in item) {
           if (prop == 'id') {
             temp.push(item[prop]);
           }
         }
       }
-      this.selectedProducts = temp;
+      this.selectedUsers = temp;
     } else {
-      // for (let item of this.products) {
-      //   for (let prop in item) {
-      //     if (prop == 'checked') {
-      //       item[prop] = false;
-      //     }
-      //   }
-      // }
-
-      this.selectedProducts = [];
+      this.selectedUsers = [];
     }
   }
 }

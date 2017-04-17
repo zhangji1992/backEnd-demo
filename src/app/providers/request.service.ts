@@ -16,16 +16,16 @@ import {DialogModule, TreeNode} from "primeng/primeng";
 export class RequestService {
   userName: string;
 
-  constructor(private http: Http,
-              private route: ActivatedRoute,
-              private router: Router) {
+  constructor(protected http: Http,
+              protected route: ActivatedRoute,
+              protected router: Router) {
   }
 
-  private handleError(error: any): Promise<any> {
+  protected handleError(error: any): Promise<any> {
     return Promise.reject(error);
   }
 
-  private httpPost(url, param?): Promise<any> {
+  protected httpPost(url, param?): Promise<any> {
     return this.http.post(url, JSON.stringify(param))               //请求头已在app.module.ts中预设并注入
       .toPromise()
       .then(res => {
@@ -33,24 +33,6 @@ export class RequestService {
         // console.log('data', data);
         let resultStatus = data.resultStatus;
 
-        // switch(resultStatus){
-        //   case 'success':
-        //     return data.infoData;
-        //   // case 'error':
-        //   //   console.log('fail:', data.errorMassage || data.errorStackTrace || data.exception);
-        //   //   return Promise.reject(data.infoData || data.errorMassage);
-        //   // case 'exception':
-        //   //   console.log('exception:', data.errorMassage || data.errorStackTrace || data.exception);
-        //   //   return Promise.reject(data.errorMassage);
-        //   // case 'validate':
-        //   //   console.log('validate:', data.errorMassage || data.errorStackTrace || data.exception);
-        //   //   return Promise.reject(data.infoData);
-        //   // case 'validates':
-        //   //   console.log('validates:', data.errorMassage || data.errorStackTrace || data.exception);
-        //   //   return Promise.reject(data.infoData);
-        //   default:
-        //     return Promise.reject(data.infoData);
-        // }
         if (resultStatus == 'success') {
           return data.infoData;
         } else if (resultStatus == 'error') {
@@ -82,7 +64,7 @@ export class RequestService {
         this.userName = res.name;
         // console.log('登录成功', res, this.userName);
         // this.router.navigateByUrl("/backend-frame/demo/demo-page");
-        this.router.navigate(['../backend-frame', 'demo', 'demo-page'], {relativeTo: this.route});
+        this.router.navigate(['../backend-frame', 'demo', 'demo-page'], { relativeTo: this.route });
         return res;
       })
       .catch(this.handleError);
