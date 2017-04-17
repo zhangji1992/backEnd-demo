@@ -30,6 +30,7 @@ export class TopMenuComponent implements OnInit {
       .then(topMenu => {
         // console.log('ngOnInit getTopMenu', topMenu, this.service.userName);
         this.topMenu = topMenu;
+        this.selectedMenu = this.topMenu[1].id;
       }, error => {
         if (error.resultStatus == 'error' && error.errorMassage == '未登录或登录超时！') {
           this.router.navigateByUrl("/login");
