@@ -20,7 +20,7 @@ import {
   PanelModule,
   ConfirmDialogModule,
   ConfirmationService,
-  GrowlModule,RadioButtonModule
+  GrowlModule, RadioButtonModule, TreeModule, TreeNode, SharedModule, TreeTableModule,BlockUIModule
 } from "primeng/primeng";
 import {requestOptionsProvider} from "../default-request-options.service";
 import {PermissionComponent} from "./permission/permission";
@@ -30,6 +30,7 @@ import {DemoAffairsComponent} from "./demo/demo-affairs/demo-affairs";
 import {UserManageComponent} from "./permission/user-manage/user-manage.component";
 import {RoleManageComponent} from "./permission/role-manage/role-manage.component";
 import {MenuManageComponent} from "./permission/menu-manage/menu-manage.component";
+import {LoadingComponent} from "./my-common/loading/loading.component";
 
 const backendFrameRoutes = [
   {
@@ -74,8 +75,8 @@ const backendFrameRoutes = [
     DataTableModule,
     DialogModule,
     TabViewModule,
-    CheckboxModule,
-    PanelModule,RadioButtonModule,
+    CheckboxModule,TreeTableModule,SharedModule,
+    PanelModule,RadioButtonModule,TreeModule,BlockUIModule,
     RouterModule.forChild(backendFrameRoutes)
   ],
   exports: [],
@@ -93,7 +94,8 @@ const backendFrameRoutes = [
     TopMenuComponent,
     BackendFrameComponent,
     PageNotFound2Component,
-    PageNotFound3Component
+    PageNotFound3Component,
+    LoadingComponent
   ],
   providers: [requestOptionsProvider, ConfirmationService, CookieService]
 })
