@@ -85,35 +85,35 @@ export class DemoPageComponent implements OnInit {
   }
 
   search() {
-    let sbegin=this.searchBeginTime?moment(this.searchBeginTime).format('YYYY-MM-DD'):'';
-    let send=this.searchEndTime?moment(this.searchEndTime).format('YYYY-MM-DD'):'';
-    let bstart=this.searchUpdateStartTime ? moment(this.searchUpdateStartTime).format('YYYY-MM-DD HH:mm:ss') : '';
-    let bend=this.searchUpdateEndTime ? moment(this.searchUpdateEndTime).format('YYYY-MM-DD HH:mm:ss') : '';
+    let sbegin = this.searchBeginTime ? moment(this.searchBeginTime).format('YYYY-MM-DD') : '';
+    let send = this.searchEndTime ? moment(this.searchEndTime).format('YYYY-MM-DD') : '';
+    let bstart = this.searchUpdateStartTime ? moment(this.searchUpdateStartTime).format('YYYY-MM-DD HH:mm:ss') : '';
+    let bend = this.searchUpdateEndTime ? moment(this.searchUpdateEndTime).format('YYYY-MM-DD HH:mm:ss') : '';
 
     let param = {
       "name": this.searchName,
       "remarks": this.searchRemarks,
-      "startBirthday":sbegin,
-      "endBirthday":send,
-      "startCreateDate":bstart,
-      "endCreateDate":bend
+      "startBirthday": sbegin,
+      "endBirthday": send,
+      "startCreateDate": bstart,
+      "endCreateDate": bend
     };
 
     // console.log("time:  ",param);
 
-    this.display=true;//显示loading层
+    this.display = true;//显示loading层
 
     this.service.search(this.pageNo, this.pageSize, param)
       .then(products => {
         console.log('search get', products);
-        this.display=false;
+        this.display = false;
         this.products = products;
       }, error => {
-        this.display=false;
+        this.display = false;
         this.alertDialog(error);
       })
       .catch(err => {
-        this.display=false;
+        this.display = false;
         this.ifException = true;
         console.log('err', err, err.json());
         this.myException = err;
@@ -260,13 +260,13 @@ export class DemoPageComponent implements OnInit {
 
   product_save() {
     this.display = true;
-    let pbirthday= this.product_birthday? moment(this.product_birthday).format('YYYY-MM-DD'):'';
+    let pbirthday = this.product_birthday ? moment(this.product_birthday).format('YYYY-MM-DD') : '';
     let param = {
       "id": this.product_id,
       "remarks": this.product_remarks,
       "name": this.product_name,
       "age": null,
-      "birthday":pbirthday,
+      "birthday": pbirthday,
       "loginEmail": this.product_email,
       "password": this.product_password,
       "price": null,
