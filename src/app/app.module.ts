@@ -7,10 +7,13 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {AppComponent} from './app.component';
 import {PageNotFoundComponent} from "./backend-frame/my-common/page-not-found/page-not-found.component";
 import {ComponentsModule} from "./backend-frame/my-common/components/components.module";
-import {ProvidersModule} from "./providers/providers.module";
-import {InputTextModule, TreeModule} from "primeng/primeng";
+// import {ProvidersModule} from "./providers/providers.module";
+import {ConfirmationService, InputTextModule, TreeModule} from "primeng/primeng";
 import {LoginModule} from "./login/login.module";
 import {requestOptionsProvider} from "./default-request-options.service";
+import {RequestService} from "./providers/request.service";
+import {CookieService} from "angular2-cookie/core";
+import {BackendFrameModule} from "./backend-frame/backend-frame.module";
 
 const appRoutes = [
   {path: '', redirectTo: 'login', pathMatch: 'full'},
@@ -29,15 +32,16 @@ const appRoutes = [
     InputTextModule,
     TreeModule,
     ReactiveFormsModule,
-    ProvidersModule,
+    // ProvidersModule,
     LoginModule,
+    BackendFrameModule,
     RouterModule.forRoot(appRoutes),
   ],
   declarations: [
     AppComponent,
     PageNotFoundComponent,
   ],
-  providers: [requestOptionsProvider],    //http请求头的统一预设值
+  providers: [requestOptionsProvider, RequestService, ConfirmationService, CookieService],    //http请求头的统一预设值
   bootstrap: [AppComponent]
 })
 export class AppModule {

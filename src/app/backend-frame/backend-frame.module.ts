@@ -32,6 +32,7 @@ import {UserManageComponent} from "./permission/user-manage/user-manage.componen
 import {RoleManageComponent} from "./permission/role-manage/role-manage.component";
 import {MenuManageComponent} from "./permission/menu-manage/menu-manage.component";
 import {LoadingComponent} from "./my-common/loading/loading.component";
+// import {RequestService} from "../providers/request.service";
 
 const backendFrameRoutes = [
   {
@@ -57,7 +58,9 @@ const backendFrameRoutes = [
           {path: '**', component: PageNotFound3Component}
         ]
       },
-      {path: '**', component: PageNotFound2Component}   //带参数的路由也会匹配
+      // {
+      //   path: '**', component: PageNotFound2Component                             //带参数的路由也会匹配(路由bug)
+      // }
     ]
   }
 ];
@@ -102,11 +105,12 @@ const backendFrameRoutes = [
     FooterInfoComponent,
     TopMenuComponent,
     BackendFrameComponent,
+    // PageNotFoundComponent,
     PageNotFound2Component,
     PageNotFound3Component,
     LoadingComponent
   ],
-  providers: [requestOptionsProvider, ConfirmationService, CookieService]
+  // providers: [requestOptionsProvider, ConfirmationService, CookieService]
 })
 export class BackendFrameModule {
 }

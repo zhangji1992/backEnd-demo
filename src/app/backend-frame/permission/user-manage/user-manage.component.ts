@@ -28,7 +28,7 @@ export class UserManageComponent implements OnInit {
     loginName: '',
     name: '',
     is_login: this.default
-  }
+  };
 
   users: any[]; //分页读取到的列表数据
 

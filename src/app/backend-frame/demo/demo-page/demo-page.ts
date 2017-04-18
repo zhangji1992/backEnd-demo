@@ -3,6 +3,7 @@ import {Product, PrimeProduct} from "./product";
 import {RequestService} from "../../../providers/request.service";
 import {ConfirmationService} from 'primeng/primeng';
 import {Router} from "@angular/router";
+import * as moment from "moment";
 
 @Component({
   selector: 'demo-page',
@@ -26,7 +27,8 @@ export class DemoPageComponent implements OnInit {
   searchRemarks: string = '';
   searchBeginTime: Date;
   searchEndTime: Date;
-  searchUpdateStartTime: Date; searchUpdateEndTime: Date;
+  searchUpdateStartTime: Date;
+  searchUpdateEndTime: Date;
   product: Product = new PrimeProduct();
 
   newTabPanel: string = '添加演示';                 //新标签页名称
@@ -45,9 +47,9 @@ export class DemoPageComponent implements OnInit {
   product_remarks: string;
   product_price: number;
   product_birthday: Date;
-  product_updateTime:Date;
+  product_updateTime: Date;
 
-  showForm:boolean=false; //默认不显示添加演示表单
+  showForm: boolean = false; //默认不显示添加演示表单
 
   confrim: any;
   tabViewCss = {
@@ -63,18 +65,19 @@ export class DemoPageComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log('test', this.service.getUserName());
     this.search();
     this.setCalenderLanguage();
   }
 
-  setCalenderLanguage(){
+  setCalenderLanguage() {
     this.en = {
       firstDayOfWeek: 0,
-      dayNames: ["日","一","二","三","四","五","六"],
-      dayNamesShort: ["日","一","二","三","四","五","六"],
-      dayNamesMin: ["日","一","二","三","四","五","六"],
-      monthNames: [ "一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月" ],
-      monthNamesShort: [ "一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"]
+      dayNames: ["日", "一", "二", "三", "四", "五", "六"],
+      dayNamesShort: ["日", "一", "二", "三", "四", "五", "六"],
+      dayNamesMin: ["日", "一", "二", "三", "四", "五", "六"],
+      monthNames: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+      monthNamesShort: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"]
     };
   }
 
@@ -86,26 +89,29 @@ export class DemoPageComponent implements OnInit {
   search() {
     let param = {
       "name": this.searchName,
-      "remarks": this.searchRemarks
+      "remarks": this.searchRemarks,
+      'start': moment(this.searchUpdateStartTime).format('YYYY-MM-DD HH:mm:ss'),
+      'end': moment(this.searchUpdateEndTime).format('YYYY-MM-DD HH:mm:ss')
     };
+    console.log('param', param);
 
-    this.display=true;//显示loading层
-
-    this.service.search(this.pageNo, this.pageSize, param)
-      .then(products => {
-        console.log('search get', products);
-        this.display=false;
-        this.products = products;
-      }, error => {
-        this.display=false;
-        this.alertDialog(error);
-      })
-      .catch(err => {
-        this.display=false;
-        this.ifException = true;
-        console.log('err', err, err.json());
-        this.myException = err;
-      })
+    // this.display=true;//显示loading层
+    //
+    // this.service.search(this.pageNo, this.pageSize, param)
+    //   .then(products => {
+    //     console.log('search get', products);
+    //     this.display=false;
+    //     this.products = products;
+    //   }, error => {
+    //     this.display=false;
+    //     this.alertDialog(error);
+    //   })
+    //   .catch(err => {
+    //     this.display=false;
+    //     this.ifException = true;
+    //     console.log('err', err, err.json());
+    //     this.myException = err;
+    //   })
   }
 
 
@@ -135,7 +141,7 @@ export class DemoPageComponent implements OnInit {
     this.searchBeginTime = null;
     this.searchEndTime = null;
     this.searchUpdateStartTime = null;
-    this.searchUpdateEndTime=null;
+    this.searchUpdateEndTime = null;
   }
 
   edit(product) {
@@ -144,8 +150,8 @@ export class DemoPageComponent implements OnInit {
     this.newTabPanel = '编辑演示';
     this.ifTab1Active = false;
     this.ifTab2Active = true;
-    this.display=true;
-    this.showForm=true;
+    this.display = true;
+    this.showForm = true;
 
     // this.newProduct = false;
     // this.product = this.cloneProduct(product);
@@ -156,17 +162,17 @@ export class DemoPageComponent implements OnInit {
     };
     this.service.addOrEdit(param)
       .then(item => {
-        this.showForm=true;
-        this.display=false;
+        this.showForm = true;
+        this.display = false;
         this.initProduct(item);
       }, error => {
-        this.showForm=false;
-        this.display=false;
+        this.showForm = false;
+        this.display = false;
         this.alertDialog(error)
-      }).catch(error=>{
-        this.showForm=false;
-        this.display=false;
-      });
+      }).catch(error => {
+      this.showForm = false;
+      this.display = false;
+    });
   }
 
   //初始化表单数据
@@ -176,7 +182,7 @@ export class DemoPageComponent implements OnInit {
     this.product_age = item.age;
 
     this.product_birthday = new Date(item.birthday);
-    this.product_updateTime=new Date(item.updateDate);
+    this.product_updateTime = new Date(item.updateDate);
     this.product_email = item.loginEmail;
     this.product_password = item.password;
     this.product_ifEnable = item.isEnable;
@@ -192,12 +198,12 @@ export class DemoPageComponent implements OnInit {
       this.newTabPanel = '添加演示';
       this.ifTab1Active = true;
       this.ifTab2Active = false;
-      this.showForm=true;
+      this.showForm = true;
     } else if (event.index == 1) {
-      this.ifTab1Active = false ;
+      this.ifTab1Active = false;
       this.ifTab2Active = true;
-      this.display=true;
-      this.showForm=false;
+      this.display = true;
+      this.showForm = false;
 
       this.product_id = '';
       this.product_name = '';
@@ -207,34 +213,35 @@ export class DemoPageComponent implements OnInit {
       this.product_ifEnable = false;
       this.product_score = '';
       this.product_hits = null;
-      this.product_updateTime=null;
+      this.product_updateTime = null;
 
       let param = {
         id: ''
       };
       this.service.addOrEdit(param)
         .then(item => {
-          this.display=false; this.showForm=true;
+          this.display = false;
+          this.showForm = true;
           this.initProduct(item);
         }, error => {
           console.log('111', error);
           this.dialogHeader = '提示';
-          this.display=false;
+          this.display = false;
           this.confirmationService.confirm({
             message: error,
             accept: () => {
               this.ifTab1Active = true;
               this.ifTab2Active = false;
-              this.showForm=true;
+              this.showForm = true;
             },
             reject: () => {
               this.ifTab1Active = true;
               this.ifTab2Active = false;
-              this.showForm=true;
+              this.showForm = true;
             }
           });
-        }).catch(error=>{
-        this.display=false;
+        }).catch(error => {
+        this.display = false;
       });
     }
   }
@@ -247,7 +254,7 @@ export class DemoPageComponent implements OnInit {
   }
 
   product_save() {
-    this.display=true;
+    this.display = true;
     let param = {
       "id": this.product_id,
       "remarks": '',
@@ -261,14 +268,14 @@ export class DemoPageComponent implements OnInit {
       "isScore": this.product_score,
       "score": null,
       "hits": this.product_hits,
-      'updateDate':this.product_updateTime,
+      'updateDate': this.product_updateTime,
       "type": null,
       "info": null
     };
-    console.log( this.product_birthday);
+    console.log(this.product_birthday);
     this.service.save(param)
       .then(res => {
-        this.display=false;
+        this.display = false;
         this.newTabPanel = '添加演示';
 
         this.ifTab1Active = true;
@@ -276,11 +283,11 @@ export class DemoPageComponent implements OnInit {
 
         this.search();
       }, error => {
-        this.display= false;
+        this.display = false;
         this.alertDialog(error)
-      }).catch(error=>{
-        this.display=false;
-      });
+      }).catch(error => {
+      this.display = false;
+    });
   }
 
   cloneProduct(p: Product): Product {
@@ -316,27 +323,27 @@ export class DemoPageComponent implements OnInit {
 
   delete(product) {
     this.dialogHeader = '删除演示';
-    let  _self=this;
+    let _self = this;
     this.confirmationService.confirm({
       message: '确定要删除该演示么',
       accept: () => {
-        _self.display=true;
+        _self.display = true;
         let param = [{
           id: product.id
         }];
         this.service.del(param)
           .then(res => {
-            _self.display=false;
+            _self.display = false;
             this.search();
           }, error => {
-            _self.display=false;
+            _self.display = false;
             this.alertDialog(error)
-          }).catch(err=>{
-           _self.display=false;
+          }).catch(err => {
+          _self.display = false;
         });
       },
-      reject: () =>{
-        _self.display=false;
+      reject: () => {
+        _self.display = false;
       }
     });
     // this.products.splice(product.id - 1, 1);
@@ -345,25 +352,25 @@ export class DemoPageComponent implements OnInit {
 
   batchDel() {
     this.dialogHeader = '批量删除';
-    let  _self=this;
+    let _self = this;
     this.confirmationService.confirm({
       message: '确定批量删除这些演示吗？',
       accept: () => {
-        _self.display=true;
+        _self.display = true;
         let param = [];
         for (let id of this.selectedProducts) {
           param.push({id: id});
         }
         this.service.del(param)
           .then(res => {
-            _self.display=false;
+            _self.display = false;
             this.search();
           }, error => {
-            _self.display=false;
+            _self.display = false;
             this.alertDialog(error)
-          }).catch(err=>{
-            _self.display=false;
-          })
+          }).catch(err => {
+          _self.display = false;
+        })
       },
     });
   }

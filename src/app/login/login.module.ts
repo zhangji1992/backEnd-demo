@@ -8,10 +8,10 @@ import {RouterModule} from "@angular/router";
 import {CommonModule} from "@angular/common";
 import {CheckboxModule, InputTextModule, PasswordModule,ConfirmDialogModule,ConfirmationService} from "primeng/primeng";
 import {ReactiveFormsModule} from "@angular/forms";
-import {ProvidersModule} from "../providers/providers.module";
-import {RequestService} from "../providers/request.service";
-import {requestOptionsProvider} from "../default-request-options.service";
-import { CookieService } from 'angular2-cookie/services/cookies.service';
+// import {ProvidersModule} from "../providers/providers.module";
+// import {RequestService} from "../providers/request.service";
+// import {requestOptionsProvider} from "../default-request-options.service";
+// import { CookieService } from 'angular2-cookie/services/cookies.service';
 
 const loginRoutes = [
   {path: '', component: LoginComponent}
@@ -23,11 +23,12 @@ const loginRoutes = [
     InputTextModule,
     PasswordModule,
     ReactiveFormsModule,
-    CheckboxModule,ConfirmDialogModule,
+    CheckboxModule,
+    ConfirmDialogModule,
     RouterModule.forChild(loginRoutes)],
   exports: [],
   declarations: [LoginComponent],
-  providers: [ConfirmationService,CookieService]
+  // providers: [ConfirmationService, CookieService]
 })
 export class LoginModule {
 }

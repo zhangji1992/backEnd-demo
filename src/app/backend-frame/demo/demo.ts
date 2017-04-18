@@ -3,7 +3,7 @@
  */
 import {Component, OnInit, animate, state, style, transition, trigger} from '@angular/core';
 import {RequestService} from "../../providers/request.service";
-import {ConfirmationService} from "primeng/primeng";
+// import {ConfirmationService} from "primeng/primeng";
 
 @Component({
   selector: 'demo',

@@ -5,14 +5,14 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {RequestService} from "../providers/request.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {ConfirmDialogModule, ConfirmationService} from 'primeng/primeng';
+// import {ConfirmDialogModule, ConfirmationService} from 'primeng/primeng';
 import {CookieService} from 'angular2-cookie/core';
 
 @Component({
   selector: 'login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-  providers: [ConfirmationService, CookieService]
+  // providers: [ConfirmationService, CookieService]
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup; //FormGroup继承了AbstractControl类
@@ -25,7 +25,6 @@ export class LoginComponent implements OnInit {
               public router: Router,
               public route: ActivatedRoute,
               public service: RequestService,
-              private confirmationService: ConfirmationService,
               private _cookieService: CookieService) {
   }
 
@@ -107,6 +106,7 @@ export class LoginComponent implements OnInit {
         this._cookieService.put('userName', res.name);
         // console.log('vvv2', this.service.userName);
         this.router.navigate(['../backend-frame', 'demo', 'demo-page'], { relativeTo: this.route });
+        // this.router.navigateByUrl('/backend-frame');
         // this.router.navigateByUrl('/backend-frame/permission/role-manage');
         // this.router.navigateByUrl('/backend-frame/permission/menu-manage');
       }, error => {

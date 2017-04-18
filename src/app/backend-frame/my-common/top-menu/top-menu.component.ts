@@ -24,7 +24,7 @@ export class TopMenuComponent implements OnInit {
   }
 
   ngOnInit() {
-    // console.log("dddd: ", JSON.stringify(this._cookieService.getAll()));
+    console.log('tee', this.service);
 
     this.service.getTopMenu()
       .then(topMenu => {
