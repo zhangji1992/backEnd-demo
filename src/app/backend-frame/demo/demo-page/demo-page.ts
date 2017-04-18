@@ -47,7 +47,6 @@ export class DemoPageComponent implements OnInit {
   product_remarks: string;
   product_price: number;
   product_birthday: Date;
-  product_updateTime: Date;
 
   showForm: boolean = false; //默认不显示添加演示表单
 
@@ -65,7 +64,6 @@ export class DemoPageComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('test', this.service.getUserName());
     this.search();
     this.setCalenderLanguage();
   }
@@ -87,31 +85,39 @@ export class DemoPageComponent implements OnInit {
   }
 
   search() {
+    let sbegin=this.searchBeginTime?moment(this.searchBeginTime).format('YYYY-MM-DD'):'';
+    let send=this.searchEndTime?moment(this.searchEndTime).format('YYYY-MM-DD'):'';
+    let bstart=this.searchUpdateStartTime ? moment(this.searchUpdateStartTime).format('YYYY-MM-DD HH:mm:ss') : '';
+    let bend=this.searchUpdateEndTime ? moment(this.searchUpdateEndTime).format('YYYY-MM-DD HH:mm:ss') : '';
+
     let param = {
       "name": this.searchName,
       "remarks": this.searchRemarks,
-      'start': moment(this.searchUpdateStartTime).format('YYYY-MM-DD HH:mm:ss'),
-      'end': moment(this.searchUpdateEndTime).format('YYYY-MM-DD HH:mm:ss')
+      "startBirthday":sbegin,
+      "endBirthday":send,
+      "startCreateDate":bstart,
+      "endCreateDate":bend
     };
-    console.log('param', param);
 
-    // this.display=true;//显示loading层
-    //
-    // this.service.search(this.pageNo, this.pageSize, param)
-    //   .then(products => {
-    //     console.log('search get', products);
-    //     this.display=false;
-    //     this.products = products;
-    //   }, error => {
-    //     this.display=false;
-    //     this.alertDialog(error);
-    //   })
-    //   .catch(err => {
-    //     this.display=false;
-    //     this.ifException = true;
-    //     console.log('err', err, err.json());
-    //     this.myException = err;
-    //   })
+    // console.log("time:  ",param);
+
+    this.display=true;//显示loading层
+
+    this.service.search(this.pageNo, this.pageSize, param)
+      .then(products => {
+        console.log('search get', products);
+        this.display=false;
+        this.products = products;
+      }, error => {
+        this.display=false;
+        this.alertDialog(error);
+      })
+      .catch(err => {
+        this.display=false;
+        this.ifException = true;
+        console.log('err', err, err.json());
+        this.myException = err;
+      })
   }
 
 
@@ -181,8 +187,8 @@ export class DemoPageComponent implements OnInit {
     this.product_name = item.name;
     this.product_age = item.age;
 
-    this.product_birthday = new Date(item.birthday);
-    this.product_updateTime = new Date(item.updateDate);
+    this.product_birthday = item.birthday;
+
     this.product_email = item.loginEmail;
     this.product_password = item.password;
     this.product_ifEnable = item.isEnable;
@@ -213,7 +219,6 @@ export class DemoPageComponent implements OnInit {
       this.product_ifEnable = false;
       this.product_score = '';
       this.product_hits = null;
-      this.product_updateTime = null;
 
       let param = {
         id: ''
@@ -255,12 +260,13 @@ export class DemoPageComponent implements OnInit {
 
   product_save() {
     this.display = true;
+    let pbirthday= this.product_birthday? moment(this.product_birthday).format('YYYY-MM-DD'):'';
     let param = {
       "id": this.product_id,
-      "remarks": '',
+      "remarks": this.product_remarks,
       "name": this.product_name,
       "age": null,
-      "birthday": this.product_birthday,
+      "birthday":pbirthday,
       "loginEmail": this.product_email,
       "password": this.product_password,
       "price": null,
@@ -268,7 +274,6 @@ export class DemoPageComponent implements OnInit {
       "isScore": this.product_score,
       "score": null,
       "hits": this.product_hits,
-      'updateDate': this.product_updateTime,
       "type": null,
       "info": null
     };
